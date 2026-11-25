@@ -1258,7 +1258,7 @@ function runTests(){
    T("all themes render front cover essentials",allOk);
    b.forName="";const hNo=coverHTML(b,false);
    T("no-name cover prints no placeholder strip",!hNo.includes("Created For")&&!hNo.includes("For: You"));
-   b.forName="Grandma Rose";}
+   b.forName="Grandma Rose";
    b.coverPhoto="data:image/jpeg;base64,AAAA";b.forName="Grandma Rose";
    const f=coverHTML(b,false),bk2=coverHTML(b,true);
    T("photo in keepsake frame front + back",f.includes("keepsake")&&bk2.includes("keepsake")&&f.includes("Grandma Rose"));
