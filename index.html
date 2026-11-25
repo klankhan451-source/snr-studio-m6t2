@@ -422,9 +422,12 @@ function genWordSearch(r,bank,easy,usedW){
 function genNumberSearch(r,bank,easy,opts){
   opts=opts||{};
   const size=opts.size||(easy?9:11), n=opts.count||(easy?5:7);
-  let numPool=bank.numbers;
-  if(opts.used){const fresh=numPool.filter(x=>!opts.used.has(x[0]));if(fresh.length>=n)numPool=fresh;else opts.used.clear()}
-  const items=sample(r,numPool,n);
+  /* several events can share one year: group by digit-string so a grid never
+     places the same digits twice; the label is picked at random per year */
+  const byDigits={};for(const [d,lab] of bank.numbers){(byDigits[d]=byDigits[d]||[]).push(lab)}
+  let digitPool=Object.keys(byDigits);
+  if(opts.used){const fresh=digitPool.filter(d=>!opts.used.has(d));if(fresh.length>=n)digitPool=fresh;else opts.used.clear()}
+  const items=sample(r,digitPool,Math.min(n,digitPool.length)).map(d=>[d,pick(r,byDigits[d])]);
   if(opts.used)items.forEach(x=>opts.used.add(x[0]));
   const words=items.map(x=>x[0]);
   const dirs=easy?DIRS8.slice(0,4):DIRS8;
@@ -636,8 +639,15 @@ function genPage(r,book,type,ctx){
       if(type==="trivia"){const qs=pickUnused(r,bank.trivia,ctx.usedQ,easy?4:5,x=>x[0]);p={type,title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a}))}}
       else if(type==="phrases"){const it=pickUnused(r,bank.phrases,ctx.usedPh,easy?4:5,x=>x[0]);p={type,title:"Finish the Phrase",items:it.map(([s,e])=>({start:s,end:e}))}}
       else if(type==="prompts"){const it=pickUnused(r,bank.prompts,ctx.usedPr,book.fontPt>=28?2:3,x=>x);
-        const totChars=it.reduce((a,q)=>a+q.length,0);
-        p={type,title:"Talk About It",items:it,lines:book.fontPt>=28?(totChars>150?2:3):2}}
+        let lines=2,compact=false;
+        if(book.fontPt>=28){ /* height model (pt): head ~200 + wrapped question lines + write lines + fact ~95 */
+          const qLines=cpl=>it.reduce((a,q)=>a+Math.ceil(q.length/cpl),0);
+          let est=200+qLines(34)*40+it.length*14+it.length*3*35+95;
+          if(est<=660)lines=3;
+          else{est=200+qLines(34)*40+it.length*14+it.length*2*35+95;
+            if(est>660){compact=true;est=200+qLines(38)*36+it.length*14+it.length*2*35+95}}
+        }
+        p={type,title:"Talk About It",items:it,lines,compact}}
       else if(type==="numbersearch")p=genNumberSearch(r,bank,easy,Object.assign(book.fontPt>=28?{size:10,count:6}:{}, {used:ctx.usedN}));
       else if(type==="crossword")p=genCrossword(r,bank,easy,Object.assign(book.fontPt>=28?{size:10,want:6}:{}, {used:ctx.usedC}));
       else if(type==="scramble")p=genScramble(r,bank,easy,book.fontPt>=28?4:(easy?4:5),ctx.usedW);
@@ -770,7 +780,7 @@ function pageHTML(book,p,idx){
   else if(p.type==="maze"){body=`<div class="maze-box">${mazeSVG(p,false)}</div>`}
   else if(p.type==="trivia"){body=p.items.map((it,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(it.q)}</p>`).join("")}
   else if(p.type==="phrases"){body=p.items.map((it,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(it.start)} <b>_______________</b></p>`).join("")}
-  else if(p.type==="prompts"){body=p.items.map((q,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(q)}</p><div class="write-lines">${'<div class="wl"></div>'.repeat(p.lines||2)}</div>`).join("")}
+  else if(p.type==="prompts"){body=p.items.map((q,i)=>`<p class="q-line"${p.compact?' style="font-size:calc(var(--bfs,24pt) * .9)"':""}><span class="qn">${i+1}.</span> ${esc(q)}</p><div class="write-lines">${'<div class="wl"></div>'.repeat(p.lines||2)}</div>`).join("")}
   else if(p.type==="matching"){
     const left=p.objs.map((o,i)=>`<div class="match-item">${objSVG(o,false)}<span>${esc(o.name)}</span><span class="match-line">&nbsp;</span></div>`).join("");
     const right=p.order.map((oi,k)=>`<div class="match-item">${objSVG(p.objs[oi],true)}<span class="ltr">${"ABCDEF"[k]}</span></div>`).join("");
@@ -1275,7 +1285,11 @@ function runTests(){
    const akTxt=answerKeyPages(b).join("");const m=akTxt.match(/Answers for Pages (\d+)–(\d+)/g)||[];
    T("AK headers use singular for one page",!m.some(h=>{const p=h.match(/(\d+)–(\d+)/);return p&&p[1]===p[2]}),"groups="+m.length);
    const ns=pageHTML(b,Object.assign(b.pages.find(p=>p.type==="numbersearch")||{type:"numbersearch",title:"Number Search",grid:[["1"]],placed:[{word:"1960"}],labels:{"1960":"x"}},{num:1}),0);
-   T("number-search clue bank wraps (ns-bank)",ns.includes("ns-bank"));}
+   T("number-search clue bank wraps (ns-bank)",ns.includes("ns-bank"));
+   let nsDup=false;for(const k of DECADE_KEYS){const rr=rng(31),used=new Set();
+     for(let t=0;t<3;t++){const g=genNumberSearch(rr,BANKS[k],false,{used});
+       if(g){const ws=g.placed.map(x=>x.word);if(new Set(ws).size!==ws.length)nsDup=true}}}
+   T("number search never places the same digits twice",!nsDup);}
   {const banned=["Dementia","Alzheimer","Memory Loss","For Old People"];
    const b=generateBook({decade:"mix",size:50,fontPt:24,seed:3});
    const all=coverHTML(b,false)+coverHTML(b,true)+belongsHTML(b)+howtoHTML(b)+contentsHTML(b)+licenceHTML(b)+b.title+b.subtitle;
