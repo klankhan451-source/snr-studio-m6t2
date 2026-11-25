@@ -11,6 +11,7 @@
   --bg:#f3eee3; --card:#fffdf7; --accent:#4A6B5D; --accent2:#D96B43;
 }
 *{box-sizing:border-box}
+.sheet *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 html,body{margin:0;padding:0}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5}
 [hidden]{display:none !important}
@@ -105,14 +106,14 @@ input[type=range]{width:100%}
 .pg-kicker{font-size:12pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--terra)}
 .pg-title{font-family:Georgia,serif;font-size:calc(var(--bfs,24pt) * 1.35);line-height:1.15;margin:4px 0 6px;color:var(--sage-d)}
 .pg-sub{font-size:var(--bfs,24pt);line-height:1.35;color:#3c4a43;margin:0}
-.fact{margin-top:auto;background:#f7f1de;border:1.5px solid #e0d3a8;border-radius:10px;padding:10px 14px;font-size:calc(var(--bfs,24pt) * .66);line-height:1.32}
+.fact{margin-top:auto;background:#f7f1de;border:1.5px solid #e0d3a8;border-radius:10px;padding:10px 14px;font-size:calc(var(--bfs,24pt) * .72);line-height:1.32}
 .fact b{color:#8a6d1c}
 .ws-grid,.ns-grid{border-collapse:collapse;margin:10px auto}
 .ws-grid td,.ns-grid td{border:1.6px solid #9db3a6;text-align:center;font-weight:700;color:#1B2E26}
 .ws-grid td{width:var(--cell,calc(var(--bfs,24pt) * 1.35));height:var(--cell,calc(var(--bfs,24pt) * 1.35));font-size:calc(var(--cell,30pt) * .72)}
 .ns-grid td{width:calc(var(--cell,30pt) * .85);height:var(--cell,calc(var(--bfs,24pt) * 1.3));font-size:calc(var(--cell,30pt) * .7)}
-.word-bank{columns:2;column-gap:28px;font-size:calc(var(--bfs,24pt) * .85);line-height:1.5;margin:8px auto 0;max-width:88%}
-.word-bank div{break-inside:avoid}
+.word-bank{columns:2;column-gap:20px;font-size:calc(var(--bfs,24pt) * .78);line-height:1.45;margin:8px auto 0;max-width:96%}
+.word-bank div{break-inside:avoid;white-space:nowrap}
 .sdk{border-collapse:collapse;margin:8px auto}
 .sdk td{width:var(--cell,calc(var(--bfs,24pt) * 1.55));height:var(--cell,calc(var(--bfs,24pt) * 1.55));border:1.4px solid #b9c8bd;text-align:center;font-size:calc(var(--cell,36pt) * .68);font-weight:700;color:#1B2E26}
 .sdk td.giv{background:#eef3ec;color:#4A6B5D}
@@ -123,32 +124,34 @@ input[type=range]{width:100%}
 .cw-grid td{width:var(--cell,calc(var(--bfs,24pt) * 1.28));height:var(--cell,calc(var(--bfs,24pt) * 1.28));text-align:center;font-size:calc(var(--cell,30pt) * .62);font-weight:700;position:relative}
 .cw-grid td.cell{border:2px solid #46685a;background:#fff;color:#1B2E26}
 .cw-grid td.blk{background:transparent}
-.cw-grid td .num{position:absolute;top:1px;left:3px;font-size:calc(var(--bfs,24pt) * .42);font-weight:800;color:#D96B43}
-.cw-clues{font-size:calc(var(--bfs,24pt) * .64);line-height:1.38;flex:1}
+.cw-grid td .num{position:absolute;top:1px;left:3px;font-size:calc(var(--bfs,24pt) * .55);font-weight:800;color:#D96B43}
+.cw-clues{font-size:calc(var(--bfs,24pt) * .76);line-height:1.34;flex:1}
 .cw-clues h4{margin:6px 0 3px;font-size:calc(var(--bfs,24pt) * .72);color:var(--sage-d)}
 .cw-clues div{margin-bottom:2px}
 .q-line{font-size:var(--bfs,24pt);line-height:1.4;margin:0 0 14px}
 .q-line .qn{font-weight:800;color:var(--terra)}
 .write-lines{margin-top:10px}
 .write-lines .wl{border-bottom:2px solid #c9d4c9;height:calc(var(--bfs,24pt) * 1.25)}
+.scr-item{break-inside:avoid;page-break-inside:avoid}
 .scr-word{font-size:calc(var(--bfs,24pt) * 1.3);font-weight:800;letter-spacing:.22em;text-align:center;color:var(--sage-d);margin:10px 0 4px;line-height:1.25}
 .scr-line{border-bottom:2px solid #c9d4c9;height:calc(var(--bfs,24pt) * .95);margin-top:4px}
 .scr-clue{text-align:center;font-size:calc(var(--bfs,24pt) * .85);color:#3c4a43;margin:0}
 .match-cols{display:flex;gap:5%;margin-top:8px}
 .match-col{flex:1}
 .match-item{display:flex;align-items:center;gap:12px;border:1.8px solid #c9d4c9;border-radius:12px;padding:8px 12px;margin-bottom:10px;font-size:calc(var(--bfs,24pt) * .8);font-weight:700}
-.match-item .mk{width:calc(var(--bfs,24pt) * 1.55);height:calc(var(--bfs,24pt) * 1.55);flex:0 0 auto}
+.match-item .mk{width:calc(var(--bfs,24pt) * 2.05);height:calc(var(--bfs,24pt) * 2.05);flex:0 0 auto}
+.match-line{margin-left:auto;border-bottom:2.5px solid #9db3a6;width:2.4em;height:1em;text-align:center}
 .match-item .ltr{margin-left:auto;font-size:calc(var(--bfs,24pt) * .95);color:var(--terra);font-weight:800}
 .maze-box{text-align:center;margin-top:6px}
 .maze-box svg{max-width:100%;height:auto}
 /* answer key */
 .ak-grid td.sol{background:#ffe9a8}
-.ak-item{font-size:calc(var(--bfs,24pt) * .72);line-height:1.4;margin-bottom:10px}
-.ak-item h4{margin:0 0 4px;font-size:calc(var(--bfs,24pt) * .85);color:var(--sage-d)}
+.ak-item{font-size:calc(var(--bfs,24pt) * .85);line-height:1.4;margin-bottom:12px;break-inside:avoid}
+.ak-item h4{margin:0 0 4px;font-size:calc(var(--bfs,24pt) * .95);color:var(--sage-d)}
 .ak-grid{border-collapse:collapse;margin:4px 0}
-.ak-grid td{border:1.2px solid #b9c8bd;width:calc(var(--bfs,24pt) * .52);height:calc(var(--bfs,24pt) * .52);text-align:center;font-weight:700;font-size:calc(var(--bfs,24pt) * .4)}
+.ak-grid td{border:1.2px solid #b9c8bd;width:calc(var(--bfs,24pt) * .72);height:calc(var(--bfs,24pt) * .72);text-align:center;font-weight:700;font-size:calc(var(--bfs,24pt) * .55)}
 .ak-sdk{border-collapse:collapse;margin:4px 0}
-.ak-sdk td{border:1.1px solid #b9c8bd;width:calc(var(--bfs,24pt) * .6);height:calc(var(--bfs,24pt) * .6);text-align:center;font-weight:700;font-size:calc(var(--bfs,24pt) * .44)}
+.ak-sdk td{border:1.1px solid #b9c8bd;width:calc(var(--bfs,24pt) * .8);height:calc(var(--bfs,24pt) * .8);text-align:center;font-weight:700;font-size:calc(var(--bfs,24pt) * .58)}
 /* ---------- covers ---------- */
 .cover-sheet{color:var(--cv-ink)}
 .cov-frame{position:absolute;inset:0;background:var(--cv-bg);display:flex;flex-direction:column;align-items:center;padding:0.55in 0.6in;text-align:center;overflow:hidden}
@@ -309,43 +312,47 @@ function saveSettings(){try{localStorage.setItem(SETKEY,JSON.stringify(settings)
    prompts (Talk About It), numbers [digits, label] for Number Search. */
 const BANKS={
 fifties:{label:"1950s",name:"The Fabulous Fifties",
- words:["JUKEBOX","DINER","SODA","POODLE","SKIRT","VINYL","DRIVEIN","SADDLE","MALT","SWING","ROCKER","BOPPER","TELEVISION","TRANSISTOR","HULA","HOOP","CHECKER","CABINET","PROM","CARNIVAL"],
- cross:[["ELVIS","The King of Rock and Roll"],["JUKEBOX","It played your song for a nickel"],["DINER","Coffee and pie at the counter"],["POODLE","____ skirt, a dance-hall favourite"],["VINYL","Records were made of it"],["HOOP","Hula ____, the 1958 craze"],["SODA","____ fountain treats"],["DRIVEIN","Movies watched from the car"],["MARILYN","Blonde star of 'Some Like It Hot'"],["CHECKERS","Red and black board game"],["MALT","Thick diner milkshake"],["PROM","The big school dance"]],
- trivia:[["Who was known as the King of Rock and Roll?","Elvis Presley"],["In 1958, what toy ring did everyone spin around their hips?","The Hula Hoop"],["What was the name of the first satellite, launched in 1957?","Sputnik 1"],["Which actress starred in 'Gentlemen Prefer Blondes' (1953)?","Marilyn Monroe"],["In the 1950s, what did a 'drive-in' let you watch from your car?","A movie"],["Who became Queen of England in 1952?","Queen Elizabeth II"],["What creamy treat did a 'soda jerk' serve at the drugstore counter?","A malted milkshake (or ice-cream soda)"],["Which TV couple lived at 328 Chauncey Street in Brooklyn?","Ralph and Alice Kramden (The Honeymooners)"],["What did families gather around to watch in the evening — the new 'television' or the radio?","The television"],["Which baseball great wore number 7 for the Yankees?","Mickey Mantle"],["What style of skirt, often with a poodle on it, did teenage girls wear?","A poodle skirt"],["In 1955, which theme park opened in California?","Disneyland"]],
+ words:["JUKEBOX","DINER","SODA","POODLE","SKIRT","VINYL","DRIVEIN","SADDLE","MALT","SWING","ROCKER","BOPPER","TELEVISION","TRANSISTOR","HULA","HOOP","CHECKERS","CABINET","PROM","CARNIVAL"],
+ clues:{JUKEBOX:"It played your song for a nickel",DINER:"Coffee and pie at the counter",SODA:"Fizzy fountain drink",POODLE:"Curly-coated dog on a skirt",SKIRT:"It swirled on the dance floor",VINYL:"Records were made of it",DRIVEIN:"Movies watched from the car",SADDLE:"Two-tone shoes named for a horse seat",MALT:"Thick diner milkshake",SWING:"Big-band dance music",ROCKER:"A chair that gently rocks",BOPPER:"A sock-hop teenager",TELEVISION:"The new box in the living room",TRANSISTOR:"Pocket radios ran on it",HULA:"You spin it around your hips",HOOP:"A ring you twirl and spin",CHECKERS:"Red and black board game",CABINET:"Kitchen cupboard with doors",PROM:"The big school dance",CARNIVAL:"Fairground of rides and games"},
+ cross:[["ELVIS","The King of Rock and Roll"],["JUKEBOX","It played your song for a nickel"],["DINER","Coffee and pie at the counter"],["POODLE","____ skirt, a dance-hall favourite"],["VINYL","Records were made of it"],["HOOP","Hula ____, the 1958 craze"],["SODA","____ fountain treats"],["DRIVEIN","Movies watched from the car (2 words)"],["MARILYN","Blonde star of 'Some Like It Hot'"],["CHECKERS","Red and black board game"],["MALT","Thick diner milkshake"],["PROM","The big school dance"]],
+ trivia:[["Who was known as the King of Rock and Roll?","Elvis Presley"],["In 1958, what toy ring did everyone spin around their hips?","The Hula Hoop"],["What was the name of the first satellite, launched in 1957?","Sputnik 1"],["Which actress starred in 'Gentlemen Prefer Blondes' (1953)?","Marilyn Monroe"],["In the 1950s, what did a 'drive-in' let you watch from your car?","A movie"],["Who became Queen of England in 1952?","Queen Elizabeth II"],["What creamy treat did a 'soda jerk' serve at the drugstore counter?","A malted milkshake (or ice-cream soda)"],["Which TV couple lived at 328 Chauncey Street in Brooklyn?","Ralph and Alice Kramden (The Honeymooners)"],["What new living-room appliance became the centre of family evenings in the 1950s?","The television"],["Which baseball great wore number 7 for the Yankees?","Mickey Mantle"],["What style of skirt, often with a poodle on it, did teenage girls wear?","A poodle skirt"],["In 1955, which theme park opened in California?","Disneyland"]],
  phrases:[["A stitch in time","saves nine"],["Don't count your chickens","before they hatch"],["Rock around","the clock tonight"],["See you later","alligator"],["Love and marriage go together","like a horse and carriage"],["Home is where","the heart is"],["Waste not","want not"],["A penny saved","is a penny earned"]],
- facts:["In 1950, a brand-new car cost about $1,500 — and gasoline was just 27 cents a gallon.","The first colour television broadcasts began in the early 1950s; many families still watched in black and white.","A loaf of bread cost about 14 cents in 1950.","The hula hoop sold over 25 million units in its first four months in 1958.","Diners often had a jukebox selector right at every table.","In 1953, the first issue of a famous TV guide cost 15 cents.","Drive-in theatres could hold hundreds of cars, each with its own speaker on a pole.","The average new house in 1950 cost about $8,450.","Milk was still delivered to many doorsteps in glass bottles in the 1950s.","In 1956, Elvis Presley appeared on television so often that year he was nicknamed 'Elvis the Pelvis'."],
+ facts:["In 1950, a brand-new car cost about $1,500 — and gasoline was just 27 cents a gallon.","The first colour television broadcasts began in the early 1950s; many families still watched in black and white.","A loaf of bread cost about 14 cents in 1950.","The hula hoop sold over 25 million units in its first four months in 1958.","Diners often had a jukebox selector right at every table.","In 1953, the first issue of a famous TV guide cost 15 cents.","Drive-in theatres could hold hundreds of cars, each with its own speaker on a pole.","The average new house in 1950 cost about $8,450.","Milk was still delivered to many doorsteps in glass bottles in the 1950s.","In 1956, Elvis Presley appeared on television so often that year he was nicknamed 'Elvis the Pelvis'.","The first McDonald's restaurant opened in 1955 in Des Plaines, Illinois.","In 1959, Alaska and Hawaii became the 49th and 50th states.","The first Barbie doll appeared in 1959, wearing a black-and-white striped swimsuit.","Frisbees first flew in 1957, sold under the name Pluto Platters.","Rock and roll topped the charts — Chuck Berry, Buddy Holly and Little Richard led the way.","In 1950, the Diners Club card became the first modern credit card.","The first colour television sets went on sale in 1954 — at nearly $1,000 each.","Sunday drives were a family ritual, and the car radio was the entertainment."],
  prompts:["Describe your favourite meal that your mother or grandmother used to make. What made it special?","Tell about the first television you ever saw. Whose house was it at, and what did you watch?","What was your favourite song to dance to when you were young? Who did you dance with?","Describe the car your family had — or the one you dreamed of having.","What did a Saturday afternoon look like when you were twelve years old?","Tell about a favourite teacher and something kind they did.","What was the best treat you could buy with a nickel or a dime?","Describe the street or neighbourhood you grew up on. Who lived next door?"],
  numbers:[["1955","Disneyland opened"],["1957","Sputnik launched"],["1952","Elizabeth became Queen"],["1958","The hula hoop craze"],["1953","First TV Guide issue"],["1956","Elvis on Ed Sullivan"],["1959","Hawaii became a state"],["1954","First colour TV sets"]]},
 sixties:{label:"1960s",name:"The Swinging Sixties",
  words:["BEATLES","TWIST","MOON","ROCKET","GUITAR","FLOWER","PEACE","MINISKIRT","BEATNIK","SCOOTER","VINYL","SURFING","MOTOWN","BEEHIVE","GO","CARNABY","MOD","JAZZ","BANJO","HARMONICA"],
+ clues:{BEATLES:"Fab Four from Liverpool",TWIST:"Chubby Checker's dance",MOON:"Apollo 11 landed here in 1969",ROCKET:"It carried men to the Moon",GUITAR:"Hendrix played a famous one",FLOWER:"It stood for peace and love",PEACE:"Flower-power symbol word",MINISKIRT:"The decade's fashion shock",BEATNIK:"Beret-wearing cool cat",SCOOTER:"Two-wheeled city runabout",VINYL:"Records were made of it",SURFING:"Riding waves on a board",MOTOWN:"Detroit record label of soul",BEEHIVE:"Tall 1960s hairstyle",GO:"The green-light word",CARNABY:"London's swinging fashion street",MOD:"Sharp-dressed sixties style",JAZZ:"Improvised music with soul",BANJO:"Five-string folk instrument",HARMONICA:"Pocket mouth organ"},
  cross:[["BEATLES","Fab Four from Liverpool"],["TWIST","Chubby Checker's dance"],["MOON","Apollo 11 landed here in 1969"],["MOTOWN","Detroit record label of soul"],["BEEHIVE","Tall 1960s hairstyle"],["SURF","____ music from California beaches"],["PEACE","Flower-power symbol word"],["GUITAR","Hendrix played a famous one"],["ROCKET","It carried men to the Moon"],["MINI","____ skirt, the decade's fashion shock"],["WOODSTOCK","Famous 1969 music festival"],["ARMSTRONG","First man on the Moon"]],
  trivia:[["Which band was known as the Fab Four?","The Beatles"],["Who was the first man to walk on the Moon, in 1969?","Neil Armstrong"],["What dance did Chubby Checker make famous?","The Twist"],["Which 1969 festival drew half a million music fans to a New York farm?","Woodstock"],["Who sang 'Respect' in 1967?","Aretha Franklin"],["What was the tall, teased hairstyle of the decade called?","The beehive"],["Which car, introduced in 1964, became an American icon?","The Ford Mustang"],["What did 'flower power' protesters put in soldiers' rifle barrels?","Flowers"],["Who was the first woman in space, in 1963?","Valentina Tereshkova"],["Which British model became the face of the miniskirt era?","Twiggy"],["What TV show featured the starship Enterprise?","Star Trek"],["In 1967, which film featured Dustin Hoffman and a famous older neighbour?","The Graduate"]],
  phrases:[["All you need is","love"],["And that's the way","it is (Walter Cronkite)"],["One small step for man","one giant leap for mankind"],["Goodnight, John-Boy","Goodnight, Mary Ellen"],["Sock it","to me"],["Here comes the judge","Here comes the judge"],["Flower power","peace and love"],["Make love, not","war"]],
- facts:["The first man walked on the Moon on July 20, 1969 — about 600 million people watched on television.","A gallon of gasoline cost about 31 cents in 1960.","The Beatles first appeared on American television in February 1964, watched by 73 million people.","The first Walmart store opened in 1962 in Rogers, Arkansas.","In 1963, a first-class stamp cost just 5 cents.","The lava lamp was invented in 1963 and became a bedroom favourite.","The Ford Mustang launched in 1964 and sold 22,000 cars on its first day.","Instant coffee and Tang — the astronauts' drink — were 1960s kitchen staples.","The first handheld calculator arrived at the very end of the decade, in 1969.","Barbie's friend Ken was introduced in 1961."],
+ facts:["The first man walked on the Moon on July 20, 1969 — about 600 million people watched on television.","A gallon of gasoline cost about 31 cents in 1960.","The Beatles first appeared on American television in February 1964, watched by 73 million people.","The first Walmart store opened in 1962 in Rogers, Arkansas.","In 1963, a first-class stamp cost just 5 cents.","The lava lamp was invented in 1963 and became a bedroom favourite.","The Ford Mustang launched in 1964 and sold 22,000 cars on its first day.","Instant coffee and Tang — the astronauts' drink — were 1960s kitchen staples.","The first handheld calculators appeared in the early 1970s.","Barbie's friend Ken was introduced in 1961.","The first James Bond film, Dr. No, arrived in 1962.","In 1966, Star Trek boldly went on television for the first time.","The first Super Bowl was played in January 1967.","In 1965, The Sound of Music charmed cinema audiences everywhere.","The first cash machine (ATM) opened in London in 1967.","Colour television became common in family homes by the late 1960s.","The Beatles played their final live concert in 1966, then became a studio-only band.","Miniskirts, go-go boots and bold patterns filled the high streets."],
  prompts:["Where were you when you heard about the Moon landing? Who was with you?","Tell about a favourite Beatles, Motown or sixties song. What does it remind you of?","Describe the fashions you wore as a young adult. Any favourites you wish would come back?","What was your first job, and what did you earn?","Tell about a road trip or holiday you remember from those years.","Describe a favourite television show of the era. Who did you watch it with?","What did a typical family dinner look like at your table?","Tell about the bravest or kindest thing you saw someone do."],
  numbers:[["1969","Moon landing"],["1964","Beatles on US TV"],["1962","First Walmart"],["1963","5-cent stamps"],["1961","Ken doll arrives"],["1967","Summer of Love"],["1965","First miniskirt craze"],["1960","31-cent gasoline"]]},
 seventies:{label:"1970s",name:"The Groovy Seventies",
- words:["DISCO","BELLBOTTOM","PLATFORM","AFRO","FONDU","PET","ROCK","ROLLER","SKATE","VINYL","EIGHT","TRACK","MOOD","RING","LAVA","LAMP","SHAG","CARPET","FARRAH","TRAVOLTA"],
- cross:[["DISCO","Saturday Night Fever music"],["ABBA","Swedish group of 'Dancing Queen'"],["FONDU","Melted-cheese party pot"],["TRAVOLTA","Star of 'Grease'"],["LAVA","____ lamp, a glowing favourite"],["ROLLER","____ disco on eight wheels"],["PLATFORM","____ shoes added inches"],["BELLBOTTOM","Flared trousers"],["JAWS","1975 shark blockbuster"],["ROCKY","1976 boxing film"],["STARWARS","1977 space saga"],["PETROCK","A stone sold as a pet"]],
- trivia:[["Who played Danny in the film 'Grease' (1978)?","John Travolta"],["Which Swedish group sang 'Dancing Queen'?","ABBA"],["What was the 1975 film about a great white shark?","Jaws"],["Which 1977 film began 'A long time ago in a galaxy far, far away'?","Star Wars"],["What fad 'pet' was simply a smooth stone in a box?","The Pet Rock"],["Which TV family lived in a split-level and had a maid named Alice?","The Brady Bunch"],["What music style filled dance floors with mirror balls?","Disco"],["Who sang 'Stayin' Alive' with the Bee Gees' famous falsetto?","The Bee Gees (Barry Gibb)"],["Which boxer called himself 'The Greatest'?","Muhammad Ali"],["What did people dip into a pot of melted cheese at parties?","Fondue"],["Which skating pastime boomed at roller discos?","Roller skating"],["What hairstyle did Farrah Fawcett make famous?","Feathered waves"]],
- phrases:[["May the Force","be with you"],["Stayin' alive","stayin' alive"],["We will","rock you"],["Book 'em","Danno (Hawaii Five-O)"],["Dyn-o-mite","(Good Times)"],["You talking","to me? (Taxi Driver)"],["Keep on","truckin'"],["Far out","man"]],
- facts:["The first Star Wars film in 1977 cost about $11 million to make — and earned over $775 million.","A movie ticket cost about $2.50 in the mid-1970s.","The Rubik's Cube was invented in 1974 (its fame exploded in 1980).","Microwave ovens became common kitchen items in the 1970s.","The pet rock sold over a million units in just a few months in 1975.","In 1971, the first Starbucks opened in Seattle — coffee only, no chairs.","The 8-track tape was the car music format of the decade before cassettes took over.","A gallon of gasoline rose from about 36 cents in 1970 to around 86 cents by 1979.","The first mobile phone call was made in 1973 — the handset weighed about 2.5 pounds.","Shag carpet came in harvest gold, avocado green and burnt orange."],
+ words:["DISCO","BELLBOTTOM","PLATFORM","AFRO","FONDUE","PET","ROCK","ROLLER","SKATE","VINYL","EIGHT","TRACK","MOOD","RING","LAVA","LAMP","SHAG","CARPET","FARRAH","TRAVOLTA"],
+ clues:{DISCO:"Saturday Night Fever music",BELLBOTTOM:"Flared trousers",PLATFORM:"Shoes that added inches",AFRO:"Round, natural hairstyle",FONDUE:"Melted-cheese party pot",PET:"Man's best friend",ROCK:"A stone — and a loud music style",ROLLER:"Disco on eight wheels",SKATE:"Glide on wheels or ice",VINYL:"Records were made of it",EIGHT:"Wheels on a roller-disco skater",TRACK:"One song on a tape or album",MOOD:"A ring changed colour with it",RING:"A circle worn on a finger",LAVA:"Glowing lamp goo",LAMP:"It lights the room",SHAG:"Deep-pile carpet style",CARPET:"Soft floor covering",FARRAH:"Feathered-hair poster star",TRAVOLTA:"Star of 'Grease'"},
+ cross:[["DISCO","Saturday Night Fever music"],["ABBA","Swedish group of 'Dancing Queen'"],["FONDUE","Melted-cheese party pot"],["TRAVOLTA","Star of 'Grease'"],["LAVA","____ lamp, a glowing favourite"],["ROLLER","____ disco on eight wheels"],["PLATFORM","____ shoes added inches"],["BELLBOTTOM","A flared trouser style (2 words)"],["JAWS","1975 shark blockbuster"],["ROCKY","1976 boxing film"],["STARWARS","1977 space saga (2 words)"],["PETROCK","A stone sold as a pet (2 words)"]],
+ trivia:[["Who played Danny in the film 'Grease' (1978)?","John Travolta"],["Which Swedish group sang 'Dancing Queen'?","ABBA"],["What was the 1975 film about a great white shark?","Jaws"],["Which 1977 film began 'A long time ago in a galaxy far, far away'?","Star Wars"],["What fad 'pet' was simply a smooth stone in a box?","The Pet Rock"],["Which TV family lived in a split-level and had a maid named Alice?","The Brady Bunch"],["What music style filled dance floors with mirror balls?","Disco"],["Which group's falsetto voices made 'Stayin' Alive' a disco anthem?","The Bee Gees"],["Which boxer called himself 'The Greatest'?","Muhammad Ali"],["What did people dip into a pot of melted cheese at parties?","Fondue"],["Which skating pastime boomed at roller discos?","Roller skating"],["What hairstyle did Farrah Fawcett make famous?","Feathered waves"]],
+ phrases:[["May the Force","be with you"],["Stayin' alive, stayin' alive","Ah, ha, ha, ha — stayin' alive"],["We will","rock you"],["Book 'em","Danno (Hawaii Five-O)"],["Dyn-o-mite","(Good Times)"],["You talking","to me? (Taxi Driver)"],["Keep on","truckin'"],["Far out","man"]],
+ facts:["The first Star Wars film in 1977 cost about $11 million to make — and earned over $775 million.","In 1976, the average movie ticket cost about $2.13.","The Rubik's Cube was invented in 1974 (its fame exploded in 1980).","Microwave ovens became common kitchen items in the 1970s.","The pet rock sold over a million units in just a few months in 1975.","In 1971, the first Starbucks opened in Seattle, selling whole-bean coffee, tea and spices.","The 8-track tape was the car music format of the decade before cassettes took over.","A gallon of gasoline rose from about 36 cents in 1970 to around 86 cents by 1979.","The first mobile phone call was made in 1973 — the handset weighed about 2.5 pounds.","Shag carpet came in harvest gold, avocado green and burnt orange.","In 1972, the video game Pong started the arcade era.","The Sony Walkman arrived in 1979 — music you could carry anywhere.","In 1975, Saturday Night Live began its long television run.","The first Earth Day was celebrated in 1970.","In 1973, the Sydney Opera House opened its famous white sails.","Fondue parties and devilled eggs were the height of home entertaining.","In 1978, the world's first test-tube baby was born in England.","Platform shoes and flared trousers ruled every dance floor."],
  prompts:["Tell about a favourite film you saw at the cinema in those years. Who went with you?","Describe a party or dance you remember — the music, the clothes, the food.","What was the first record, tape or concert you ever bought or attended?","Tell about a family holiday or day out that still makes you smile.","Describe your hairstyle in those years. Would you wear it again?","What new gadget or appliance amazed your household when it arrived?","Tell about a friend from those days. What did you get up to together?","Describe the car you drove — or rode in — most often."],
  numbers:[["1977","Star Wars released"],["1975","Jaws and the Pet Rock"],["1978","Grease the film"],["1973","First mobile call"],["1971","First Starbucks"],["1976","Rocky released"],["1979","86-cent gasoline"],["1974","Rubik's Cube invented"]]},
 eighties:{label:"1980s",name:"The Totally Eighties",
  words:["ARCADE","PACMAN","WALKMAN","CASSETTE","RUBIK","CUBE","MIXTAPE","BOOMBOX","NEON","SHOULDER","PADS","VIDEO","RENTAL","MTV","SYNTH","POP","HAIRSPRAY","SKATEBOARD","AEROBICS","GHOSTBUSTERS"],
- cross:[["PACMAN","Arcade hero who ate dots"],["WALKMAN","Sony's pocket cassette player"],["RUBIK","____'s Cube, the puzzle craze"],["MTV","Channel that played music videos"],["BOOMBOX","Big portable stereo"],["MIXTAPE","A cassette made for someone special"],["GHOSTBUSTERS","Who you gonna call?"],["MADONNA","Queen of Pop"],["AEROBICS","Jane Fonda's workout craze"],["NEON","Bright colour of the decade"],["BLOCKBUSTER","Video rental giant"],["ET","The friendly alien who phoned home"]],
- trivia:[["Which yellow arcade character munched dots and fruit?","Pac-Man"],["What did the 'W' in MTV stand for — what did the channel show all day?","Music videos (the M is Music)"],["Who you gonna call, in the 1984 film?","Ghostbusters"],["Which puzzle cube drove the world happily mad?","The Rubik's Cube"],["What Sony gadget let you carry your music in your pocket?","The Walkman"],["Which pop star was called the Queen of Pop?","Madonna"],["What did E.T. want to do?","Phone home"],["Which TV detective drove a Ferrari in Hawaii?","Magnum, P.I."],["What home-video format beat Betamax?","VHS"],["Which wedding did millions watch on TV in 1981?","Prince Charles and Lady Diana"],["What fitness craze had everyone in leg warmers?","Aerobics"],["Which band sang 'Sweet Child O' Mine'?","Guns N' Roses"]],
+ clues:{ARCADE:"Where Pac-Man lived",PACMAN:"Arcade hero who ate dots",WALKMAN:"Sony's pocket cassette player",CASSETTE:"Tape you had to rewind",RUBIK:"His cube drove the world mad",CUBE:"Six-sided puzzle shape",MIXTAPE:"A cassette made for someone special",BOOMBOX:"Big portable stereo",NEON:"Bright colour of the decade",SHOULDER:"Pads made them huge in jackets",PADS:"They filled out eighties jackets",VIDEO:"You rented one for the weekend",RENTAL:"Blockbuster's business",MTV:"Channel that played music videos",SYNTH:"Electronic keyboard sound",POP:"Chart music of kings and queens",HAIRSPRAY:"It held the big hair up",SKATEBOARD:"Four wheels and a deck",AEROBICS:"Jane Fonda's workout craze",GHOSTBUSTERS:"Who you gonna call?"},
+ cross:[["PACMAN","Arcade hero who ate dots"],["WALKMAN","Sony's pocket cassette player"],["RUBIK","____'s Cube, the puzzle craze"],["MTV","Channel that played music videos"],["BOOMBOX","Big portable stereo"],["MIXTAPE","A cassette made for someone special (2 words)"],["GHOSTBUSTERS","Who you gonna call?"],["MADONNA","Queen of Pop"],["AEROBICS","Jane Fonda's workout craze"],["NEON","Bright colour of the decade"],["BLOCKBUSTER","Video rental giant"],["ET","The friendly alien who phoned home"]],
+ trivia:[["Which yellow arcade character munched dots and fruit?","Pac-Man"],["What did MTV play all day when it launched in 1981?","Music videos"],["Who you gonna call, in the 1984 film?","Ghostbusters"],["Which puzzle cube drove the world happily mad?","The Rubik's Cube"],["What Sony gadget let you carry your music in your pocket?","The Walkman"],["Which pop star was called the Queen of Pop?","Madonna"],["What did E.T. want to do?","Phone home"],["Which TV detective drove a Ferrari in Hawaii?","Magnum, P.I."],["What home-video format beat Betamax?","VHS"],["Which wedding did millions watch on TV in 1981?","Prince Charles and Lady Diana"],["What fitness craze had everyone in leg warmers?","Aerobics"],["Which band sang 'Sweet Child O' Mine'?","Guns N' Roses"]],
  phrases:[["Who you gonna","call? Ghostbusters!"],["I'll be","back (The Terminator)"],["E.T. phone","home"],["Greed, for lack of a better word","is good (Wall Street)"],["Nobody puts Baby","in a corner (Dirty Dancing)"],["Where's","the beef?"],["Just say","no"],["Go ahead","make my day"]],
- facts:["MTV launched on August 1, 1981 — the first video shown was 'Video Killed the Radio Star'.","The first CD players went on sale in 1982.","A movie ticket cost about $3.50 in the early 1980s.","The Rubik's Cube sold over 100 million units between 1980 and 1983.","Video rental stores charged membership fees — and late fees for not rewinding!","The first mobile phones of the 1980s cost nearly $4,000.","Pac-Man was the best-selling arcade game of the decade.","In 1985, a gallon of gasoline cost about $1.20.","The Berlin Wall fell on November 9, 1989.","Shoulder pads, big hair and neon leg warmers defined the decade's look."],
+ facts:["MTV launched on August 1, 1981 — the first video shown was 'Video Killed the Radio Star'.","The first CD players went on sale in 1982.","A movie ticket cost about $3.50 in the early 1980s.","The Rubik's Cube sold over 100 million units between 1980 and 1983.","Video rental stores charged membership fees — and late fees for not rewinding!","The first mobile phones of the 1980s cost nearly $4,000.","Pac-Man was the best-selling arcade game of the decade.","In 1985, a gallon of gasoline cost about $1.20.","The Berlin Wall fell on November 9, 1989.","Shoulder pads, big hair and neon leg warmers defined the decade's look.","In 1982, Michael Jackson's Thriller became the best-selling album ever.","The first IBM personal computer went on sale in 1981.","In 1984, the first Apple Macintosh computer was unveiled.","Video shops reminded everyone: 'Be kind, rewind!'","In 1986, The Oprah Winfrey Show went national in America.","The first handheld mobile phone, the Motorola DynaTAC, arrived in 1983.","In 1980, CNN launched as the first 24-hour television news channel.","Cabbage Patch Kids and Transformers filled the toy shelves."],
  prompts:["Tell about a favourite film you rented on video. Did you remember to rewind it?","What songs were on a mixtape you made or received? Who was it for?","Describe the big hairstyles and fashions of the decade. Did you join in?","Tell about a wedding, celebration or family event from those years.","What was the first computer or video game you ever saw or played?","Describe a favourite television show of the era and its characters.","Tell about a holiday or day trip you remember fondly.","What advice would you give to your younger self from those days?"],
  numbers:[["1981","MTV launches"],["1984","Ghostbusters film"],["1982","First CD players"],["1989","Berlin Wall falls"],["1985","$1.20 gasoline"],["1980","Pac-Man arrives"],["1983","100M Rubik's Cubes"],["1987","Dirty Dancing film"]]}
 };
 const DECADE_KEYS=["fifties","sixties","seventies","eighties"];
 function bankFor(book){ /* merged bank for a book's decade focus */
   if(book.decade!=="mix")return BANKS[book.decade];
-  const m={label:"Golden Mix",name:"The Golden Years",words:[],cross:[],trivia:[],phrases:[],facts:[],prompts:[],numbers:[]};
-  for(const k of DECADE_KEYS){const b=BANKS[k];for(const f of ["words","cross","trivia","phrases","facts","prompts","numbers"])m[f]=m[f].concat(b[f])}
+  const m={label:"Golden Mix",name:"The Golden Years",words:[],cross:[],trivia:[],phrases:[],facts:[],prompts:[],numbers:[],clues:{}};
+  for(const k of DECADE_KEYS){const b=BANKS[k];for(const f of ["words","cross","trivia","phrases","facts","prompts","numbers"])m[f]=m[f].concat(b[f]);Object.assign(m.clues,b.clues||{})}
   return m;
 }
 /* SVG objects for Picture Matching — drawn shapes, no emoji */
@@ -363,7 +370,7 @@ const OBJECTS=[
  {name:"Star",svg:'<path d="M32 6l7 17 18 1-14 11 4 18-15-10-15 10 4-18L7 24l18-1z"/>'},
  {name:"Sailboat",svg:'<path d="M32 8v30M32 12l16 22H32zM28 16v18H14z"/><path d="M10 44h44l-6 10H16z"/>'}
 ];
-function objSVG(o,silhouette){return `<svg viewBox="0 0 64 64" class="mk" aria-hidden="true"><g fill="${silhouette?"#3c4a43":"#fdf6dd"}" stroke="${silhouette?"#3c4a43":"#4A6B5D"}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">${o.svg}</g></svg>`}
+function objSVG(o,silhouette){return `<svg viewBox="0 0 64 64" class="mk" aria-hidden="true"><g fill="${silhouette?"#3c4a43":"#ffffff"}" stroke="${silhouette?"#3c4a43":"#1B2E26"}" stroke-width="${silhouette?"2.4":"3.4"}" stroke-linejoin="round" stroke-linecap="round">${o.svg}</g></svg>`}
 </script>
 <script>
 "use strict";
@@ -399,9 +406,13 @@ function verifyPlaced(grid,placed){
   }
   return true;
 }
-function genWordSearch(r,bank,easy){
+function genWordSearch(r,bank,easy,usedW){
   const size=easy?10:12, n=easy?6:9;
-  const words=sample(r,bank.words.filter(w=>w.length<=size),n).map(w=>w.toUpperCase());
+  const pool=bank.words.filter(w=>w.length<=size);
+  let avail=usedW?pool.filter(w=>!usedW.has(w.toUpperCase())):pool;
+  if(avail.length<n){if(usedW)usedW.clear();avail=pool}
+  const words=sample(r,avail,n).map(w=>w.toUpperCase());
+  if(usedW)words.forEach(w=>usedW.add(w));
   const dirs=easy?DIRS8.slice(0,4):DIRS8;
   const out=placeWords(r,words,size,"ABCDEFGHIJKLMNOPQRSTUVWXYZ",dirs);
   if(!out||!verifyPlaced(out.grid,out.placed))return null;
@@ -410,7 +421,10 @@ function genWordSearch(r,bank,easy){
 function genNumberSearch(r,bank,easy,opts){
   opts=opts||{};
   const size=opts.size||(easy?9:11), n=opts.count||(easy?5:7);
-  const items=sample(r,bank.numbers,n);
+  let numPool=bank.numbers;
+  if(opts.used){const fresh=numPool.filter(x=>!opts.used.has(x[0]));if(fresh.length>=n)numPool=fresh;else opts.used.clear()}
+  const items=sample(r,numPool,n);
+  if(opts.used)items.forEach(x=>opts.used.add(x[0]));
   const words=items.map(x=>x[0]);
   const dirs=easy?DIRS8.slice(0,4):DIRS8;
   const out=placeWords(r,words,size,"0123456789",dirs);
@@ -422,9 +436,13 @@ function scrambleWord(r,w){
   for(let t=0;t<40;t++){const s=shuffle(r,w.split("")).join("");if(s!==w)return s}
   return w.split("").reverse().join("");
 }
-function genScramble(r,bank,easy,count){
-  const words=sample(r,bank.words.filter(w=>w.length>=4&&w.length<=9),count||(easy?4:5));
-  const clueFor=w=>{const hit=bank.cross.find(c=>c[0]===w);return hit?hit[1]:"A favourite word from "+bank.name};
+function genScramble(r,bank,easy,count,usedW){
+  const pool=bank.words.filter(w=>w.length>=4&&w.length<=9), want=count||(easy?4:5);
+  let avail=usedW?pool.filter(w=>!usedW.has(w.toUpperCase())):pool;
+  if(avail.length<want){if(usedW)usedW.clear();avail=pool}
+  const words=sample(r,avail,want);
+  if(usedW)words.forEach(w=>usedW.add(w.toUpperCase()));
+  const clueFor=w=>{if(bank.clues&&bank.clues[w])return bank.clues[w];const hit=bank.cross.find(c=>c[0]===w);return hit?hit[1]:"A favourite word from "+bank.name};
   const items=words.map(w=>({word:w.toUpperCase(),scr:scrambleWord(r,w.toUpperCase()),clue:clueFor(w.toUpperCase())}));
   if(items.some(i=>i.scr===i.word))return null;
   return {type:"scramble",title:"Word Scramble",items};
@@ -476,7 +494,8 @@ function genSudoku(r,easy){
 function genCrossword(r,bank,easy,opts){
   opts=opts||{};
   const size=opts.size||(easy?10:12), want=opts.want||(easy?6:8);
-  const entries=shuffle(r,bank.cross.filter(c=>c[0].length>=3&&c[0].length<=size));
+  let entries=shuffle(r,bank.cross.filter(c=>c[0].length>=3&&c[0].length<=size));
+  if(opts.used){const fresh=entries.filter(c=>!opts.used.has(c[0]));if(fresh.length>=5)entries=fresh.concat(entries.filter(c=>opts.used.has(c[0])))}
   const grid=Array.from({length:size},()=>Array(size).fill(null));
   const placed=[];
   const canPlace=(w,row,col,dr,dc)=>{
@@ -513,6 +532,7 @@ function genCrossword(r,bank,easy,opts){
     }
     if(!done)continue;
   }
+  if(opts.used)placed.forEach(p=>opts.used.add(p.word));
   if(placed.length<4)return null;
   /* integrity: re-extract every word from the grid */
   for(const p of placed){let s="";for(let i=0;i<p.word.length;i++)s+=grid[p.r+p.dr*i][p.c+p.dc*i];if(s!==p.word)return null}
@@ -552,14 +572,15 @@ function genMaze(r,easy){
 function mazeSVG(m,showPath,widthPx){
   const cw=34,W=m.cols*cw,H=m.rows*cw;let s=`<svg viewBox="0 0 ${W} ${H}" width="${widthPx||Math.min(620,W*1.6)}" role="img" aria-label="Maze">`;
   s+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#fffdf4"/>`;
-  if(showPath&&m.path&&m.path.length>1){s+=`<polyline points="${m.path.map(([r,c])=>((c+.5)*cw)+","+((r+.5)*cw)).join(" ")}" fill="none" stroke="#D96B43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>`}
+  if(showPath&&m.path&&m.path.length>1){s+=`<polyline points="${m.path.map(([r,c])=>((c+.5)*cw)+","+((r+.5)*cw)).join(" ")}" fill="none" stroke="#D96B43" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`}
   s+=`<g stroke="#1B2E26" stroke-width="3.4" stroke-linecap="round">`;
   for(let r=0;r<m.rows;r++)for(let c=0;c<m.cols;c++){const cell=m.cells[r][c],x=c*cw,y=r*cw;
     if(cell.w[0]&&!(r===0&&c===0))s+=`<line x1="${x}" y1="${y}" x2="${x+cw}" y2="${y}"/>`;
     if(cell.w[1])s+=`<line x1="${x+cw}" y1="${y}" x2="${x+cw}" y2="${y+cw}"/>`;
     if(cell.w[2]&&!(r===m.rows-1&&c===m.cols-1))s+=`<line x1="${x}" y1="${y+cw}" x2="${x+cw}" y2="${y+cw}"/>`;
     if(cell.w[3])s+=`<line x1="${x}" y1="${y+cw}" x2="${x}" y2="${y}"/>`;}
-  s+=`</g><circle cx="${cw/2}" cy="${cw/2}" r="8" fill="#4A6B5D"/><path d="M${(m.cols-.5)*cw-9} ${(m.rows-.5)*cw+8} l9-16 9 16z" fill="#D96B43"/></svg>`;
+  const ex=(m.cols-.5)*cw,ey=(m.rows-.5)*cw;
+  s+=`</g><circle cx="${cw/2}" cy="${cw/2}" r="9" fill="#2F9E44" stroke="#ffffff" stroke-width="2"/><line x1="${ex}" y1="${ey+11}" x2="${ex}" y2="${ey-13}" stroke="#E8760A" stroke-width="3.4" stroke-linecap="round"/><path d="M${ex} ${ey-13} l14 4.5 -14 4.5z" fill="#E8760A"/></svg>`;
   return s;
 }
 /* ---- Text / memory-care page generators ---- */
@@ -591,7 +612,16 @@ const AK_SLOTS=4;
 const AK_COST={wordsearch:2,numbersearch:2,sudoku:2,crossword:3,maze:1,scramble:1,trivia:1,phrases:1,matching:1,prompts:0};
 const MIX_PATTERN=["wordsearch","trivia","sudoku","maze","scramble","crossword","prompts","numbersearch","matching","phrases","wordsearch","sudoku","trivia","maze","crossword","scramble","numbersearch","prompts","phrases","matching"];
 let bookSeq=0;
-function makeCtx(){return{usedQ:new Set(),usedPh:new Set(),usedPr:new Set(),fact:0}}
+function makeCtx(){return{usedQ:new Set(),usedPh:new Set(),usedPr:new Set(),usedW:new Set(),usedC:new Set(),usedN:new Set(),factOrder:null,factIdx:0}}
+function nextFact(r,bank,ctx){
+  if(!ctx.factOrder||ctx.factIdx>=ctx.factOrder.length){
+    const last=ctx.factOrder&&ctx.factOrder.length?ctx.factOrder[ctx.factOrder.length-1]:-1;
+    ctx.factOrder=shuffle(r,bank.facts.map((_,i)=>i));
+    if(ctx.factOrder.length>1&&ctx.factOrder[0]===last)ctx.factOrder.push(ctx.factOrder.shift());
+    ctx.factIdx=0;
+  }
+  return bank.facts[ctx.factOrder[ctx.factIdx++]];
+}
 function pickUnused(r,pool,used,n,key){
   let avail=pool.filter(x=>!used.has(key(x)));
   if(avail.length<n){used.clear();avail=pool.slice()}
@@ -605,21 +635,34 @@ function genPage(r,book,type,ctx){
       if(type==="trivia"){const qs=pickUnused(r,bank.trivia,ctx.usedQ,easy?4:5,x=>x[0]);p={type,title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a}))}}
       else if(type==="phrases"){const it=pickUnused(r,bank.phrases,ctx.usedPh,easy?4:5,x=>x[0]);p={type,title:"Finish the Phrase",items:it.map(([s,e])=>({start:s,end:e}))}}
       else if(type==="prompts"){const it=pickUnused(r,bank.prompts,ctx.usedPr,book.fontPt>=28?2:3,x=>x);p={type,title:"Talk About It",items:it,lines:book.fontPt>=28?3:2}}
-      else if(type==="numbersearch")p=genNumberSearch(r,bank,easy,book.fontPt>=28?{size:10,count:6}:null);
-      else if(type==="crossword")p=genCrossword(r,bank,easy,book.fontPt>=28?{size:10,want:6}:null);
-      else if(type==="scramble")p=genScramble(r,bank,easy,book.fontPt>=28?4:(easy?4:5));
+      else if(type==="numbersearch")p=genNumberSearch(r,bank,easy,Object.assign(book.fontPt>=28?{size:10,count:6}:{}, {used:ctx.usedN}));
+      else if(type==="crossword")p=genCrossword(r,bank,easy,Object.assign(book.fontPt>=28?{size:10,want:6}:{}, {used:ctx.usedC}));
+      else if(type==="scramble")p=genScramble(r,bank,easy,book.fontPt>=28?4:(easy?4:5),ctx.usedW);
+      else if(type==="wordsearch")p=genWordSearch(r,bank,easy,ctx.usedW);
       else p=GENERATORS[type](r,bank,easy);
     }catch(e){p=null}
-    if(p){p.fact=bank.facts[ctx.fact%bank.facts.length];ctx.fact++;return p}
+    if(p){p.fact=nextFact(r,bank,ctx);return p}
   }
   const qs=pickUnused(r,bank.trivia,ctx.usedQ,4,x=>x[0]);
-  const p={type:"trivia",title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a})),fact:bank.facts[ctx.fact%bank.facts.length]};ctx.fact++;return p;
+  const p={type:"trivia",title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a})),fact:nextFact(r,bank,ctx)};return p;
 }
-function akPagesFor(pages){ /* simulate the exact greedy packing used by answerKeyPages */
-  let groups=0,slots=0,open=false;
-  for(const p of pages){const cost=AK_COST[p.type]||0;if(!cost)continue;
-    if(open&&slots+cost>AK_SLOTS){groups++;slots=0;open=false}
-    slots+=cost;open=true}
+const AK_BUDGET=580; /* pt of answer content per key page (page inner ~688pt minus key heading) */
+function akHeight(book,p){ /* conservative height estimate (pt) of one answer-key item */
+  const f=book.fontPt, head=f*1.6;
+  if(p.type==="wordsearch"||p.type==="numbersearch")return head+p.grid.length*f*.72+10;
+  if(p.type==="sudoku")return head+9*f*.8+10;
+  if(p.type==="crossword"){const B=cwBounds(p);const rows=B.mxr-B.mnr+1;
+    const chars=p.placed.reduce((a,x)=>a+x.word.length+6,0);
+    return head+rows*f*.72+Math.ceil(chars/36)*f*1.25+14}
+  if(p.type==="maze")return head+300;
+  if(p.type==="scramble"||p.type==="trivia"||p.type==="phrases"||p.type==="matching")return head+(((p.items||p.objs||[]).length)||5)*f*1.6+8;
+  return 0;
+}
+function akPagesFor(book,pages){ /* simulate the exact greedy packing used by answerKeyPages */
+  let groups=0,used=0,open=false;
+  for(const p of pages){const h=akHeight(book,p);if(!h)continue;
+    if(open&&used+h>AK_BUDGET){groups++;used=0;open=false}
+    used+=h;open=true}
   if(open)groups++;
   return Math.max(1,groups);
 }
@@ -639,15 +682,16 @@ function generateBook(opts){
   const pages=[];
   let guard=0;
   while(pages.length<P&&guard++<400){pages.push(genPage(r,book,pattern[pages.length%pattern.length],ctx))}
-  let A=akPagesFor(pages);
-  while(FIXED_PAGES+pages.length+A>book.sizeTarget&&pages.length>12){pages.pop();A=akPagesFor(pages)}
+  let A=akPagesFor(book,pages);
+  while(FIXED_PAGES+pages.length+A>book.sizeTarget&&pages.length>12){pages.pop();A=akPagesFor(book,pages)}
   const fillers=["prompts","trivia","phrases","matching"];
   let fi=0;
   while(FIXED_PAGES+pages.length+A<book.sizeTarget){
     const want=fillers[fi++%fillers.length];
-    const trial=want==="prompts"||(FIXED_PAGES+pages.length+1+akPagesFor(pages.concat([{type:want}]))<=book.sizeTarget)?want:"prompts";
-    pages.push(genPage(r,book,trial,ctx));A=akPagesFor(pages);
+    const trial=want==="prompts"||(FIXED_PAGES+pages.length+1+akPagesFor(book,pages.concat([{type:want}]))<=book.sizeTarget)?want:"prompts";
+    pages.push(genPage(r,book,trial,ctx));A=akPagesFor(book,pages);
   }
+  const counters={};pages.forEach(pg=>{counters[pg.type]=(counters[pg.type]||0)+1;pg.num=counters[pg.type]});
   book.pages=pages;book.totalPages=FIXED_PAGES+pages.length+A;
   book.puzzleCount=pages.length;
   return book;
@@ -667,7 +711,18 @@ function cellFor(book,p){
   if(p.type==="numbersearch"){const bank=Math.ceil(p.placed.length/2)*f*2.55+12;return Math.max(20,Math.min(f*1.3,(AVAIL-head-fact-bank)/(p.grid.length*1.08)))}
   if(p.type==="sudoku")return Math.max(24,Math.min(f*1.55,(AVAIL-head-fact-f*1.7)/(9*1.05)));
   if(p.type==="crossword"){const B=cwBounds(p);const rows=B.mxr-B.mnr+1,cols=B.mxc-B.mnc+1;
-    return Math.max(17,Math.min(f*1.6,(AVAIL-head-fact)/rows,370/cols))}
+    let cell=Math.max(17,Math.min(f*1.38,(AVAIL-head-fact-30-p.placed.length*6)/rows,370/cols));
+    /* fit estimator: shrink clue type (and if needed the grid) until the page fits */
+    const headE=30+f*5.2, factE=f*2.85+23, BUDGET=672;
+    const chars=p.placed.reduce((a,x)=>a+x.clue.length+4,0);
+    let m=0.76;
+    const cluesH=mm=>{const cf=f*mm,colW=Math.max(90,525-cols*cell-22),cpl=Math.max(10,colW/(cf*0.46));
+      return (Math.ceil(chars/cpl)+3)*cf*1.34};
+    let est=headE+Math.max(rows*cell,cluesH(m))+factE+12;
+    while(est>BUDGET&&m>0.56){m-=0.06;est=headE+Math.max(rows*cell,cluesH(m))+factE+12}
+    if(est>BUDGET){cell=Math.max(16,(BUDGET-headE-factE-12)/rows);est=headE+Math.max(rows*cell,cluesH(m))+factE+12}
+    p._cwM=m;
+    return cell}
   return null;
 }
 function factBox(p){return p&&p.fact?`<div class="fact"><b>Did You Know?</b> ${esc(p.fact)}</div>`:""}
@@ -686,12 +741,12 @@ function cwBounds(p){let mnr=99,mxr=-1,mnc=99,mxc=-1;
   return {mnr,mxr,mnc,mxc};
 }
 function pageHTML(book,p,idx){
-  const head=`<div class="pg-kicker">${esc(ACTIVITY_LABEL[p.type])} · ${esc(bankFor(book).name)}</div><h3 class="pg-title">${esc(p.title)} ${p.type==="wordsearch"||p.type==="numbersearch"||p.type==="sudoku"||p.type==="crossword"||p.type==="maze"?"· No. "+(idx+1):""}</h3><p class="pg-sub">${esc(INSTR[p.type])}</p>`;
+  const head=`<div class="pg-kicker">${esc(ACTIVITY_LABEL[p.type])} · ${esc(bankFor(book).name)}</div><h3 class="pg-title">${esc(p.title)} · No. ${p.num||(idx+1)}</h3><p class="pg-sub">${esc(INSTR[p.type])}</p>`;
   let body="";
   if(p.type==="wordsearch"||p.type==="numbersearch"){
     const cls=p.type==="wordsearch"?"ws-grid":"ns-grid";
     body=`<table class="${cls}">${p.grid.map(row=>"<tr>"+row.map(ch=>`<td>${ch}</td>`).join("")+"</tr>").join("")}</table>`;
-    if(p.type==="wordsearch")body+=`<div class="word-bank" style="columns:3">${p.placed.map(x=>`<div>• ${esc(x.word)}</div>`).join("")}</div>`;
+    if(p.type==="wordsearch")body+=`<div class="word-bank" style="columns:${book.fontPt>=28?2:3}">${p.placed.map(x=>`<div>• ${esc(x.word)}</div>`).join("")}</div>`;
     else body+=`<div class="word-bank">${p.placed.map(x=>`<div>• ${esc(x.word)} — ${esc(p.labels[x.word]||"")}</div>`).join("")}</div>`;
   }
   else if(p.type==="sudoku"){
@@ -704,17 +759,17 @@ function pageHTML(book,p,idx){
       rows+=ch?`<td class="cell">${starts[i+","+j]?`<span class="num">${starts[i+","+j]}</span>`:""}</td>`:`<td class="blk"></td>`}rows+="</tr>"}
     body=`<div class="cw-wrap"><table class="cw-grid">${rows}</table>`;
     const ac=p.placed.filter(x=>x.dir==="across").sort((a,b)=>a.num-b.num),dn=p.placed.filter(x=>x.dir==="down").sort((a,b)=>a.num-b.num);
-    body+=`<div class="cw-clues"><h4>Across</h4>${ac.map(x=>`<div><b>${x.num}.</b> ${esc(x.clue)}</div>`).join("")}<h4>Down</h4>${dn.map(x=>`<div><b>${x.num}.</b> ${esc(x.clue)}</div>`).join("")}</div></div>`;
+    body+=`<div class="cw-clues" style="font-size:calc(var(--bfs) * ${p._cwM||0.76})"><h4>Across</h4>${ac.map(x=>`<div><b>${x.num}.</b> ${esc(x.clue)}</div>`).join("")}<h4>Down</h4>${dn.map(x=>`<div><b>${x.num}.</b> ${esc(x.clue)}</div>`).join("")}</div></div>`;
   }
   else if(p.type==="scramble"){
-    body=p.items.map((it,i)=>`<div class="scr-word">${esc(it.scr)}</div><p class="scr-clue">Clue: ${esc(it.clue)}</p><div class="scr-line"></div>`).join("");
+    body=p.items.map((it,i)=>`<div class="scr-item"><div class="scr-word">${esc(it.scr)}</div><p class="scr-clue">Clue: ${esc(it.clue)}</p><div class="scr-line"></div></div>`).join("");
   }
   else if(p.type==="maze"){body=`<div class="maze-box">${mazeSVG(p,false)}</div>`}
   else if(p.type==="trivia"){body=p.items.map((it,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(it.q)}</p>`).join("")}
   else if(p.type==="phrases"){body=p.items.map((it,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(it.start)} <b>_______________</b></p>`).join("")}
   else if(p.type==="prompts"){body=p.items.map((q,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(q)}</p><div class="write-lines">${'<div class="wl"></div>'.repeat(p.lines||2)}</div>`).join("")}
   else if(p.type==="matching"){
-    const left=p.objs.map((o,i)=>`<div class="match-item">${objSVG(o,false)}<span>${esc(o.name)}</span><span style="margin-left:auto;border-bottom:2px solid #9db3a6;width:1.1em;text-align:center">&nbsp;</span></div>`).join("");
+    const left=p.objs.map((o,i)=>`<div class="match-item">${objSVG(o,false)}<span>${esc(o.name)}</span><span class="match-line">&nbsp;</span></div>`).join("");
     const right=p.order.map((oi,k)=>`<div class="match-item">${objSVG(p.objs[oi],true)}<span class="ltr">${"ABCDEF"[k]}</span></div>`).join("");
     body=`<div class="match-cols"><div class="match-col">${left}</div><div class="match-col">${right}</div></div>`;
   }
@@ -722,7 +777,7 @@ function pageHTML(book,p,idx){
 }
 /* ---- answer key ---- */
 function akItemHTML(book,p,idx){
-  const h=`<h4>${esc(p.title)} — page ${5+idx}</h4>`;
+  const h=`<h4>${esc(p.title)} No. ${p.num||(idx+1)} — Answers (Page ${5+idx})</h4>`;
   if(p.type==="wordsearch"||p.type==="numbersearch"){
     const sol=new Set();for(const pl of p.placed)for(let i=0;i<pl.word.length;i++)sol.add((pl.r+pl.dr*i)+","+(pl.c+pl.dc*i));
     return `<div class="ak-item">${h}<table class="ak-grid">${p.grid.map((row,i)=>"<tr>"+row.map((ch,j)=>`<td class="${sol.has(i+","+j)?"sol":""}">${ch}</td>`).join("")+"</tr>").join("")}</table></div>`;
@@ -733,7 +788,7 @@ function akItemHTML(book,p,idx){
     for(let i=B.mnr;i<=B.mxr;i++){rows+="<tr>";for(let j=B.mnc;j<=B.mxc;j++)rows+=`<td>${p.grid[i][j]||""}</td>`;rows+="</tr>"}
     return `<div class="ak-item">${h}<table class="ak-grid">${rows}</table><div>${p.placed.map(x=>`<b>${x.num}.</b> ${esc(x.word)}`).join(" · ")}</div></div>`;
   }
-  if(p.type==="maze")return `<div class="ak-item">${h}<div class="maze-box">${mazeSVG(p,true,300)}</div></div>`;
+  if(p.type==="maze")return `<div class="ak-item">${h}<div class="maze-box">${mazeSVG(p,true,360)}</div></div>`;
   if(p.type==="scramble")return `<div class="ak-item">${h}${p.items.map((it,i)=>`<div>${i+1}. ${esc(it.word)}</div>`).join("")}</div>`;
   if(p.type==="trivia")return `<div class="ak-item">${h}${p.items.map((it,i)=>`<div>${i+1}. ${esc(it.a)}</div>`).join("")}</div>`;
   if(p.type==="phrases")return `<div class="ak-item">${h}${p.items.map((it,i)=>`<div>${i+1}. ${esc(it.start)} ${esc(it.end)}</div>`).join("")}</div>`;
@@ -744,12 +799,12 @@ function akItemHTML(book,p,idx){
   return "";
 }
 function answerKeyPages(book){
-  const groups=[];let curGroup=[],slots=0;
-  book.pages.forEach((p,idx)=>{const cost=AK_COST[p.type]||0;if(!cost)return;
-    if(slots+cost>AK_SLOTS&&curGroup.length){groups.push(curGroup);curGroup=[];slots=0}
-    curGroup.push([p,idx]);slots+=cost});
+  const groups=[];let curGroup=[],used=0;
+  book.pages.forEach((p,idx)=>{const h=akHeight(book,p);if(!h)return;
+    if(used+h>AK_BUDGET&&curGroup.length){groups.push(curGroup);curGroup=[];used=0}
+    curGroup.push([p,idx]);used+=h});
   if(curGroup.length)groups.push(curGroup);
-  return groups.map((g,gi)=>`<div class="pg-kicker">Answer Key</div><h3 class="pg-title">Answers ${groups.length>1?"· Part "+(gi+1):""}</h3>`+g.map(([p,idx])=>akItemHTML(book,p,idx)).join(""));
+  return groups.map((g,gi)=>`<div class="pg-kicker">Answer Key</div><h3 class="pg-title">Answers for Pages ${5+g[0][1]}–${5+g[g.length-1][1]}</h3>`+g.map(([p,idx])=>akItemHTML(book,p,idx)).join(""));
 }
 </script>
 <script>
@@ -790,7 +845,7 @@ function coverHTML(book,back){
       <h2 class="cov-title">${esc(book.title)}</h2>
       <p class="cov-sub">${esc(book.subtitle)}</p>
       <div class="cov-hero">${hero}</div>
-      <div class="cov-seal"><span class="big">${book.puzzleCount||0}</span><span class="sm">FUN PUZZLES &amp; SOLUTIONS INCLUDED</span></div>
+      <div class="cov-seal"><span class="big">${book.puzzleCount||0}</span><span class="sm">FUN ACTIVITIES &amp; SOLUTIONS INCLUDED</span></div>
       <div class="cov-for">Specially Created For: <b>${esc(book.forName||"You")}</b></div>
     </div>`;
   }
@@ -820,7 +875,7 @@ function belongsHTML(book){
   return `<div style="text-align:center;margin-top:1.2in"><div class="pg-kicker">${esc(bankFor(book).name)}</div>
   <h3 class="pg-title" style="font-size:34pt">${esc(book.title)}</h3>
   <p class="pg-sub" style="margin-top:0.5in">This book belongs to</p>
-  <div style="border-bottom:3px solid #4A6B5D;width:70%;margin:0.35in auto 0;height:0.7in"></div>
+  <div style="border-bottom:3px solid #4A6B5D;width:70%;margin:0.35in auto 0;height:0.7in;display:flex;align-items:flex-end;justify-content:center">${book.forName?`<span style="font-family:Georgia,serif;font-style:italic;font-size:30pt;color:#1B2E26;padding-bottom:4px">${esc(book.forName)}</span>`:""}</div>
   <p class="pg-sub" style="margin-top:0.6in;font-size:calc(var(--bfs) * .8)">With love, from ${esc(book.publisher||"Golden Years Activity Studio")}</p></div>`;
 }
 function howtoHTML(book){
@@ -834,12 +889,14 @@ function howtoHTML(book){
   <p class="pg-sub">Most of all — enjoy the trip down memory lane.</p></div>`;
 }
 function contentsHTML(book){
-  const first={},counts={};
-  book.pages.forEach((p,i)=>{if(!(p.type in first))first[p.type]=5+i;counts[p.type]=(counts[p.type]||0)+1});
+  const byType={};
+  book.pages.forEach((p,i)=>{(byType[p.type]=byType[p.type]||[]).push(5+i)});
+  const order=Object.keys(byType).sort((a,b)=>byType[a][0]-byType[b][0]);
+  const rows=order.map(t=>`<p class="pg-sub" style="font-size:calc(var(--bfs) * .7);line-height:1.35;border-bottom:1.5px dotted #b9c8bd;padding:5px 0"><b>${esc(ACTIVITY_LABEL[t])}</b> — ${byType[t].length} in this book · pages ${byType[t].join(", ")}</p>`).join("");
   const akStart=5+book.pages.length;
-  const rows=Object.keys(counts).sort((a,b)=>first[a]-first[b]).map(t=>`<p class="pg-sub" style="display:flex;justify-content:space-between;border-bottom:1.5px dotted #b9c8bd;padding:5px 0"><span>${esc(ACTIVITY_LABEL[t])} <span style="color:#8a8578">(${counts[t]} pages)</span></span><b>${first[t]}</b></p>`).join("");
-  return `<div class="pg-kicker">Contents</div><h3 class="pg-title">What's Inside</h3>${rows}
-  <p class="pg-sub" style="display:flex;justify-content:space-between;border-bottom:1.5px dotted #b9c8bd;padding:5px 0"><span>Answer Key</span><b>${akStart}</b></p>`;
+  return `<div class="pg-kicker">Contents</div><h3 class="pg-title">What's Inside</h3>
+  <p class="pg-sub" style="font-size:calc(var(--bfs) * .72);margin-bottom:6px">The puzzles take turns throughout the book, one kind after another. Here is where to find each kind:</p>${rows}
+  <p class="pg-sub" style="font-size:calc(var(--bfs) * .7);padding:5px 0"><b>Answer Key</b> — starts on page ${akStart}</p>`;
 }
 function licenceHTML(book){
   return `<div class="pg-kicker">About This Book</div><h3 class="pg-title">A Note From the Publisher</h3>
@@ -1179,7 +1236,7 @@ function runTests(){
     const b=generateBook({decade:"mix",size:size,fontPt:24,seed:1000+size});
     const sheets=composeBook(b);
     T("book "+size+" exact total",b.totalPages===size&&sheets.length===size,`total=${b.totalPages} sheets=${sheets.length} puzzles=${b.puzzleCount}`);
-    T("book "+size+" answer pages match",answerKeyPages(b).length===akPagesFor(b.pages),"ak="+answerKeyPages(b).length);
+    T("book "+size+" answer pages match",answerKeyPages(b).length===akPagesFor(b,b.pages),"ak="+answerKeyPages(b).length);
   }
   {const b=generateBook({decade:"fifties",size:100,fontPt:28,easy:true,mix:["sudoku","wordsearch"],seed:777});
    T("easy single-decade subset-mix book",b.totalPages===100&&b.pages.every(p=>["sudoku","wordsearch","trivia","prompts","phrases","matching"].includes(p.type)),"pages="+b.pages.length);}
