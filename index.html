@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Large-Print Seniors Activity Book Generator — Golden Years Activity Studio</title>
+<style>
+:root{
+  --sage:#4A6B5D; --sage-d:#1B2E26; --cream:#FDF8F0; --terra:#D96B43;
+  --ink:#22302a; --mut:#5c6a63; --line:#d9cfbc; --gold:#C59B27;
+  --bg:#f3eee3; --card:#fffdf7; --accent:#4A6B5D; --accent2:#D96B43;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:16px;line-height:1.5}
+[hidden]{display:none !important}
+h1,h2,h3{font-family:Georgia,"Times New Roman",serif;margin:0}
+button{font-family:inherit}
+.site-header{background:linear-gradient(135deg,#1B2E26,#2c4a3e);color:#FDF8F0;padding:14px 16px 12px}
+.header-inner{max-width:1080px;margin:0 auto;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.brand-mark{width:44px;height:44px;border-radius:50%;background:#FDF8F0;color:#4A6B5D;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.site-header h1{font-size:21px;line-height:1.2}
+.site-header p{margin:3px 0 0;font-size:13px;color:#cfdccf;max-width:560px}
+.book-chip{margin-left:auto;background:rgba(253,248,240,.12);border:1px solid rgba(253,248,240,.35);border-radius:10px;padding:7px 12px;font-size:13px;max-width:340px}
+.tabs{max-width:1080px;margin:0 auto;padding:10px 12px 0;display:flex;gap:8px;flex-wrap:wrap}
+.tab-btn{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:9px 16px;font-size:14.5px;font-weight:600;cursor:pointer;color:var(--ink)}
+.tab-btn.active{background:var(--sage);border-color:var(--sage);color:#fff}
+main{max-width:1080px;margin:0 auto;padding:14px 12px 90px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 2px 10px rgba(27,46,38,.06)}
+.panel h2{font-size:22px;margin-bottom:4px}
+.sub{color:var(--mut);font-size:14px;margin:0 0 14px}
+.btn{display:inline-block;border:1.5px solid var(--sage);background:#fff;color:var(--sage-d);border-radius:10px;padding:11px 18px;font-size:15px;font-weight:700;cursor:pointer;min-height:48px}
+.btn:hover{background:#eef4ee}
+.btn-cta{background:var(--accent2);border-color:var(--accent2);color:#fff}
+.btn-cta:hover{background:#c55a35}
+.btn-gold{background:var(--sage);border-color:var(--sage);color:#fff}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.inp,select.inp,textarea.inp{width:100%;font-size:16px;padding:11px 12px;border:1.5px solid var(--line);border-radius:9px;background:#fff;font-family:inherit;color:var(--ink)}
+label.f{display:block;font-size:13px;font-weight:700;color:var(--sage-d);margin:0 0 5px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr}}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:86px;z-index:90;background:#1B2E26;color:#FDF8F0;padding:12px 18px;border-radius:10px;font-size:14.5px;max-width:92vw;box-shadow:0 8px 24px rgba(0,0,0,.35);text-align:center}
+/* ---------- Quick Start ---------- */
+.qs-step{font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--terra);margin:14px 0 8px}
+.qs-step:first-child{margin-top:0}
+.theme-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+@media(max-width:640px){.theme-cards{grid-template-columns:repeat(5,1fr);gap:6px}}
+.tcard{border:2px solid var(--line);border-radius:12px;background:#fff;padding:10px 4px 8px;text-align:center;cursor:pointer}
+.tcard .tic{font-size:24px;line-height:1.1;display:block}
+.tcard .tlab{font-size:12.5px;font-weight:700;display:block;margin-top:3px}
+.tcard.sel{border-color:var(--terra);background:#fdf1ea;box-shadow:0 0 0 2px rgba(217,107,67,.25)}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap}
+.pill{flex:1;border:2px solid var(--line);background:#fff;border-radius:12px;padding:10px 6px;text-align:center;cursor:pointer;font-weight:700;font-size:15px;min-width:86px}
+.pill small{display:block;font-weight:500;font-size:12px;color:var(--mut)}
+.pill.sel{border-color:var(--sage);background:#eaf1ec;box-shadow:0 0 0 2px rgba(74,107,93,.2)}
+#qGen{width:100%;min-height:64px;font-size:20px;border:none;border-radius:14px;background:var(--terra);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 6px 18px rgba(217,107,67,.35);margin-top:14px}
+#qGen:active{transform:translateY(1px)}
+.qs-ready{margin-top:18px;border:2px dashed var(--sage);border-radius:14px;padding:16px;background:#fbf7ec;text-align:center}
+.qs-ready .stats{font-size:16px;font-weight:700;margin:12px 0}
+#qPdf{width:100%;min-height:62px;font-size:19px;border:none;border-radius:14px;background:var(--sage);color:#fff;font-weight:800;cursor:pointer}
+/* ---------- sticky action bar (phones) ---------- */
+#actionBar{display:none}
+@media(max-width:760px){
+  #actionBar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;background:#1B2E26;padding:10px 12px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -4px 18px rgba(0,0,0,.35)}
+  #actionBar .ab-btn{flex:1;min-height:52px;border:none;border-radius:10px;font-size:15.5px;font-weight:700;cursor:pointer}
+  #actionBar .ab-gen{background:var(--accent2);color:#fff}
+  #actionBar .ab-print{background:#FFD166;color:#14213D}
+}
+@media print{#actionBar{display:none !important}}
+/* ---------- compact header/panel on phones so Quick Start fits screen 1 ---------- */
+@media(max-width:760px){
+  .site-header{padding:9px 12px 8px}
+  .site-header h1{font-size:16.5px}
+  .site-header p{display:none}
+  .brand-mark{width:34px;height:34px}
+  .book-chip{display:none}
+  .tabs{padding:7px 10px 0;gap:6px}
+  .tab-btn{padding:7px 12px;font-size:13.5px}
+  main{padding:10px 10px 84px}
+  .panel{padding:13px 12px}
+  .panel h2{font-size:19px}
+  .sub{font-size:13px;margin-bottom:9px}
+  .qs-step{margin:10px 0 6px}
+  .tcard{padding:7px 2px 6px}
+  .tcard .tic{font-size:20px}
+  .tcard .tlab{font-size:11.5px}
+  .pill{padding:8px 4px;font-size:14px}
+  #qGen{margin-top:10px;min-height:58px;font-size:18.5px}
+}
+/* ---------- cover studio ---------- */
+.covthemes{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.covtheme{border:2px solid var(--line);border-radius:12px;overflow:hidden;cursor:pointer;background:#fff;text-align:left;padding:0}
+.covtheme .sw{height:52px}
+.covtheme .nm{font-size:12.5px;font-weight:700;padding:7px 9px;display:block}
+.covtheme.sel{border-color:var(--terra);box-shadow:0 0 0 2px rgba(217,107,67,.25)}
+.cov-prev{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+input[type=range]{width:100%}
+/* ---------- book pages (screen + print share these) ---------- */
+#printRoot{display:none}
+.sheet{position:relative;margin:0 auto;background:#fff;overflow:hidden;page-break-after:always;break-after:page}
+.pg-inner{position:absolute;inset:0;padding:0.65in 0.6in 0.8in;display:flex;flex-direction:column}
+.pg-foot{position:absolute;left:0.6in;right:0.6in;bottom:0.32in;display:flex;justify-content:space-between;font-size:10.5pt;color:#8a8578;border-top:1px solid #e3ddcc;padding-top:6px}
+.pg-kicker{font-size:12pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--terra)}
+.pg-title{font-family:Georgia,serif;font-size:calc(var(--bfs,24pt) * 1.35);line-height:1.15;margin:4px 0 6px;color:var(--sage-d)}
+.pg-sub{font-size:var(--bfs,24pt);line-height:1.35;color:#3c4a43;margin:0}
+.fact{margin-top:auto;background:#f7f1de;border:1.5px solid #e0d3a8;border-radius:10px;padding:10px 14px;font-size:calc(var(--bfs,24pt) * .66);line-height:1.32}
+.fact b{color:#8a6d1c}
+.ws-grid,.ns-grid{border-collapse:collapse;margin:10px auto}
+.ws-grid td,.ns-grid td{border:1.6px solid #9db3a6;text-align:center;font-weight:700;color:#1B2E26}
+.ws-grid td{width:var(--cell,calc(var(--bfs,24pt) * 1.35));height:var(--cell,calc(var(--bfs,24pt) * 1.35));font-size:calc(var(--cell,30pt) * .72)}
+.ns-grid td{width:calc(var(--cell,30pt) * .85);height:var(--cell,calc(var(--bfs,24pt) * 1.3));font-size:calc(var(--cell,30pt) * .7)}
+.word-bank{columns:2;column-gap:28px;font-size:calc(var(--bfs,24pt) * .85);line-height:1.5;margin:8px auto 0;max-width:88%}
+.word-bank div{break-inside:avoid}
+.sdk{border-collapse:collapse;margin:8px auto}
+.sdk td{width:var(--cell,calc(var(--bfs,24pt) * 1.55));height:var(--cell,calc(var(--bfs,24pt) * 1.55));border:1.4px solid #b9c8bd;text-align:center;font-size:calc(var(--cell,36pt) * .68);font-weight:700;color:#1B2E26}
+.sdk td.giv{background:#eef3ec;color:#4A6B5D}
+.sdk td.bx{border-right:3.2px solid #1B2E26}.sdk td.by{border-bottom:3.2px solid #1B2E26}
+.sdk td.lx{border-left:3.2px solid #1B2E26}.sdk td.ty{border-top:3.2px solid #1B2E26}
+.cw-wrap{display:flex;gap:22px;align-items:flex-start;margin-top:6px}
+.cw-grid{border-collapse:collapse;flex:0 0 auto}
+.cw-grid td{width:var(--cell,calc(var(--bfs,24pt) * 1.28));height:var(--cell,calc(var(--bfs,24pt) * 1.28));text-align:center;font-size:calc(var(--cell,30pt) * .62);font-weight:700;position:relative}
+.cw-grid td.cell{border:2px solid #46685a;background:#fff;color:#1B2E26}
+.cw-grid td.blk{background:transparent}
+.cw-grid td .num{position:absolute;top:1px;left:3px;font-size:calc(var(--bfs,24pt) * .42);font-weight:800;color:#D96B43}
+.cw-clues{font-size:calc(var(--bfs,24pt) * .64);line-height:1.38;flex:1}
+.cw-clues h4{margin:6px 0 3px;font-size:calc(var(--bfs,24pt) * .72);color:var(--sage-d)}
+.cw-clues div{margin-bottom:2px}
+.q-line{font-size:var(--bfs,24pt);line-height:1.4;margin:0 0 14px}
+.q-line .qn{font-weight:800;color:var(--terra)}
+.write-lines{margin-top:10px}
+.write-lines .wl{border-bottom:2px solid #c9d4c9;height:calc(var(--bfs,24pt) * 1.25)}
+.scr-word{font-size:calc(var(--bfs,24pt) * 1.3);font-weight:800;letter-spacing:.22em;text-align:center;color:var(--sage-d);margin:10px 0 4px;line-height:1.25}
+.scr-line{border-bottom:2px solid #c9d4c9;height:calc(var(--bfs,24pt) * .95);margin-top:4px}
+.scr-clue{text-align:center;font-size:calc(var(--bfs,24pt) * .85);color:#3c4a43;margin:0}
+.match-cols{display:flex;gap:5%;margin-top:8px}
+.match-col{flex:1}
+.match-item{display:flex;align-items:center;gap:12px;border:1.8px solid #c9d4c9;border-radius:12px;padding:8px 12px;margin-bottom:10px;font-size:calc(var(--bfs,24pt) * .8);font-weight:700}
+.match-item .mk{width:calc(var(--bfs,24pt) * 1.55);height:calc(var(--bfs,24pt) * 1.55);flex:0 0 auto}
+.match-item .ltr{margin-left:auto;font-size:calc(var(--bfs,24pt) * .95);color:var(--terra);font-weight:800}
+.maze-box{text-align:center;margin-top:6px}
+.maze-box svg{max-width:100%;height:auto}
+/* answer key */
+.ak-grid td.sol{background:#ffe9a8}
+.ak-item{font-size:calc(var(--bfs,24pt) * .72);line-height:1.4;margin-bottom:10px}
+.ak-item h4{margin:0 0 4px;font-size:calc(var(--bfs,24pt) * .85);color:var(--sage-d)}
+.ak-grid{border-collapse:collapse;margin:4px 0}
+.ak-grid td{border:1.2px solid #b9c8bd;width:calc(var(--bfs,24pt) * .52);height:calc(var(--bfs,24pt) * .52);text-align:center;font-weight:700;font-size:calc(var(--bfs,24pt) * .4)}
+.ak-sdk{border-collapse:collapse;margin:4px 0}
+.ak-sdk td{border:1.1px solid #b9c8bd;width:calc(var(--bfs,24pt) * .6);height:calc(var(--bfs,24pt) * .6);text-align:center;font-weight:700;font-size:calc(var(--bfs,24pt) * .44)}
+/* ---------- covers ---------- */
+.cover-sheet{color:var(--cv-ink)}
+.cov-frame{position:absolute;inset:0;background:var(--cv-bg);display:flex;flex-direction:column;align-items:center;padding:0.55in 0.6in;text-align:center;overflow:hidden}
+.cov-border{position:absolute;inset:0.28in;border:3px solid var(--cv-accent);border-radius:6px;pointer-events:none}
+.cov-border::after{content:"";position:absolute;inset:7px;border:1.2px solid var(--cv-accent2);border-radius:4px}
+.cov-motif{position:absolute;opacity:.16;pointer-events:none}
+.cov-pill{position:relative;z-index:2;background:var(--cv-accent);color:var(--cv-pillink,#fff);font-weight:800;letter-spacing:.1em;font-size:13.5pt;padding:9px 20px;border-radius:999px;margin-top:0.18in;text-transform:uppercase}
+.cov-title{position:relative;z-index:2;font-family:Georgia,serif;font-weight:700;font-size:40pt;line-height:1.12;color:var(--cv-ink);margin:0.28in 0.1in 0}
+.cov-sub{position:relative;z-index:2;font-size:15.5pt;line-height:1.45;color:var(--cv-ink);opacity:.85;margin:0.14in 0.3in 0;max-width:6.4in}
+.cov-hero{position:relative;z-index:2;margin-top:0.3in;display:flex;flex-direction:column;align-items:center}
+.cov-motifbox{width:3.4in;height:2.9in;display:flex;align-items:center;justify-content:center}
+.cov-motifbox svg{width:100%;height:100%}
+.keepsake{background:#FFFDF4;padding:0.16in;border:1px solid #d8c98f;outline:2.5px solid var(--cv-gold,#C59B27);outline-offset:-0.09in;border-radius:10px;box-shadow:0 14px 30px rgba(0,0,0,.28);width:3.3in}
+.keepsake .kimg{overflow:hidden;border-radius:5px;width:100%;height:2.45in;background:#eee}
+.keepsake .kimg img{width:100%;height:100%;object-fit:cover;display:block}
+.keepsake-sm{width:2.15in}
+.keepsake-sm .kimg{height:1.55in}
+.k-plaque{margin-top:0.14in;background:var(--cv-accent);color:var(--cv-pillink,#fff);border-radius:6px;padding:7px 14px;font-family:Georgia,serif;font-size:14.5pt;max-width:3.6in}
+.cov-seal{position:absolute;z-index:3;right:0.62in;bottom:1.28in;width:1.62in;height:1.62in;border-radius:50%;background:var(--cv-badge);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.3);border:3px solid rgba(255,255,255,.75);transform:rotate(8deg)}
+.cov-seal .big{font-size:19pt;font-weight:800;line-height:1.05;font-family:Georgia,serif}
+.cov-seal .sm{font-size:8.6pt;font-weight:700;letter-spacing:.06em;line-height:1.25;padding:0 8px}
+.cov-for{position:relative;z-index:2;margin-top:auto;background:rgba(255,255,255,.82);border:1.5px solid var(--cv-accent);border-radius:8px;padding:9px 22px;font-size:15pt;color:var(--cv-ink)}
+.cov-for b{font-family:Georgia,serif}
+.back-head{font-family:Georgia,serif;font-size:27pt;line-height:1.2;color:var(--cv-ink);margin-top:0.25in}
+.back-bullets{text-align:left;font-size:16.5pt;line-height:1.5;margin:0.22in 0.15in 0;color:var(--cv-ink)}
+.back-bullets li{margin-bottom:9px}
+.lookstrip{display:flex;gap:0.14in;margin-top:0.26in;position:relative;z-index:2}
+.mini-page{width:2.02in;height:2.62in;background:#fff;border:1.5px solid var(--cv-accent);border-radius:4px;overflow:hidden;position:relative;box-shadow:0 6px 14px rgba(0,0,0,.18);flex:0 0 auto}
+.mini-page .mini-in{position:absolute;top:0;left:0;width:8.5in;height:11in;transform:scale(.2376);transform-origin:top left;pointer-events:none}
+.barcode-zone{position:absolute;right:0.55in;bottom:0.5in;width:2.0in;height:1.2in;background:#fff;border:1.5px dashed #b9b2a0;border-radius:4px;z-index:2}
+.cov-pub{position:absolute;left:0.6in;bottom:0.52in;font-size:12.5pt;color:var(--cv-ink);opacity:.85;z-index:2;font-weight:700}
+/* ink saver */
+.ink-saver .sheet{--cv-bg:#fff !important}
+.ink-saver .cov-frame{background:#fff !important}
+.ink-saver .fact{background:#fff}
+.ink-saver .sdk td.giv{background:#eee}
+pre#testResults{white-space:pre-wrap;background:#111;color:#b6ffb6;padding:14px;border-radius:8px;font-size:12px}
+.bookcard{border:1.5px solid var(--line);border-radius:12px;padding:14px;background:#fff;margin-bottom:12px}
+.bookcard h3{font-size:18px;margin-bottom:3px}
+.checkrow{display:flex;flex-wrap:wrap;gap:8px}
+.checkrow label{border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;cursor:pointer;background:#fff}
+.checkrow input{accent-color:var(--sage)}
+</style>
+<style>
+/* ============================================================
+   License gate (stage 2) — warm golden-years styling.
+   The [hidden] guard keeps any CSS display rule from
+   overriding the hidden attribute (the lock screen is
+   display:flex, which would otherwise keep it visible
+   after unlock) — same guard as the other Songlap tools.
+   ============================================================ */
+[hidden] { display: none !important; }
+
+#lock-screen {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(150deg, #1B2E26 0%, #2c4a3e 55%, #4A6B5D 100%);
+  padding: 20px;
+}
+.lock-card {
+  background: #FDF8F0; border-radius: 10px; border-top: 6px solid #D96B43;
+  box-shadow: 0 18px 48px rgba(0,0,0,.5); max-width: 460px; width: 100%;
+  padding: 34px 30px; text-align: center;
+}
+.lock-logo {
+  width: 64px; height: 64px; margin: 0 auto; border-radius: 50%;
+  background: #eaf1ec; color: #4A6B5D;
+  display: flex; align-items: center; justify-content: center;
+}
+.lock-logo svg { width: 32px; height: 32px; }
+.lock-card h1 { font-family: Georgia, "Times New Roman", serif; font-size: 25px; font-weight: 700; color: #1B2E26; margin: 12px 0 10px; }
+.lock-sub { font-size: 14.5px; line-height: 1.6; color: #5c6a63; margin-bottom: 18px; }
+#lock-form input {
+  width: 100%; font-size: 16px; padding: 12px 14px; margin-bottom: 10px;
+  border: 1.5px solid #d9cfbc; border-radius: 8px; background: #fff; font-family: inherit;
+}
+#lock-form input:focus { outline: none; border-color: #4A6B5D; }
+#lock-input { letter-spacing: 1px; }
+.lock-error {
+  color: #b3261e; font-size: 14px; margin-top: 12px; line-height: 1.5;
+  background: #f9e9e7; border-radius: 8px; padding: 10px 12px;
+}
+.lock-error.info { color: #5c4a1f; background: #f3ead3; }
+.lock-note { font-size: 13px; color: #5c6a63; margin-top: 14px; }
+#lock-submit {
+  width: 100%; min-height: 52px; background: #D96B43; color: #fff; border: none;
+  border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; font-family: inherit;
+}
+#lock-submit:hover:not(:disabled) { background: #c55a35; }
+#lock-submit:disabled { opacity: .45; cursor: not-allowed; }
+.license-bar {
+  background: #1B2E26; color: #FFD166; font-size: 13px; text-align: center; padding: 7px 10px;
+}
+@media (max-width: 520px) {
+  .lock-card { padding: 26px 20px; }
+  #lock-submit { min-height: 54px; }
+}
+</style>
+</head>
+<body>
+<!-- ================= lock screen ================= -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 18.5V5.5"/><path d="M8.5 7.5h7M8.5 11h5"/></svg></div>
+    <h1>Large-Print Seniors Activity Book Generator</h1>
+    <p class="lock-sub">Enter the name and license code from your purchase to unlock the studio. Your code stays saved on this device.</p>
+    <form id="lock-form">
+      <input id="lock-name" type="text" placeholder="Your name" autocomplete="name">
+      <input id="lock-input" type="text" placeholder="License code (SNR-XXXXXX)" autocomplete="off" style="text-transform:uppercase">
+      <button id="lock-submit" type="submit">Unlock</button>
+      <div id="lock-error" class="lock-error" hidden></div>
+    </form>
+    <p class="lock-note">One code per buyer — it registers to your name on first use.</p>
+  </div>
+</div>
+
+<!-- ================= app ================= -->
+<div id="app" hidden>
+  <div id="license-bar" class="license-bar" hidden>
+    Licensed to <span id="license-name"></span> · <span id="license-code"></span> · You may sell the books you create with this tool
+  </div>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 18.5V5.5"/><path d="M8.5 7.5h7M8.5 11h5"/></svg></div>
+    <div>
+      <h1>Large-Print Seniors Activity Book Generator</h1>
+      <p>Golden Years Activity Studio — make beautiful, easy-on-the-eyes activity books in minutes. Ready to print, gift or sell.</p>
+    </div>
+    <div class="book-chip" id="bookChip">No book yet — make one in the <b>⚡ Quick Start</b> tab.</div>
+  </div>
+</header>
+<nav class="tabs" id="tabNav"></nav>
+<main id="panels"></main>
+<div id="actionBar"><button class="ab-btn ab-gen" id="abGen" type="button">⚙ Generate Book</button><button class="ab-btn ab-print" id="abPrint" type="button">🖨 Print / Save PDF</button></div>
+</div>
+<div id="toast" hidden></div>
+<div id="printRoot"></div>
+<script>
+"use strict";
+/* ================= utilities (Whodunit pattern) ================= */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+function rng(seed){let t=seed>>>0;return()=>{t+=0x6D2B79F5;let r=Math.imul(t^t>>>15,1|t);r^=r+Math.imul(r^r>>>7,61|r);return((r^r>>>14)>>>0)/4294967296}}
+function pick(r,arr){return arr[Math.floor(r()*arr.length)]}
+function shuffle(r,arr){const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function sample(r,arr,n){return shuffle(r,arr).slice(0,n)}
+function toast(msg){const t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(t._h);t._h=setTimeout(()=>t.hidden=true,2800)}
+function downloadURI(uri,name){const a=document.createElement("a");a.href=uri;a.download=name;document.body.appendChild(a);a.click();a.remove()}
+
+/* ================= settings ================= */
+const SETKEY="seniors_settings_v1";
+let settings={paper:"letter",inkSaver:false};
+try{Object.assign(settings,JSON.parse(localStorage.getItem(SETKEY)||"{}"))}catch(e){}
+function saveSettings(){try{localStorage.setItem(SETKEY,JSON.stringify(settings))}catch(e){}}
+
+/* ================= nostalgia banks ================= */
+/* Per decade: words (word search / scramble), cross [WORD, clue],
+   trivia [question, answer], phrases [start, ending], facts,
+   prompts (Talk About It), numbers [digits, label] for Number Search. */
+const BANKS={
+fifties:{label:"1950s",name:"The Fabulous Fifties",
+ words:["JUKEBOX","DINER","SODA","POODLE","SKIRT","VINYL","DRIVEIN","SADDLE","MALT","SWING","ROCKER","BOPPER","TELEVISION","TRANSISTOR","HULA","HOOP","CHECKER","CABINET","PROM","CARNIVAL"],
+ cross:[["ELVIS","The King of Rock and Roll"],["JUKEBOX","It played your song for a nickel"],["DINER","Coffee and pie at the counter"],["POODLE","____ skirt, a dance-hall favourite"],["VINYL","Records were made of it"],["HOOP","Hula ____, the 1958 craze"],["SODA","____ fountain treats"],["DRIVEIN","Movies watched from the car"],["MARILYN","Blonde star of 'Some Like It Hot'"],["CHECKERS","Red and black board game"],["MALT","Thick diner milkshake"],["PROM","The big school dance"]],
+ trivia:[["Who was known as the King of Rock and Roll?","Elvis Presley"],["In 1958, what toy ring did everyone spin around their hips?","The Hula Hoop"],["What was the name of the first satellite, launched in 1957?","Sputnik 1"],["Which actress starred in 'Gentlemen Prefer Blondes' (1953)?","Marilyn Monroe"],["In the 1950s, what did a 'drive-in' let you watch from your car?","A movie"],["Who became Queen of England in 1952?","Queen Elizabeth II"],["What creamy treat did a 'soda jerk' serve at the drugstore counter?","A malted milkshake (or ice-cream soda)"],["Which TV couple lived at 328 Chauncey Street in Brooklyn?","Ralph and Alice Kramden (The Honeymooners)"],["What did families gather around to watch in the evening — the new 'television' or the radio?","The television"],["Which baseball great wore number 7 for the Yankees?","Mickey Mantle"],["What style of skirt, often with a poodle on it, did teenage girls wear?","A poodle skirt"],["In 1955, which theme park opened in California?","Disneyland"]],
+ phrases:[["A stitch in time","saves nine"],["Don't count your chickens","before they hatch"],["Rock around","the clock tonight"],["See you later","alligator"],["Love and marriage go together","like a horse and carriage"],["Home is where","the heart is"],["Waste not","want not"],["A penny saved","is a penny earned"]],
+ facts:["In 1950, a brand-new car cost about $1,500 — and gasoline was just 27 cents a gallon.","The first colour television broadcasts began in the early 1950s; many families still watched in black and white.","A loaf of bread cost about 14 cents in 1950.","The hula hoop sold over 25 million units in its first four months in 1958.","Diners often had a jukebox selector right at every table.","In 1953, the first issue of a famous TV guide cost 15 cents.","Drive-in theatres could hold hundreds of cars, each with its own speaker on a pole.","The average new house in 1950 cost about $8,450.","Milk was still delivered to many doorsteps in glass bottles in the 1950s.","In 1956, Elvis Presley appeared on television so often that year he was nicknamed 'Elvis the Pelvis'."],
+ prompts:["Describe your favourite meal that your mother or grandmother used to make. What made it special?","Tell about the first television you ever saw. Whose house was it at, and what did you watch?","What was your favourite song to dance to when you were young? Who did you dance with?","Describe the car your family had — or the one you dreamed of having.","What did a Saturday afternoon look like when you were twelve years old?","Tell about a favourite teacher and something kind they did.","What was the best treat you could buy with a nickel or a dime?","Describe the street or neighbourhood you grew up on. Who lived next door?"],
+ numbers:[["1955","Disneyland opened"],["1957","Sputnik launched"],["1952","Elizabeth became Queen"],["1958","The hula hoop craze"],["1953","First TV Guide issue"],["1956","Elvis on Ed Sullivan"],["1959","Hawaii became a state"],["1954","First colour TV sets"]]},
+sixties:{label:"1960s",name:"The Swinging Sixties",
+ words:["BEATLES","TWIST","MOON","ROCKET","GUITAR","FLOWER","PEACE","MINISKIRT","BEATNIK","SCOOTER","VINYL","SURFING","MOTOWN","BEEHIVE","GO","CARNABY","MOD","JAZZ","BANJO","HARMONICA"],
+ cross:[["BEATLES","Fab Four from Liverpool"],["TWIST","Chubby Checker's dance"],["MOON","Apollo 11 landed here in 1969"],["MOTOWN","Detroit record label of soul"],["BEEHIVE","Tall 1960s hairstyle"],["SURF","____ music from California beaches"],["PEACE","Flower-power symbol word"],["GUITAR","Hendrix played a famous one"],["ROCKET","It carried men to the Moon"],["MINI","____ skirt, the decade's fashion shock"],["WOODSTOCK","Famous 1969 music festival"],["ARMSTRONG","First man on the Moon"]],
+ trivia:[["Which band was known as the Fab Four?","The Beatles"],["Who was the first man to walk on the Moon, in 1969?","Neil Armstrong"],["What dance did Chubby Checker make famous?","The Twist"],["Which 1969 festival drew half a million music fans to a New York farm?","Woodstock"],["Who sang 'Respect' in 1967?","Aretha Franklin"],["What was the tall, teased hairstyle of the decade called?","The beehive"],["Which car, introduced in 1964, became an American icon?","The Ford Mustang"],["What did 'flower power' protesters put in soldiers' rifle barrels?","Flowers"],["Who was the first woman in space, in 1963?","Valentina Tereshkova"],["Which British model became the face of the miniskirt era?","Twiggy"],["What TV show featured the starship Enterprise?","Star Trek"],["In 1967, which film featured Dustin Hoffman and a famous older neighbour?","The Graduate"]],
+ phrases:[["All you need is","love"],["And that's the way","it is (Walter Cronkite)"],["One small step for man","one giant leap for mankind"],["Goodnight, John-Boy","Goodnight, Mary Ellen"],["Sock it","to me"],["Here comes the judge","Here comes the judge"],["Flower power","peace and love"],["Make love, not","war"]],
+ facts:["The first man walked on the Moon on July 20, 1969 — about 600 million people watched on television.","A gallon of gasoline cost about 31 cents in 1960.","The Beatles first appeared on American television in February 1964, watched by 73 million people.","The first Walmart store opened in 1962 in Rogers, Arkansas.","In 1963, a first-class stamp cost just 5 cents.","The lava lamp was invented in 1963 and became a bedroom favourite.","The Ford Mustang launched in 1964 and sold 22,000 cars on its first day.","Instant coffee and Tang — the astronauts' drink — were 1960s kitchen staples.","The first handheld calculator arrived at the very end of the decade, in 1969.","Barbie's friend Ken was introduced in 1961."],
+ prompts:["Where were you when you heard about the Moon landing? Who was with you?","Tell about a favourite Beatles, Motown or sixties song. What does it remind you of?","Describe the fashions you wore as a young adult. Any favourites you wish would come back?","What was your first job, and what did you earn?","Tell about a road trip or holiday you remember from those years.","Describe a favourite television show of the era. Who did you watch it with?","What did a typical family dinner look like at your table?","Tell about the bravest or kindest thing you saw someone do."],
+ numbers:[["1969","Moon landing"],["1964","Beatles on US TV"],["1962","First Walmart"],["1963","5-cent stamps"],["1961","Ken doll arrives"],["1967","Summer of Love"],["1965","First miniskirt craze"],["1960","31-cent gasoline"]]},
+seventies:{label:"1970s",name:"The Groovy Seventies",
+ words:["DISCO","BELLBOTTOM","PLATFORM","AFRO","FONDU","PET","ROCK","ROLLER","SKATE","VINYL","EIGHT","TRACK","MOOD","RING","LAVA","LAMP","SHAG","CARPET","FARRAH","TRAVOLTA"],
+ cross:[["DISCO","Saturday Night Fever music"],["ABBA","Swedish group of 'Dancing Queen'"],["FONDU","Melted-cheese party pot"],["TRAVOLTA","Star of 'Grease'"],["LAVA","____ lamp, a glowing favourite"],["ROLLER","____ disco on eight wheels"],["PLATFORM","____ shoes added inches"],["BELLBOTTOM","Flared trousers"],["JAWS","1975 shark blockbuster"],["ROCKY","1976 boxing film"],["STARWARS","1977 space saga"],["PETROCK","A stone sold as a pet"]],
+ trivia:[["Who played Danny in the film 'Grease' (1978)?","John Travolta"],["Which Swedish group sang 'Dancing Queen'?","ABBA"],["What was the 1975 film about a great white shark?","Jaws"],["Which 1977 film began 'A long time ago in a galaxy far, far away'?","Star Wars"],["What fad 'pet' was simply a smooth stone in a box?","The Pet Rock"],["Which TV family lived in a split-level and had a maid named Alice?","The Brady Bunch"],["What music style filled dance floors with mirror balls?","Disco"],["Who sang 'Stayin' Alive' with the Bee Gees' famous falsetto?","The Bee Gees (Barry Gibb)"],["Which boxer called himself 'The Greatest'?","Muhammad Ali"],["What did people dip into a pot of melted cheese at parties?","Fondue"],["Which skating pastime boomed at roller discos?","Roller skating"],["What hairstyle did Farrah Fawcett make famous?","Feathered waves"]],
+ phrases:[["May the Force","be with you"],["Stayin' alive","stayin' alive"],["We will","rock you"],["Book 'em","Danno (Hawaii Five-O)"],["Dyn-o-mite","(Good Times)"],["You talking","to me? (Taxi Driver)"],["Keep on","truckin'"],["Far out","man"]],
+ facts:["The first Star Wars film in 1977 cost about $11 million to make — and earned over $775 million.","A movie ticket cost about $2.50 in the mid-1970s.","The Rubik's Cube was invented in 1974 (its fame exploded in 1980).","Microwave ovens became common kitchen items in the 1970s.","The pet rock sold over a million units in just a few months in 1975.","In 1971, the first Starbucks opened in Seattle — coffee only, no chairs.","The 8-track tape was the car music format of the decade before cassettes took over.","A gallon of gasoline rose from about 36 cents in 1970 to around 86 cents by 1979.","The first mobile phone call was made in 1973 — the handset weighed about 2.5 pounds.","Shag carpet came in harvest gold, avocado green and burnt orange."],
+ prompts:["Tell about a favourite film you saw at the cinema in those years. Who went with you?","Describe a party or dance you remember — the music, the clothes, the food.","What was the first record, tape or concert you ever bought or attended?","Tell about a family holiday or day out that still makes you smile.","Describe your hairstyle in those years. Would you wear it again?","What new gadget or appliance amazed your household when it arrived?","Tell about a friend from those days. What did you get up to together?","Describe the car you drove — or rode in — most often."],
+ numbers:[["1977","Star Wars released"],["1975","Jaws and the Pet Rock"],["1978","Grease the film"],["1973","First mobile call"],["1971","First Starbucks"],["1976","Rocky released"],["1979","86-cent gasoline"],["1974","Rubik's Cube invented"]]},
+eighties:{label:"1980s",name:"The Totally Eighties",
+ words:["ARCADE","PACMAN","WALKMAN","CASSETTE","RUBIK","CUBE","MIXTAPE","BOOMBOX","NEON","SHOULDER","PADS","VIDEO","RENTAL","MTV","SYNTH","POP","HAIRSPRAY","SKATEBOARD","AEROBICS","GHOSTBUSTERS"],
+ cross:[["PACMAN","Arcade hero who ate dots"],["WALKMAN","Sony's pocket cassette player"],["RUBIK","____'s Cube, the puzzle craze"],["MTV","Channel that played music videos"],["BOOMBOX","Big portable stereo"],["MIXTAPE","A cassette made for someone special"],["GHOSTBUSTERS","Who you gonna call?"],["MADONNA","Queen of Pop"],["AEROBICS","Jane Fonda's workout craze"],["NEON","Bright colour of the decade"],["BLOCKBUSTER","Video rental giant"],["ET","The friendly alien who phoned home"]],
+ trivia:[["Which yellow arcade character munched dots and fruit?","Pac-Man"],["What did the 'W' in MTV stand for — what did the channel show all day?","Music videos (the M is Music)"],["Who you gonna call, in the 1984 film?","Ghostbusters"],["Which puzzle cube drove the world happily mad?","The Rubik's Cube"],["What Sony gadget let you carry your music in your pocket?","The Walkman"],["Which pop star was called the Queen of Pop?","Madonna"],["What did E.T. want to do?","Phone home"],["Which TV detective drove a Ferrari in Hawaii?","Magnum, P.I."],["What home-video format beat Betamax?","VHS"],["Which wedding did millions watch on TV in 1981?","Prince Charles and Lady Diana"],["What fitness craze had everyone in leg warmers?","Aerobics"],["Which band sang 'Sweet Child O' Mine'?","Guns N' Roses"]],
+ phrases:[["Who you gonna","call? Ghostbusters!"],["I'll be","back (The Terminator)"],["E.T. phone","home"],["Greed, for lack of a better word","is good (Wall Street)"],["Nobody puts Baby","in a corner (Dirty Dancing)"],["Where's","the beef?"],["Just say","no"],["Go ahead","make my day"]],
+ facts:["MTV launched on August 1, 1981 — the first video shown was 'Video Killed the Radio Star'.","The first CD players went on sale in 1982.","A movie ticket cost about $3.50 in the early 1980s.","The Rubik's Cube sold over 100 million units between 1980 and 1983.","Video rental stores charged membership fees — and late fees for not rewinding!","The first mobile phones of the 1980s cost nearly $4,000.","Pac-Man was the best-selling arcade game of the decade.","In 1985, a gallon of gasoline cost about $1.20.","The Berlin Wall fell on November 9, 1989.","Shoulder pads, big hair and neon leg warmers defined the decade's look."],
+ prompts:["Tell about a favourite film you rented on video. Did you remember to rewind it?","What songs were on a mixtape you made or received? Who was it for?","Describe the big hairstyles and fashions of the decade. Did you join in?","Tell about a wedding, celebration or family event from those years.","What was the first computer or video game you ever saw or played?","Describe a favourite television show of the era and its characters.","Tell about a holiday or day trip you remember fondly.","What advice would you give to your younger self from those days?"],
+ numbers:[["1981","MTV launches"],["1984","Ghostbusters film"],["1982","First CD players"],["1989","Berlin Wall falls"],["1985","$1.20 gasoline"],["1980","Pac-Man arrives"],["1983","100M Rubik's Cubes"],["1987","Dirty Dancing film"]]}
+};
+const DECADE_KEYS=["fifties","sixties","seventies","eighties"];
+function bankFor(book){ /* merged bank for a book's decade focus */
+  if(book.decade!=="mix")return BANKS[book.decade];
+  const m={label:"Golden Mix",name:"The Golden Years",words:[],cross:[],trivia:[],phrases:[],facts:[],prompts:[],numbers:[]};
+  for(const k of DECADE_KEYS){const b=BANKS[k];for(const f of ["words","cross","trivia","phrases","facts","prompts","numbers"])m[f]=m[f].concat(b[f])}
+  return m;
+}
+/* SVG objects for Picture Matching — drawn shapes, no emoji */
+const OBJECTS=[
+ {name:"Teapot",svg:'<path d="M14 34h36l-3 20a6 6 0 0 1-6 5H23a6 6 0 0 1-6-5z"/><path d="M47 40q13-3 11 7q-2 9-13 7" fill="none" stroke-width="4"/><path d="M17 42q-11-5-9 5q1 8 10 6" fill="none" stroke-width="4"/><path d="M26 34q6-8 12 0" fill="none" stroke-width="4"/><circle cx="32" cy="26" r="3.5"/>'},
+ {name:"Key",svg:'<circle cx="22" cy="32" r="11"/><path d="M31 32h26M50 32v9M57 32v6" fill="none" stroke-width="5"/>'},
+ {name:"Bicycle",svg:'<circle cx="18" cy="44" r="11"/><circle cx="50" cy="44" r="11"/><path d="M18 44 30 26h12l8 18M30 26l-4-6h-6M42 26l3-7h6" fill="none" stroke-width="4"/>'},
+ {name:"Lamp",svg:'<path d="M32 8 46 30H18z"/><path d="M32 30v20M22 56h20M32 50v6" fill="none" stroke-width="4"/>'},
+ {name:"Radio",svg:'<rect x="10" y="26" width="48" height="30" rx="4"/><circle cx="22" cy="41" r="6"/><path d="M34 34h18M34 42h18M34 50h10" stroke-width="3.5"/><path d="M14 26 50 6" fill="none" stroke-width="3.5"/>'},
+ {name:"Umbrella",svg:'<path d="M6 36a26 26 0 0 1 52 0q-6-5-13 0q-7-5-13 0q-6-5-13 0q-7-5-13 0z"/><path d="M32 10v36a6 6 0 0 1-12 0" fill="none" stroke-width="4"/>'},
+ {name:"House",svg:'<path d="M10 34 32 14l22 20"/><path d="M16 32v24h32V32" fill="none" stroke-width="4"/><rect x="27" y="42" width="10" height="14"/>'},
+ {name:"Flower",svg:'<circle cx="32" cy="24" r="6"/><circle cx="32" cy="12" r="6"/><circle cx="32" cy="36" r="6"/><circle cx="20" cy="24" r="6"/><circle cx="44" cy="24" r="6"/><path d="M32 40v18M32 50q-9-2-11-10M32 54q9-2 11-10" fill="none" stroke-width="4"/>'},
+ {name:"Fish",svg:'<path d="M6 32q14-14 30-9l14-9q-2 9 0 18-2 9 0 18l-14-9q-16 5-30-9z"/><circle cx="20" cy="29" r="2.6"/>'},
+ {name:"Cup",svg:'<path d="M12 24h34l-3 28a5 5 0 0 1-5 4H20a5 5 0 0 1-5-4z"/><path d="M46 30q12 1 10 10q-1 9-13 8" fill="none" stroke-width="4"/><path d="M20 14q3-5 0-8M30 14q3-5 0-8" fill="none" stroke-width="3.5"/>'},
+ {name:"Star",svg:'<path d="M32 6l7 17 18 1-14 11 4 18-15-10-15 10 4-18L7 24l18-1z"/>'},
+ {name:"Sailboat",svg:'<path d="M32 8v30M32 12l16 22H32zM28 16v18H14z"/><path d="M10 44h44l-6 10H16z"/>'}
+];
+function objSVG(o,silhouette){return `<svg viewBox="0 0 64 64" class="mk" aria-hidden="true"><g fill="${silhouette?"#3c4a43":"#fdf6dd"}" stroke="${silhouette?"#3c4a43":"#4A6B5D"}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round">${o.svg}</g></svg>`}
+</script>
+<script>
+"use strict";
+/* ================= ENGINES — every puzzle self-verified ================= */
+const DIRS8=[[0,1],[1,0],[1,1],[1,-1],[0,-1],[-1,0],[-1,-1],[-1,1]];
+function placeWords(r,words,size,alphabet,dirs){
+  const grid=Array.from({length:size},()=>Array(size).fill(""));
+  const placed=[];
+  const sorted=words.slice().sort((a,b)=>b.length-a.length);
+  for(const w of sorted){
+    if(w.length>size)continue;
+    let done=false;
+    for(let t=0;t<300&&!done;t++){
+      const d=dirs[Math.floor(r()*dirs.length)];
+      const sr=Math.floor(r()*size),sc=Math.floor(r()*size);
+      const er=sr+d[0]*(w.length-1),ec=sc+d[1]*(w.length-1);
+      if(er<0||er>=size||ec<0||ec>=size)continue;
+      let ok=true;
+      for(let i=0;i<w.length;i++){const cell=grid[sr+d[0]*i][sc+d[1]*i];if(cell&&cell!==w[i]){ok=false;break}}
+      if(!ok)continue;
+      for(let i=0;i<w.length;i++)grid[sr+d[0]*i][sc+d[1]*i]=w[i];
+      placed.push({word:w,r:sr,c:sc,dr:d[0],dc:d[1]});
+      done=true;
+    }
+    if(!done)return null;
+  }
+  for(let i=0;i<size;i++)for(let j=0;j<size;j++)if(!grid[i][j])grid[i][j]=alphabet[Math.floor(r()*alphabet.length)];
+  return {grid,placed};
+}
+function verifyPlaced(grid,placed){
+  for(const p of placed)for(let i=0;i<p.word.length;i++){
+    if(grid[p.r+p.dr*i][p.c+p.dc*i]!==p.word[i])return false;
+  }
+  return true;
+}
+function genWordSearch(r,bank,easy){
+  const size=easy?10:12, n=easy?6:9;
+  const words=sample(r,bank.words.filter(w=>w.length<=size),n).map(w=>w.toUpperCase());
+  const dirs=easy?DIRS8.slice(0,4):DIRS8;
+  const out=placeWords(r,words,size,"ABCDEFGHIJKLMNOPQRSTUVWXYZ",dirs);
+  if(!out||!verifyPlaced(out.grid,out.placed))return null;
+  return {type:"wordsearch",title:"Word Search",grid:out.grid,placed:out.placed};
+}
+function genNumberSearch(r,bank,easy,opts){
+  opts=opts||{};
+  const size=opts.size||(easy?9:11), n=opts.count||(easy?5:7);
+  const items=sample(r,bank.numbers,n);
+  const words=items.map(x=>x[0]);
+  const dirs=easy?DIRS8.slice(0,4):DIRS8;
+  const out=placeWords(r,words,size,"0123456789",dirs);
+  if(!out||!verifyPlaced(out.grid,out.placed))return null;
+  return {type:"numbersearch",title:"Number Search",grid:out.grid,placed:out.placed,labels:Object.fromEntries(items)};
+}
+function scrambleWord(r,w){
+  if(w.length<3)return w;
+  for(let t=0;t<40;t++){const s=shuffle(r,w.split("")).join("");if(s!==w)return s}
+  return w.split("").reverse().join("");
+}
+function genScramble(r,bank,easy,count){
+  const words=sample(r,bank.words.filter(w=>w.length>=4&&w.length<=9),count||(easy?4:5));
+  const clueFor=w=>{const hit=bank.cross.find(c=>c[0]===w);return hit?hit[1]:"A favourite word from "+bank.name};
+  const items=words.map(w=>({word:w.toUpperCase(),scr:scrambleWord(r,w.toUpperCase()),clue:clueFor(w.toUpperCase())}));
+  if(items.some(i=>i.scr===i.word))return null;
+  return {type:"scramble",title:"Word Scramble",items};
+}
+/* ---- Sudoku: generate, dig holes, count solutions (must be exactly 1) ---- */
+function sdkFull(r){
+  const g=Array.from({length:9},()=>Array(9).fill(0));
+  const ok=(row,col,v)=>{for(let i=0;i<9;i++){if(g[row][i]===v||g[i][col]===v)return false}
+    const br=row-row%3,bc=col-col%3;for(let i=0;i<3;i++)for(let j=0;j<3;j++)if(g[br+i][bc+j]===v)return false;return true};
+  const fill=pos=>{if(pos===81)return true;const row=(pos/9)|0,col=pos%9;
+    for(const v of shuffle(r,[1,2,3,4,5,6,7,8,9])){if(ok(row,col,v)){g[row][col]=v;if(fill(pos+1))return true;g[row][col]=0}}
+    return false};
+  fill(0);return g;
+}
+function sdkCount(g,limit){
+  const grid=g.map(row=>row.slice());let count=0;
+  const ok=(row,col,v)=>{for(let i=0;i<9;i++){if(grid[row][i]===v||grid[i][col]===v)return false}
+    const br=row-row%3,bc=col-col%3;for(let i=0;i<3;i++)for(let j=0;j<3;j++)if(grid[br+i][bc+j]===v)return false;return true};
+  const solve=()=>{if(count>=limit)return;
+    let best=-1,bestOpts=null;
+    for(let pos=0;pos<81;pos++){const row=(pos/9)|0,col=pos%9;if(grid[row][col]===0){
+      const opts=[1,2,3,4,5,6,7,8,9].filter(v=>ok(row,col,v));
+      if(!opts.length)return;
+      if(!bestOpts||opts.length<bestOpts.length){best=pos;bestOpts=opts;if(opts.length===1)break}}}
+    if(best<0){count++;return}
+    const row=(best/9)|0,col=best%9;
+    for(const v of bestOpts){grid[row][col]=v;solve();grid[row][col]=0;if(count>=limit)return}};
+  solve();return count;
+}
+function genSudoku(r,easy){
+  for(let attempt=0;attempt<12;attempt++){
+    const sol=sdkFull(r);
+    const puz=sol.map(row=>row.slice());
+    const target=easy?38:48; /* cells removed */
+    const cells=shuffle(r,Array.from({length:81},(_,i)=>i));
+    let removed=0;
+    for(const pos of cells){
+      if(removed>=target)break;
+      const row=(pos/9)|0,col=pos%9,keep=puz[row][col];
+      puz[row][col]=0;
+      if(sdkCount(puz,2)!==1){puz[row][col]=keep}else removed++;
+    }
+    if(removed>=target-6&&sdkCount(puz,2)===1)
+      return {type:"sudoku",title:"Sudoku",puzzle:puz,solution:sol,givens:81-removed};
+  }
+  return null;
+}
+/* ---- Crossword: criss-cross placement with integrity check ---- */
+function genCrossword(r,bank,easy,opts){
+  opts=opts||{};
+  const size=opts.size||(easy?10:12), want=opts.want||(easy?6:8);
+  const entries=shuffle(r,bank.cross.filter(c=>c[0].length>=3&&c[0].length<=size));
+  const grid=Array.from({length:size},()=>Array(size).fill(null));
+  const placed=[];
+  const canPlace=(w,row,col,dr,dc)=>{
+    if(row<0||col<0||row+dr*(w.length-1)>=size||col+dc*(w.length-1)>=size)return false;
+    let cross=0;
+    for(let i=0;i<w.length;i++){
+      const rr=row+dr*i,cc=col+dc*i,cell=grid[rr][cc];
+      if(cell){if(cell!==w[i])return false;cross++}
+      else{ /* no parallel touching: side cells must be empty unless it is a crossing */
+        const sides=dr===0?[[rr-1,cc],[rr+1,cc]]:[[rr,cc-1],[rr,cc+1]];
+        for(const [sr,sc] of sides){if(sr>=0&&sr<size&&sc>=0&&sc<size&&grid[sr][sc])return false}
+      }
+    }
+    /* ends must be clear */
+    const br=row-dr,bc=col-dc,ar=row+dr*w.length,ac=col+dc*w.length;
+    if(br>=0&&br<size&&bc>=0&&bc<size&&grid[br][bc])return false;
+    if(ar>=0&&ar<size&&ac>=0&&ac<size&&grid[ar][ac])return false;
+    return placed.length===0||cross>0;
+  };
+  const put=(w,row,col,dr,dc,clue)=>{
+    for(let i=0;i<w.length;i++)grid[row+dr*i][col+dc*i]=w[i];
+    placed.push({word:w,r:row,c:col,dr,dc,clue,dir:dr===0?"across":"down"});
+  };
+  for(const [w,clue] of entries){
+    if(placed.length>=want)break;
+    if(placed.length===0){const row=(size/2)|0,col=Math.max(0,((size-w.length)/2)|0);if(canPlace(w,row,col,0,1))put(w,row,col,0,1,clue);continue}
+    let done=false;
+    outer:
+    for(let i=0;i<w.length;i++)for(const p of placed)for(let j=0;j<p.word.length;j++){
+      if(p.word[j]!==w[i])continue;
+      const dr=p.dc,dc=p.dr; /* perpendicular */
+      const row=p.r+p.dr*j-dr*i,col=p.c+p.dc*j-dc*i;
+      if(canPlace(w,row,col,dr,dc)){put(w,row,col,dr,dc,clue);done=true;break outer}
+    }
+    if(!done)continue;
+  }
+  if(placed.length<4)return null;
+  /* integrity: re-extract every word from the grid */
+  for(const p of placed){let s="";for(let i=0;i<p.word.length;i++)s+=grid[p.r+p.dr*i][p.c+p.dc*i];if(s!==p.word)return null}
+  /* numbering */
+  const nums={};let n=0;
+  for(let i=0;i<size;i++)for(let j=0;j<size;j++){
+    if(!grid[i][j])continue;
+    const startsA=(j===0||!grid[i][j-1])&&(j+1<size&&!!grid[i][j+1]);
+    const startsD=(i===0||!grid[i-1][j])&&(i+1<size&&!!grid[i+1][j]);
+    if(startsA||startsD){n++;nums[i+","+j]=n}
+  }
+  for(const p of placed)p.num=nums[p.r+","+p.c];
+  return {type:"crossword",title:"Crossword",grid,placed,size};
+}
+/* ---- Maze: recursive backtracker + BFS solvability proof ---- */
+function genMaze(r,easy){
+  const cols=easy?10:14, rows=easy?8:11;
+  const cells=Array.from({length:rows},()=>Array.from({length:cols},()=>({v:false,w:[true,true,true,true]})));
+  const stack=[[0,0]];cells[0][0].v=true;
+  const D=[[-1,0,0],[0,1,1],[1,0,2],[0,-1,3]];
+  while(stack.length){
+    const [cr,cc]=stack[stack.length-1];
+    const opts=D.filter(([dr,dc])=>{const nr=cr+dr,nc=cc+dc;return nr>=0&&nr<rows&&nc>=0&&nc<cols&&!cells[nr][nc].v});
+    if(!opts.length){stack.pop();continue}
+    const [dr,dc,wi]=pick(r,opts);const nr=cr+dr,nc=cc+dc;
+    cells[cr][cc].w[wi]=false;cells[nr][nc].w[(wi+2)%4]=false;cells[nr][nc].v=true;stack.push([nr,nc]);
+  }
+  /* BFS solution path */
+  const prev=new Map(),q=[[0,0]];prev.set("0,0",null);
+  while(q.length){const [cr,cc]=q.shift();if(cr===rows-1&&cc===cols-1)break;
+    D.forEach(([dr,dc,wi])=>{if(cells[cr][cc].w[wi])return;const nr=cr+dr,nc=cc+dc,k=nr+","+nc;
+      if(!prev.has(k)){prev.set(k,cr+","+cc);q.push([nr,nc])}})}
+  if(!prev.has((rows-1)+","+(cols-1)))return null;
+  const path=[];let k=(rows-1)+","+(cols-1);while(k){path.unshift(k.split(",").map(Number));k=prev.get(k)}
+  return {type:"maze",title:"Maze",cells,rows,cols,path};
+}
+function mazeSVG(m,showPath,widthPx){
+  const cw=34,W=m.cols*cw,H=m.rows*cw;let s=`<svg viewBox="0 0 ${W} ${H}" width="${widthPx||Math.min(620,W*1.6)}" role="img" aria-label="Maze">`;
+  s+=`<rect x="0" y="0" width="${W}" height="${H}" fill="#fffdf4"/>`;
+  if(showPath&&m.path&&m.path.length>1){s+=`<polyline points="${m.path.map(([r,c])=>((c+.5)*cw)+","+((r+.5)*cw)).join(" ")}" fill="none" stroke="#D96B43" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"/>`}
+  s+=`<g stroke="#1B2E26" stroke-width="3.4" stroke-linecap="round">`;
+  for(let r=0;r<m.rows;r++)for(let c=0;c<m.cols;c++){const cell=m.cells[r][c],x=c*cw,y=r*cw;
+    if(cell.w[0]&&!(r===0&&c===0))s+=`<line x1="${x}" y1="${y}" x2="${x+cw}" y2="${y}"/>`;
+    if(cell.w[1])s+=`<line x1="${x+cw}" y1="${y}" x2="${x+cw}" y2="${y+cw}"/>`;
+    if(cell.w[2]&&!(r===m.rows-1&&c===m.cols-1))s+=`<line x1="${x}" y1="${y+cw}" x2="${x+cw}" y2="${y+cw}"/>`;
+    if(cell.w[3])s+=`<line x1="${x}" y1="${y+cw}" x2="${x}" y2="${y}"/>`;}
+  s+=`</g><circle cx="${cw/2}" cy="${cw/2}" r="8" fill="#4A6B5D"/><path d="M${(m.cols-.5)*cw-9} ${(m.rows-.5)*cw+8} l9-16 9 16z" fill="#D96B43"/></svg>`;
+  return s;
+}
+/* ---- Text / memory-care page generators ---- */
+function genTrivia(r,bank,easy){
+  const qs=sample(r,bank.trivia,easy?4:5);
+  return {type:"trivia",title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a}))};
+}
+function genPhrases(r,bank){
+  const items=sample(r,bank.phrases,5);
+  return {type:"phrases",title:"Finish the Phrase",items:items.map(([s,e])=>({start:s,end:e}))};
+}
+function genPrompts(r,bank,count){
+  const items=sample(r,bank.prompts,count||3);
+  return {type:"prompts",title:"Talk About It",items,lines:2};
+}
+function genMatching(r){
+  const objs=sample(r,OBJECTS,6);
+  const order=shuffle(r,objs.map((_,i)=>i));
+  return {type:"matching",title:"Picture Matching",objs,order};
+}
+const GENERATORS={wordsearch:genWordSearch,numbersearch:genNumberSearch,sudoku:genSudoku,crossword:genCrossword,scramble:genScramble,maze:genMaze,trivia:genTrivia,phrases:genPhrases,prompts:genPrompts,matching:genMatching};
+const ACTIVITY_LABEL={wordsearch:"Word Search",numbersearch:"Number Search",sudoku:"Sudoku",crossword:"Crossword",scramble:"Word Scramble",maze:"Mazes",trivia:"Nostalgia Trivia",phrases:"Finish the Phrase",prompts:"Talk About It",matching:"Picture Matching"};
+</script>
+<script>
+"use strict";
+/* ================= BOOK MODEL + GENERATION ================= */
+const FIXED_PAGES=6; /* front cover, belongs, how-to, contents, licence, back cover */
+const AK_SLOTS=4;
+const AK_COST={wordsearch:2,numbersearch:2,sudoku:2,crossword:3,maze:1,scramble:1,trivia:1,phrases:1,matching:1,prompts:0};
+const MIX_PATTERN=["wordsearch","trivia","sudoku","maze","scramble","crossword","prompts","numbersearch","matching","phrases","wordsearch","sudoku","trivia","maze","crossword","scramble","numbersearch","prompts","phrases","matching"];
+let bookSeq=0;
+function makeCtx(){return{usedQ:new Set(),usedPh:new Set(),usedPr:new Set(),fact:0}}
+function pickUnused(r,pool,used,n,key){
+  let avail=pool.filter(x=>!used.has(key(x)));
+  if(avail.length<n){used.clear();avail=pool.slice()}
+  const got=sample(r,avail,n);got.forEach(x=>used.add(key(x)));return got;
+}
+function genPage(r,book,type,ctx){
+  const bank=bankFor(book),easy=book.easy;
+  for(let t=0;t<8;t++){
+    let p=null;
+    try{
+      if(type==="trivia"){const qs=pickUnused(r,bank.trivia,ctx.usedQ,easy?4:5,x=>x[0]);p={type,title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a}))}}
+      else if(type==="phrases"){const it=pickUnused(r,bank.phrases,ctx.usedPh,easy?4:5,x=>x[0]);p={type,title:"Finish the Phrase",items:it.map(([s,e])=>({start:s,end:e}))}}
+      else if(type==="prompts"){const it=pickUnused(r,bank.prompts,ctx.usedPr,book.fontPt>=28?2:3,x=>x);p={type,title:"Talk About It",items:it,lines:book.fontPt>=28?3:2}}
+      else if(type==="numbersearch")p=genNumberSearch(r,bank,easy,book.fontPt>=28?{size:10,count:6}:null);
+      else if(type==="crossword")p=genCrossword(r,bank,easy,book.fontPt>=28?{size:10,want:6}:null);
+      else if(type==="scramble")p=genScramble(r,bank,easy,book.fontPt>=28?4:(easy?4:5));
+      else p=GENERATORS[type](r,bank,easy);
+    }catch(e){p=null}
+    if(p){p.fact=bank.facts[ctx.fact%bank.facts.length];ctx.fact++;return p}
+  }
+  const qs=pickUnused(r,bank.trivia,ctx.usedQ,4,x=>x[0]);
+  const p={type:"trivia",title:"Nostalgia Trivia",items:qs.map(([q,a])=>({q,a})),fact:bank.facts[ctx.fact%bank.facts.length]};ctx.fact++;return p;
+}
+function akPagesFor(pages){ /* simulate the exact greedy packing used by answerKeyPages */
+  let groups=0,slots=0,open=false;
+  for(const p of pages){const cost=AK_COST[p.type]||0;if(!cost)continue;
+    if(open&&slots+cost>AK_SLOTS){groups++;slots=0;open=false}
+    slots+=cost;open=true}
+  if(open)groups++;
+  return Math.max(1,groups);
+}
+function generateBook(opts){
+  const r=rng(opts.seed||1);
+  const book={id:"bk"+Date.now().toString(36)+(bookSeq++),seed:opts.seed||1,
+    decade:opts.decade||"mix",sizeTarget:opts.size||100,fontPt:opts.fontPt||24,easy:!!opts.easy,
+    mix:opts.mix||null,coverTheme:opts.coverTheme||"sunroom",
+    title:opts.title||"",subtitle:opts.subtitle||"",forName:opts.forName||"",publisher:opts.publisher||"",
+    coverPhoto:"",photoZoom:120,pages:[],totalPages:0,createdAt:Date.now()};
+  const bank=bankFor(book);
+  if(!book.title)book.title="Large Print Activity Book";
+  if(!book.subtitle)book.subtitle="Word Searches • Sudoku • Crosswords • Mazes • Trivia & More — All in Easy-to-Read Large Print";
+  const ctx=makeCtx();
+  const pattern=book.mix&&book.mix.length?book.mix:MIX_PATTERN;
+  let P=book.sizeTarget-FIXED_PAGES-6;
+  const pages=[];
+  let guard=0;
+  while(pages.length<P&&guard++<400){pages.push(genPage(r,book,pattern[pages.length%pattern.length],ctx))}
+  let A=akPagesFor(pages);
+  while(FIXED_PAGES+pages.length+A>book.sizeTarget&&pages.length>12){pages.pop();A=akPagesFor(pages)}
+  const fillers=["prompts","trivia","phrases","matching"];
+  let fi=0;
+  while(FIXED_PAGES+pages.length+A<book.sizeTarget){
+    const want=fillers[fi++%fillers.length];
+    const trial=want==="prompts"||(FIXED_PAGES+pages.length+1+akPagesFor(pages.concat([{type:want}]))<=book.sizeTarget)?want:"prompts";
+    pages.push(genPage(r,book,trial,ctx));A=akPagesFor(pages);
+  }
+  book.pages=pages;book.totalPages=FIXED_PAGES+pages.length+A;
+  book.puzzleCount=pages.length;
+  return book;
+}
+/* ================= PAGE RENDERING ================= */
+function bfsVar(book){return `--bfs:${book.fontPt}pt`}
+function pgFoot(book,n){
+  return `<div class="pg-foot"><span>${esc(book.publisher||"Golden Years Activity Studio")}</span><span>${esc(book.title)}</span><span>Page ${n} of ${book.totalPages}</span></div>`;
+}
+function sheet(book,inner,n,cls,extraStyle){
+  return `<div class="sheet ${cls||""}" style="${bfsVar(book)}${extraStyle?";"+extraStyle:""}"><div class="pg-inner">${inner}</div>${n?pgFoot(book,n):""}</div>`;
+}
+/* Adaptive grid cell size (pt) so a page never overflows at 20/24/28pt */
+function cellFor(book,p){
+  const f=book.fontPt,AVAIL=640,head=f*5.3,fact=f*3.9;
+  if(p.type==="wordsearch"){const bank=Math.ceil(p.placed.length/3)*f*1.3+12;return Math.max(19,Math.min(f*1.38,(AVAIL-head-fact-bank)/(p.grid.length*1.08)))}
+  if(p.type==="numbersearch"){const bank=Math.ceil(p.placed.length/2)*f*2.55+12;return Math.max(20,Math.min(f*1.3,(AVAIL-head-fact-bank)/(p.grid.length*1.08)))}
+  if(p.type==="sudoku")return Math.max(24,Math.min(f*1.55,(AVAIL-head-fact-f*1.7)/(9*1.05)));
+  if(p.type==="crossword"){const B=cwBounds(p);const rows=B.mxr-B.mnr+1,cols=B.mxc-B.mnc+1;
+    return Math.max(17,Math.min(f*1.6,(AVAIL-head-fact)/rows,370/cols))}
+  return null;
+}
+function factBox(p){return p&&p.fact?`<div class="fact"><b>Did You Know?</b> ${esc(p.fact)}</div>`:""}
+const INSTR={wordsearch:"Find each word in the letter grid. Words run across, down and diagonally.",
+ numbersearch:"Find each special number hiding in the digit grid.",
+ sudoku:"Fill every row, column and 3×3 box with the numbers 1 to 9.",
+ crossword:"Use the clues to fill in the grid, one letter in each square.",
+ scramble:"Unscramble each word. The clue helps!",
+ maze:"Draw a path from the green start circle to the orange finish flag.",
+ trivia:"Take your time and enjoy remembering! Answers are in the back of the book.",
+ phrases:"Finish each famous phrase or song line. Answers are in the back.",
+ prompts:"Share these memories out loud with a friend, or write a few lines. There are no wrong answers!",
+ matching:"Match each picture to its shadow. Write the shadow's letter on the line."};
+function cwBounds(p){let mnr=99,mxr=-1,mnc=99,mxc=-1;
+  for(let i=0;i<p.grid.length;i++)for(let j=0;j<p.grid[i].length;j++)if(p.grid[i][j]){mnr=Math.min(mnr,i);mxr=Math.max(mxr,i);mnc=Math.min(mnc,j);mxc=Math.max(mxc,j)}
+  return {mnr,mxr,mnc,mxc};
+}
+function pageHTML(book,p,idx){
+  const head=`<div class="pg-kicker">${esc(ACTIVITY_LABEL[p.type])} · ${esc(bankFor(book).name)}</div><h3 class="pg-title">${esc(p.title)} ${p.type==="wordsearch"||p.type==="numbersearch"||p.type==="sudoku"||p.type==="crossword"||p.type==="maze"?"· No. "+(idx+1):""}</h3><p class="pg-sub">${esc(INSTR[p.type])}</p>`;
+  let body="";
+  if(p.type==="wordsearch"||p.type==="numbersearch"){
+    const cls=p.type==="wordsearch"?"ws-grid":"ns-grid";
+    body=`<table class="${cls}">${p.grid.map(row=>"<tr>"+row.map(ch=>`<td>${ch}</td>`).join("")+"</tr>").join("")}</table>`;
+    if(p.type==="wordsearch")body+=`<div class="word-bank" style="columns:3">${p.placed.map(x=>`<div>• ${esc(x.word)}</div>`).join("")}</div>`;
+    else body+=`<div class="word-bank">${p.placed.map(x=>`<div>• ${esc(x.word)} — ${esc(p.labels[x.word]||"")}</div>`).join("")}</div>`;
+  }
+  else if(p.type==="sudoku"){
+    body=`<table class="sdk">${p.puzzle.map((row,i)=>"<tr>"+row.map((v,j)=>`<td class="${v?"giv":""} ${j%3===2&&j<8?"bx":""} ${i%3===2&&i<8?"by":""} ${j%3===0&&j>0?"lx":""} ${i%3===0&&i>0?"ty":""}">${v||""}</td>`).join("")+"</tr>").join("")}</table><p class="pg-sub" style="text-align:center">${p.givens} numbers are given to get you started.</p>`;
+  }
+  else if(p.type==="crossword"){
+    const starts={};for(const pl of p.placed)starts[pl.r+","+pl.c]=pl.num;
+    const B=cwBounds(p);let rows="";
+    for(let i=B.mnr;i<=B.mxr;i++){rows+="<tr>";for(let j=B.mnc;j<=B.mxc;j++){const ch=p.grid[i][j];
+      rows+=ch?`<td class="cell">${starts[i+","+j]?`<span class="num">${starts[i+","+j]}</span>`:""}</td>`:`<td class="blk"></td>`}rows+="</tr>"}
+    body=`<div class="cw-wrap"><table class="cw-grid">${rows}</table>`;
+    const ac=p.placed.filter(x=>x.dir==="across").sort((a,b)=>a.num-b.num),dn=p.placed.filter(x=>x.dir==="down").sort((a,b)=>a.num-b.num);
+    body+=`<div class="cw-clues"><h4>Across</h4>${ac.map(x=>`<div><b>${x.num}.</b> ${esc(x.clue)}</div>`).join("")}<h4>Down</h4>${dn.map(x=>`<div><b>${x.num}.</b> ${esc(x.clue)}</div>`).join("")}</div></div>`;
+  }
+  else if(p.type==="scramble"){
+    body=p.items.map((it,i)=>`<div class="scr-word">${esc(it.scr)}</div><p class="scr-clue">Clue: ${esc(it.clue)}</p><div class="scr-line"></div>`).join("");
+  }
+  else if(p.type==="maze"){body=`<div class="maze-box">${mazeSVG(p,false)}</div>`}
+  else if(p.type==="trivia"){body=p.items.map((it,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(it.q)}</p>`).join("")}
+  else if(p.type==="phrases"){body=p.items.map((it,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(it.start)} <b>_______________</b></p>`).join("")}
+  else if(p.type==="prompts"){body=p.items.map((q,i)=>`<p class="q-line"><span class="qn">${i+1}.</span> ${esc(q)}</p><div class="write-lines">${'<div class="wl"></div>'.repeat(p.lines||2)}</div>`).join("")}
+  else if(p.type==="matching"){
+    const left=p.objs.map((o,i)=>`<div class="match-item">${objSVG(o,false)}<span>${esc(o.name)}</span><span style="margin-left:auto;border-bottom:2px solid #9db3a6;width:1.1em;text-align:center">&nbsp;</span></div>`).join("");
+    const right=p.order.map((oi,k)=>`<div class="match-item">${objSVG(p.objs[oi],true)}<span class="ltr">${"ABCDEF"[k]}</span></div>`).join("");
+    body=`<div class="match-cols"><div class="match-col">${left}</div><div class="match-col">${right}</div></div>`;
+  }
+  return head+body+factBox(p);
+}
+/* ---- answer key ---- */
+function akItemHTML(book,p,idx){
+  const h=`<h4>${esc(p.title)} — page ${5+idx}</h4>`;
+  if(p.type==="wordsearch"||p.type==="numbersearch"){
+    const sol=new Set();for(const pl of p.placed)for(let i=0;i<pl.word.length;i++)sol.add((pl.r+pl.dr*i)+","+(pl.c+pl.dc*i));
+    return `<div class="ak-item">${h}<table class="ak-grid">${p.grid.map((row,i)=>"<tr>"+row.map((ch,j)=>`<td class="${sol.has(i+","+j)?"sol":""}">${ch}</td>`).join("")+"</tr>").join("")}</table></div>`;
+  }
+  if(p.type==="sudoku")return `<div class="ak-item">${h}<table class="ak-sdk">${p.solution.map(row=>"<tr>"+row.map(v=>`<td>${v}</td>`).join("")+"</tr>").join("")}</table></div>`;
+  if(p.type==="crossword"){
+    const B=cwBounds(p);let rows="";
+    for(let i=B.mnr;i<=B.mxr;i++){rows+="<tr>";for(let j=B.mnc;j<=B.mxc;j++)rows+=`<td>${p.grid[i][j]||""}</td>`;rows+="</tr>"}
+    return `<div class="ak-item">${h}<table class="ak-grid">${rows}</table><div>${p.placed.map(x=>`<b>${x.num}.</b> ${esc(x.word)}`).join(" · ")}</div></div>`;
+  }
+  if(p.type==="maze")return `<div class="ak-item">${h}<div class="maze-box">${mazeSVG(p,true,300)}</div></div>`;
+  if(p.type==="scramble")return `<div class="ak-item">${h}${p.items.map((it,i)=>`<div>${i+1}. ${esc(it.word)}</div>`).join("")}</div>`;
+  if(p.type==="trivia")return `<div class="ak-item">${h}${p.items.map((it,i)=>`<div>${i+1}. ${esc(it.a)}</div>`).join("")}</div>`;
+  if(p.type==="phrases")return `<div class="ak-item">${h}${p.items.map((it,i)=>`<div>${i+1}. ${esc(it.start)} ${esc(it.end)}</div>`).join("")}</div>`;
+  if(p.type==="matching"){
+    const pairs=p.objs.map((o,i)=>{const k=p.order.indexOf(i);return `${o.name} — ${"ABCDEF"[k]}`});
+    return `<div class="ak-item">${h}${pairs.map(x=>`<div>${esc(x)}</div>`).join("")}</div>`;
+  }
+  return "";
+}
+function answerKeyPages(book){
+  const groups=[];let curGroup=[],slots=0;
+  book.pages.forEach((p,idx)=>{const cost=AK_COST[p.type]||0;if(!cost)return;
+    if(slots+cost>AK_SLOTS&&curGroup.length){groups.push(curGroup);curGroup=[];slots=0}
+    curGroup.push([p,idx]);slots+=cost});
+  if(curGroup.length)groups.push(curGroup);
+  return groups.map((g,gi)=>`<div class="pg-kicker">Answer Key</div><h3 class="pg-title">Answers ${groups.length>1?"· Part "+(gi+1):""}</h3>`+g.map(([p,idx])=>akItemHTML(book,p,idx)).join(""));
+}
+</script>
+<script>
+"use strict";
+/* ================= COVER THEMES (Gemini consult direction) ================= */
+const COVER_THEMES={
+ sunroom:{name:"Cozy Sunroom & Botanical Garden",bg:"#FDF8F0",ink:"#1B2E26",accent:"#4A6B5D",accent2:"#D96B43",badge:"#D96B43",gold:"#C59B27",pillink:"#FFFFFF",motif:"leaf"},
+ diner:{name:"Golden Nostalgia Diner",bg:"#FAF3E0",ink:"#1D2D44",accent:"#3d8f8d",accent2:"#C83E3B",badge:"#C83E3B",gold:"#C59B27",pillink:"#FFFFFF",motif:"starburst"},
+ library:{name:"Classic Heritage Library",bg:"#F9F6EE",ink:"#1B365D",accent:"#6B1D2F",accent2:"#C59B27",badge:"#6B1D2F",gold:"#C59B27",pillink:"#FFFFFF",motif:"book"},
+ coastal:{name:"Coastal Porch & Lighthouse",bg:"#EFE5D5",ink:"#1A3A5A",accent:"#1A3A5A",accent2:"#E07A5F",badge:"#E07A5F",gold:"#C59B27",pillink:"#FFFFFF",motif:"lighthouse"},
+ farmhouse:{name:"Countryside Farmhouse & Quilt",bg:"#F4EFE6",ink:"#2E4763",accent:"#9E2A2B",accent2:"#DDA15E",badge:"#9E2A2B",gold:"#C59B27",pillink:"#FFFFFF",motif:"quilt"},
+ autumn:{name:"Autumn Harvest & Fireside",bg:"#FBF6EC",ink:"#4A2545",accent:"#BC5D2E",accent2:"#7F8C4E",badge:"#4A2545",gold:"#C59B27",pillink:"#FFFFFF",motif:"leaf"},
+ bold:{name:"High-Contrast Bold Classic",bg:"#FFD166",ink:"#14213D",accent:"#14213D",accent2:"#D62828",badge:"#D62828",gold:"#14213D",pillink:"#FFFFFF",motif:"rays"}
+};
+function motifSVG(kind,th){
+  const a=th.accent,b=th.accent2;
+  if(kind==="leaf")return `<svg viewBox="0 0 200 170"><g fill="none" stroke="${a}" stroke-width="4" stroke-linecap="round"><path d="M100 165 C100 110 100 60 100 20"/><path d="M100 120 C70 118 52 100 48 72 C76 76 94 92 100 120Z" fill="${a}" opacity=".55"/><path d="M100 120 C130 118 148 100 152 72 C124 76 106 92 100 120Z" fill="${b}" opacity=".55"/><path d="M100 84 C76 82 62 68 59 46 C82 50 96 62 100 84Z" fill="${b}" opacity=".5"/><path d="M100 84 C124 82 138 68 141 46 C118 50 104 62 100 84Z" fill="${a}" opacity=".5"/></g><circle cx="100" cy="14" r="7" fill="${b}"/></svg>`;
+  if(kind==="starburst")return `<svg viewBox="0 0 200 170"><g fill="${b}"><path d="M100 10 L108 66 L164 40 L116 80 L172 92 L114 98 L150 142 L106 106 L100 162 L94 106 L50 142 L86 98 L28 92 L84 80 L36 40 L92 66Z"/></g><circle cx="100" cy="88" r="17" fill="${a}"/><circle cx="100" cy="88" r="9" fill="#FAF3E0"/></svg>`;
+  if(kind==="book")return `<svg viewBox="0 0 200 170"><g fill="none" stroke="${a}" stroke-width="4"><path d="M100 34 C78 18 48 16 26 24 L26 138 C48 130 78 132 100 148 C122 132 152 130 174 138 L174 24 C152 16 122 18 100 34Z" fill="${a}" opacity=".14"/><path d="M100 34 L100 148"/><path d="M40 44 C58 38 78 39 90 46 M40 66 C58 60 78 61 90 68 M40 88 C58 82 78 83 90 90 M110 46 C122 39 142 38 160 44 M110 68 C122 61 142 60 160 66 M110 90 C122 83 142 82 160 88" stroke="${b}" stroke-width="3"/></g></svg>`;
+  if(kind==="lighthouse")return `<svg viewBox="0 0 200 170"><g><path d="M86 150 L94 62 L106 62 L114 150Z" fill="${a}"/><path d="M90 108 L110 108 L112 126 L88 126Z" fill="${b}"/><rect x="90" y="44" width="20" height="18" fill="${b}"/><path d="M82 44 L118 44 L106 30 L94 30Z" fill="${a}"/><path d="M118 50 L168 34 M118 56 L170 62" stroke="${b}" stroke-width="4" stroke-linecap="round"/><path d="M20 152 q14-10 28 0 q14 10 28 0 q14-10 28 0 q14 10 28 0 q14-10 28 0" fill="none" stroke="${a}" stroke-width="4"/></g></svg>`;
+  if(kind==="quilt")return `<svg viewBox="0 0 200 170"><g stroke="#F4EFE6" stroke-width="3">${Array.from({length:4},(_,r)=>Array.from({length:5},(_,c)=>`<rect x="${14+c*35}" y="${12+r*37}" width="35" height="37" fill="${(r+c)%3===0?b:(r+c)%3===1?a:"#3D5A80"}"/>`).join("")).join("")}</g></svg>`;
+  return `<svg viewBox="0 0 200 170"><g fill="${b}">${Array.from({length:12},(_,i)=>{const an=i*Math.PI/6;const x1=100+Math.cos(an)*26,y1=85+Math.sin(an)*26,x2=100+Math.cos(an)*76,y2=85+Math.sin(an)*76;return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${b}" stroke-width="7" stroke-linecap="round"/>`}).join("")}</g><circle cx="100" cy="85" r="25" fill="${a}"/></svg>`;
+}
+function coverVars(book){const th=COVER_THEMES[book.coverTheme]||COVER_THEMES.sunroom;
+  return `--cv-bg:${th.bg};--cv-ink:${th.ink};--cv-accent:${th.accent};--cv-accent2:${th.accent2};--cv-badge:${th.badge};--cv-gold:${th.gold};--cv-pillink:${th.pillink}`}
+function keepsakeHTML(book,small){
+  const zoom=book.photoZoom||120;
+  return `<div class="keepsake ${small?"keepsake-sm":""}"><div class="kimg"><img src="${book.coverPhoto}" alt="Cover photo" style="transform:scale(${zoom/100})"></div></div>`;
+}
+function coverHTML(book,back){
+  const th=COVER_THEMES[book.coverTheme]||COVER_THEMES.sunroom;
+  if(!back){
+    const hero=book.coverPhoto
+      ? keepsakeHTML(book,false)+`<div class="k-plaque">${esc(book.forName||"With Love")}</div>`
+      : `<div class="cov-motifbox">${motifSVG(th.motif,th)}</div>`;
+    return `<div class="cov-frame"><div class="cov-border"></div>
+      <div class="cov-pill">Extra-Large Print • Easy on the Eyes</div>
+      <h2 class="cov-title">${esc(book.title)}</h2>
+      <p class="cov-sub">${esc(book.subtitle)}</p>
+      <div class="cov-hero">${hero}</div>
+      <div class="cov-seal"><span class="big">${book.puzzleCount||0}</span><span class="sm">FUN PUZZLES &amp; SOLUTIONS INCLUDED</span></div>
+      <div class="cov-for">Specially Created For: <b>${esc(book.forName||"You")}</b></div>
+    </div>`;
+  }
+  const bullets=["Extra-large, high-contrast print — gentle on tired eyes","A relaxing mix of puzzles, trivia and memory-lane moments","Every puzzle solved for you in the large-print answer key","Made for cosy afternoons, quiet mornings and good company"];
+  const miniIdx=[0,1,2].map(k=>book.pages.findIndex((p,i)=>i>=k*2&&(p.type==="wordsearch"||p.type==="sudoku"||p.type==="maze"))).map(x=>x<0?0:x);
+  const minis=book.pages.length?miniIdx.map(i=>miniPageHTML(book,i)).join(""):"";
+  return `<div class="cov-frame" style="align-items:stretch;text-align:left">
+    <div class="cov-border"></div>
+    ${book.coverPhoto?`<div style="position:absolute;top:0.55in;right:0.62in;z-index:2">${keepsakeHTML(book,true)}</div>`:""}
+    <h2 class="back-head">Hours of Relaxing,<br>Easy-to-Read Fun</h2>
+    <ul class="back-bullets" ${book.coverPhoto?`style="margin-right:2.35in"`:''}>${bullets.map(b=>`<li>${b}</li>`).join("")}</ul>
+    <div style="font-weight:800;letter-spacing:.1em;font-size:11pt;color:var(--cv-accent2);margin-top:0.24in;position:relative;z-index:2">LOOK INSIDE</div>
+    <div class="lookstrip">${minis}</div>
+    <div class="cov-pub">${esc(book.publisher||"Golden Years Activity Studio")}</div>
+    <div class="barcode-zone"></div>
+  </div>`;
+}
+function miniPageHTML(book,idx){
+  const p=book.pages[idx];if(!p)return "";
+  return `<div class="mini-page"><div class="mini-in"><div class="pg-inner" style="position:relative;width:8.5in;height:11in;--bfs:24pt">${pageHTML(book,p,idx)}</div></div></div>`;
+}
+function coverSheet(book,back){
+  return `<div class="sheet cover-sheet" style="${coverVars(book)};${bfsVar(book)}">${coverHTML(book,back)}</div>`;
+}
+/* ---- front matter + licence ---- */
+function belongsHTML(book){
+  return `<div style="text-align:center;margin-top:1.2in"><div class="pg-kicker">${esc(bankFor(book).name)}</div>
+  <h3 class="pg-title" style="font-size:34pt">${esc(book.title)}</h3>
+  <p class="pg-sub" style="margin-top:0.5in">This book belongs to</p>
+  <div style="border-bottom:3px solid #4A6B5D;width:70%;margin:0.35in auto 0;height:0.7in"></div>
+  <p class="pg-sub" style="margin-top:0.6in;font-size:calc(var(--bfs) * .8)">With love, from ${esc(book.publisher||"Golden Years Activity Studio")}</p></div>`;
+}
+function howtoHTML(book){
+  return `<div class="pg-kicker">Getting Started</div><h3 class="pg-title">How to Use This Book</h3>
+  <div style="display:flex;flex-direction:column;gap:10px">
+  <p class="pg-sub">Welcome! Every page is printed large and clear, so you can relax and enjoy it anywhere — in your favourite chair, at the kitchen table, or out on the porch.</p>
+  <p class="pg-sub">• Take one page at a time. There is no clock and no score.</p>
+  <p class="pg-sub">• Use a bold pen or a soft pencil — whatever feels best in your hand.</p>
+  <p class="pg-sub">• “Talk About It” pages are made for sharing memories with family and friends.</p>
+  <p class="pg-sub">• Stuck on a puzzle? Every answer is waiting in the Answer Key at the back.</p>
+  <p class="pg-sub">Most of all — enjoy the trip down memory lane.</p></div>`;
+}
+function contentsHTML(book){
+  const first={},counts={};
+  book.pages.forEach((p,i)=>{if(!(p.type in first))first[p.type]=5+i;counts[p.type]=(counts[p.type]||0)+1});
+  const akStart=5+book.pages.length;
+  const rows=Object.keys(counts).sort((a,b)=>first[a]-first[b]).map(t=>`<p class="pg-sub" style="display:flex;justify-content:space-between;border-bottom:1.5px dotted #b9c8bd;padding:5px 0"><span>${esc(ACTIVITY_LABEL[t])} <span style="color:#8a8578">(${counts[t]} pages)</span></span><b>${first[t]}</b></p>`).join("");
+  return `<div class="pg-kicker">Contents</div><h3 class="pg-title">What's Inside</h3>${rows}
+  <p class="pg-sub" style="display:flex;justify-content:space-between;border-bottom:1.5px dotted #b9c8bd;padding:5px 0"><span>Answer Key</span><b>${akStart}</b></p>`;
+}
+function licenceHTML(book){
+  return `<div class="pg-kicker">About This Book</div><h3 class="pg-title">A Note From the Publisher</h3>
+  <p class="pg-sub">Thank you for choosing this book. It was created with care for readers who love large, clear print and the golden days of ${esc(bankFor(book).name)}.</p>
+  <p class="pg-sub" style="margin-top:14px">Published by ${esc(book.publisher||"Golden Years Activity Studio")}.</p>
+  <p class="pg-sub" style="margin-top:14px;font-size:calc(var(--bfs) * .75)">© ${new Date().getFullYear()} ${esc(book.publisher||"Golden Years Activity Studio")}. All rights reserved. This book is for personal enjoyment; please do not copy or resell its pages.</p>`;
+}
+function composeBook(book){
+  const S=[];const T=book.totalPages;
+  S.push(coverSheet(book,false));
+  S.push(sheet(book,belongsHTML(book),2));
+  S.push(sheet(book,howtoHTML(book),3));
+  S.push(sheet(book,contentsHTML(book),4));
+  book.pages.forEach((p,i)=>{const cf=cellFor(book,p);S.push(sheet(book,pageHTML(book,p,i),5+i,"",cf?`--cell:${cf.toFixed(1)}pt`:""))});
+  answerKeyPages(book).forEach((html,i)=>S.push(sheet(book,html,5+book.pages.length+i)));
+  S.push(sheet(book,licenceHTML(book),T-1));
+  S.push(coverSheet(book,true));
+  return S;
+}
+/* ---- KDP wrap cover: one sheet, front + spine + back ---- */
+function wrapHTML(book){
+  const spineIn=Math.max(0.18,book.totalPages*0.0025);
+  const W=(8.5*2+spineIn+0.25),H=11.25;
+  return `<div class="sheet" style="width:${W}in;height:${H}in;${coverVars(book)}">
+    <div style="position:absolute;top:0.125in;left:0.125in;width:8.5in;height:11in">${coverHTML(book,true)}</div>
+    <div style="position:absolute;top:0.125in;left:${0.125+8.5}in;width:${spineIn}in;height:11in;background:var(--cv-accent);color:var(--cv-pillink);display:flex;align-items:center;justify-content:center">
+      <div style="transform:rotate(90deg);white-space:nowrap;font-family:Georgia,serif;font-size:11pt">${esc(book.title)} · ${esc(book.publisher||"Golden Years Activity Studio")}</div></div>
+    <div style="position:absolute;top:0.125in;left:${0.125+8.5+spineIn}in;width:8.5in;height:11in">${coverHTML(book,false)}</div>
+  </div>`;
+}
+</script>
+<script>
+"use strict";
+/* ================= APP STATE + PERSISTENCE ================= */
+const LSKEY="seniors_books_v1",LASTKEY="seniors_last_book_id";
+let cur=null,activeTab="quick";
+let quickSel={decade:"mix",size:100,fontPt:24};
+let buildSel={decade:"mix",size:100,fontPt:24,easy:false,mix:[]};
+function loadBooks(){try{return JSON.parse(localStorage.getItem(LSKEY))||[]}catch(e){return[]}}
+function saveBooks(a){try{localStorage.setItem(LSKEY,JSON.stringify(a))}catch(e){}}
+function autosave(){if(!cur)return;const a=loadBooks();const i=a.findIndex(x=>x.id===cur.id);
+  const copy=JSON.parse(JSON.stringify(cur));if(i>=0)a[i]=copy;else a.push(copy);saveBooks(a);
+  try{localStorage.setItem(LASTKEY,cur.id)}catch(e){}}
+function restoreLast(){if(cur)return;try{const a=loadBooks();if(!a.length)return;
+  const id=localStorage.getItem(LASTKEY);const hit=id?a.find(x=>x.id===id):null;
+  cur=JSON.parse(JSON.stringify(hit||a[a.length-1]))}catch(e){}}
+const TABS=[["quick","⚡ Quick Start"],["build","📖 Build Book"],["design","🎨 Cover Studio"],["export","🖨 Book & Export"],["books","📂 My Books"],["etsy","🛍 Etsy Kit"]];
+function chipUpdate(){const el=$("#bookChip");
+  if(!cur){el.innerHTML="No book yet — make one in the <b>⚡ Quick Start</b> tab.";return}
+  el.innerHTML=`📖 <b>${esc(cur.title)}</b> · ${cur.totalPages} pages · ${cur.puzzleCount} activities · ${cur.fontPt}pt print`;}
+function renderTabs(){$("#tabNav").innerHTML=TABS.map(([k,l])=>`<button class="tab-btn ${k===activeTab?"active":""}" data-tab="${k}">${l}</button>`).join("");
+  document.querySelectorAll("#tabNav .tab-btn").forEach(b=>b.onclick=()=>{activeTab=b.dataset.tab;render()});}
+function render(){renderTabs();chipUpdate();const P={quick:renderQuick,build:renderBuild,design:renderDesign,export:renderExport,books:renderBooks,etsy:renderEtsy};
+  const el=$("#panels");el.innerHTML="";const d=document.createElement("div");d.className="panel";el.appendChild(d);P[activeTab](d);}
+function needBook(el){el.innerHTML=`<h2>Nothing here yet</h2><p class="sub">Generate a book in the ⚡ Quick Start tab first — it takes just a few seconds — or open a ready-made starter book from My Books.</p><div class="btn-row"><button class="btn btn-cta" id="nbQuick" type="button">⚡ Quick Start — Make a Book</button><button class="btn" id="nbBooks" type="button">📂 My Books &amp; Starters</button></div>`;
+  $("#nbQuick").onclick=()=>{activeTab="quick";render()};$("#nbBooks").onclick=()=>{activeTab="books";render()};}
+function field(label,val,attrs){return `<div><label class="f">${label}</label><input class="inp" value="${esc(val)}" ${attrs||""}></div>`}
+function doGenerate(opts){
+  toast("Building your book — this can take a few seconds…");
+  setTimeout(()=>{cur=generateBook(opts);autosave();toast("Your book is ready: "+cur.totalPages+" pages, "+cur.puzzleCount+" activities.");render()},30);
+}
+/* ---------- Quick Start ---------- */
+const QS_THEMES=[["mix","🌼","Golden Mix"],["fifties","🎙","1950s"],["sixties","☮","1960s"],["seventies","🪩","1970s"],["eighties","📼","1980s"]];
+function quickGenerate(){doGenerate({decade:quickSel.decade,size:quickSel.size,fontPt:quickSel.fontPt,seed:Date.now()%2000000000})}
+function coverPreviewHTML(book,back,scale){
+  const s=scale||0.4;
+  return `<div style="width:${Math.round(816*s)}px;height:${Math.round(1056*s)}px;overflow:hidden;border-radius:6px;box-shadow:0 10px 26px rgba(0,0,0,.25);margin:0 auto">
+    <div class="sheet cover-sheet" style="width:8.5in;height:11in;transform:scale(${s});transform-origin:top left;${coverVars(book)};${bfsVar(book)}">${coverHTML(book,back)}</div></div>`;
+}
+function renderQuick(el){
+  el.innerHTML=`<h2>Make a Book in 3 Easy Steps</h2><p class="sub">Tap, tap, done — a complete large-print activity book, ready to print or sell.</p>
+  <div class="qs-step">Step 1 · Pick a theme</div>
+  <div class="theme-cards">${QS_THEMES.map(([k,ic,l])=>`<div class="tcard ${quickSel.decade===k?"sel":""}" data-qtheme="${k}"><span class="tic">${ic}</span><span class="tlab">${l}</span></div>`).join("")}</div>
+  <div class="qs-step">Step 2 · Book size &amp; print size</div>
+  <div class="pill-row">${[[50,"50 pages","Cosy booklet"],[100,"100 pages","Most popular"],[120,"120+ pages","Big value book"]].map(([v,l,s])=>`<div class="pill ${quickSel.size===v?"sel":""}" data-qsize="${v}">${l}<small>${s}</small></div>`).join("")}</div>
+  <div class="pill-row" style="margin-top:8px">${[20,24,28].map(v=>`<div class="pill ${quickSel.fontPt===v?"sel":""}" data-qfont="${v}">${v}pt<small>${v===20?"Large":v===24?"Extra large":"Jumbo print"}</small></div>`).join("")}</div>
+  <div class="qs-step">Step 3 · Make my book</div>
+  <button id="qGen" type="button">⚙ Generate My Book</button>
+  <div id="qsReady"></div>`;
+  el.querySelectorAll("[data-qtheme]").forEach(c=>c.onclick=()=>{quickSel.decade=c.dataset.qtheme;render()});
+  el.querySelectorAll("[data-qsize]").forEach(c=>c.onclick=()=>{quickSel.size=+c.dataset.qsize;render()});
+  el.querySelectorAll("[data-qfont]").forEach(c=>c.onclick=()=>{quickSel.fontPt=+c.dataset.qfont;render()});
+  $("#qGen").onclick=quickGenerate;
+  if(cur){const r=$("#qsReady");
+    r.innerHTML=`<div class="qs-ready"><div style="font-size:19px;font-weight:800">✅ Your book is ready!</div>
+    ${coverPreviewHTML(cur,false,0.42)}
+    <div class="stats">“${esc(cur.title)}” — ${cur.totalPages} pages · ${cur.puzzleCount} activities · ${cur.fontPt}pt large print</div>
+    <button id="qPdf" type="button">🖨 Get the Complete Book (PDF)</button>
+    <div class="btn-row" style="justify-content:center"><button class="btn" id="qCover" type="button">🎨 Change the Cover</button><button class="btn" id="qAgain" type="button">🔀 Make Another Book</button></div></div>`;
+    $("#qPdf").onclick=()=>printBook();
+    $("#qCover").onclick=()=>{activeTab="design";render()};
+    $("#qAgain").onclick=quickGenerate;}
+}
+/* ---------- Build Book (advanced) ---------- */
+function renderBuild(el){
+  el.innerHTML=`<h2>Build Book — Full Control</h2><p class="sub">Choose the theme, size and the exact mix of activities. Quick Start is faster; this tab is for fine-tuning.</p>
+  <div class="grid2">
+    <div><label class="f">Theme (decade)</label><select class="inp" id="bDecade">
+      ${[["mix","🌼 Golden Mix — all four decades"],["fifties","1950s — The Fabulous Fifties"],["sixties","1960s — The Swinging Sixties"],["seventies","1970s — The Groovy Seventies"],["eighties","1980s — The Totally Eighties"]].map(([v,l])=>`<option value="${v}" ${buildSel.decade===v?"selected":""}>${l}</option>`).join("")}</select></div>
+    <div><label class="f">Book size</label><select class="inp" id="bSize">${[50,100,120].map(v=>`<option value="${v}" ${buildSel.size===v?"selected":""}>${v===120?"120+":v} pages</option>`).join("")}</select></div>
+    <div><label class="f">Print size</label><select class="inp" id="bFont">${[20,24,28].map(v=>`<option value="${v}" ${buildSel.fontPt===v?"selected":""}>${v}pt large print</option>`).join("")}</select></div>
+    <div><label class="f">Easy mode (gentler puzzles, smaller grids)</label><select class="inp" id="bEasy"><option value="0" ${!buildSel.easy?"selected":""}>Standard</option><option value="1" ${buildSel.easy?"selected":""}>Easy mode ON</option></select></div>
+  </div>
+  <label class="f" style="margin-top:14px">Activity mix (tick the ones to include — the book cycles through them)</label>
+  <div class="checkrow" id="bMix">${Object.keys(ACTIVITY_LABEL).map(k=>`<label><input type="checkbox" data-mix="${k}" ${!buildSel.mix.length||buildSel.mix.includes(k)?"checked":""}> ${ACTIVITY_LABEL[k]}</label>`).join("")}</div>
+  <div class="btn-row"><button class="btn btn-cta" id="bGen" type="button">⚙ Generate Book With These Settings</button></div>
+  ${cur?`<p class="sub" style="margin-top:14px">Current book: <b>${esc(cur.title)}</b> — ${cur.totalPages} pages, ${cur.puzzleCount} activities. Pages: ${cur.pages.map(p=>ACTIVITY_LABEL[p.type]).filter((v,i,a)=>a.indexOf(v)===i).join(" · ")}</p>`:`<p class="sub" style="margin-top:14px">No book yet — generate one above.</p>`}`;
+  $("#bGen").onclick=()=>{
+    buildSel.decade=$("#bDecade").value;buildSel.size=+$("#bSize").value;buildSel.fontPt=+$("#bFont").value;buildSel.easy=$("#bEasy").value==="1";
+    buildSel.mix=Array.from(el.querySelectorAll("[data-mix]:checked")).map(x=>x.dataset.mix);
+    if(!buildSel.mix.length){toast("Tick at least one activity type first.");return}
+    quickSel={decade:buildSel.decade,size:buildSel.size,fontPt:buildSel.fontPt};
+    doGenerate({decade:buildSel.decade,size:buildSel.size,fontPt:buildSel.fontPt,easy:buildSel.easy,mix:buildSel.mix,seed:Date.now()%2000000000});
+  };
+}
+/* ---------- Cover Studio ---------- */
+function setCoverPhoto(file){
+  const rd=new FileReader();
+  rd.onload=()=>{const img=new Image();
+    img.onload=()=>{const max=1000;let w=img.naturalWidth||1,h=img.naturalHeight||1;const sc=Math.min(1,max/Math.max(w,h));
+      w=Math.max(1,Math.round(w*sc));h=Math.max(1,Math.round(h*sc));
+      const cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(img,0,0,w,h);
+      cur.coverPhoto=cv.toDataURL("image/jpeg",0.85);autosave();toast("Cover photo set — see it in the keepsake frame below.");render()};
+    img.onerror=()=>toast("That file could not be read as an image.");img.src=rd.result};
+  rd.onerror=()=>toast("That file could not be read.");rd.readAsDataURL(file);
+}
+function renderDesign(el){
+  if(!cur)return needBook(el);
+  el.innerHTML=`<h2>Cover Studio</h2><p class="sub">Beautiful designed covers are added automatically as the first and last pages of every book. Make this one yours.</p>
+  <label class="f">Cover theme</label>
+  <div class="covthemes">${Object.entries(COVER_THEMES).map(([k,th])=>`<button type="button" class="covtheme ${cur.coverTheme===k?"sel":""}" data-covtheme="${k}"><span class="sw" style="display:block;background:linear-gradient(120deg,${th.bg} 0 45%,${th.accent} 45% 75%,${th.accent2} 75%)"></span><span class="nm">${th.name}</span></button>`).join("")}</div>
+  <div class="grid2" style="margin-top:16px">
+    ${field("Book title (on the cover)","",`id="dTitle"`)}
+    ${field("Subtitle (on the cover)","",`id="dSubtitle"`)}
+    ${field("Specially Created For (name on the cover)","",`id="dFor"`)}
+    ${field("Your publisher / shop name (white-label)","",`id="dPub"`)}
+  </div>
+  <label class="f" style="margin-top:16px">📷 Cover Photo (optional) — a keepsake photo in a framed mat on the front &amp; back covers</label>
+  ${cur.coverPhoto?`<div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap"><img src="${cur.coverPhoto}" alt="Cover photo preview" style="width:110px;height:110px;object-fit:cover;border-radius:8px;border:1.5px solid var(--line)">
+    <div style="flex:1;min-width:200px"><label class="f">Photo zoom: <span id="zoomVal">${cur.photoZoom||120}%</span></label>
+    <input type="range" id="dZoom" min="100" max="200" step="5" value="${cur.photoZoom||120}">
+    <div class="btn-row"><button class="btn" id="dPhotoBtn" type="button">Change Photo</button><button class="btn" id="dPhotoRm" type="button">Remove Photo</button></div></div></div>`
+  :`<div class="btn-row"><button class="btn" id="dPhotoBtn" type="button">📷 Upload a Photo</button></div><p class="sub">No photo? The cover uses a beautiful themed illustration instead.</p>`}
+  <input type="file" id="dPhotoFile" accept="image/*" hidden>
+  <div class="cov-prev">${coverPreviewHTML(cur,false,0.4)}${coverPreviewHTML(cur,true,0.4)}</div>
+  <div class="btn-row" style="justify-content:center"><button class="btn" id="dPng" type="button">🖼 Download Front Cover (PNG)</button><button class="btn btn-gold" id="dWrap" type="button">📚 KDP Wrap Cover (Print)</button></div>
+  <p class="sub" style="text-align:center">Wrap cover = front + spine + back on one sheet for an 8.5×11 KDP paperback. Spine width for this book: <b>${(cur.totalPages*0.0025).toFixed(3)}″</b> (${cur.totalPages} pages).</p>`;
+  const bind=(id,key)=>{const n=$(id);n.value=cur[key]||"";n.addEventListener("input",()=>{cur[key]=n.value;autosave();chipUpdate()});
+    n.addEventListener("change",()=>render())};
+  bind("#dTitle","title");bind("#dSubtitle","subtitle");bind("#dFor","forName");bind("#dPub","publisher");
+  el.querySelectorAll("[data-covtheme]").forEach(b=>b.onclick=()=>{cur.coverTheme=b.dataset.covtheme;autosave();render()});
+  $("#dPhotoBtn").onclick=()=>$("#dPhotoFile").click();
+  $("#dPhotoFile").onchange=e=>{if(e.target.files&&e.target.files[0])setCoverPhoto(e.target.files[0])};
+  const rm=$("#dPhotoRm");if(rm)rm.onclick=()=>{cur.coverPhoto="";autosave();render()};
+  const z=$("#dZoom");if(z)z.oninput=()=>{cur.photoZoom=+z.value;$("#zoomVal").textContent=z.value+"%";autosave();
+    el.querySelectorAll(".keepsake .kimg img").forEach(im=>im.style.transform=`scale(${z.value/100})`)};
+  $("#dPng").onclick=()=>coverPNG(cur);
+  $("#dWrap").onclick=()=>printWrap();
+}
+function coverPNG(book){
+  const th=COVER_THEMES[book.coverTheme]||COVER_THEMES.sunroom;
+  const cv=document.createElement("canvas");cv.width=1275;cv.height=1650;const x=cv.getContext("2d");
+  x.fillStyle=th.bg;x.fillRect(0,0,1275,1650);
+  x.strokeStyle=th.accent;x.lineWidth=6;x.strokeRect(42,42,1191,1566);
+  x.strokeStyle=th.accent2;x.lineWidth=2;x.strokeRect(60,60,1155,1530);
+  x.fillStyle=th.accent;x.beginPath();x.roundRect(238,86,799,58,29);x.fill();
+  x.fillStyle=th.pillink;x.font="800 25px system-ui";x.textAlign="center";x.fillText("EXTRA-LARGE PRINT • EASY ON THE EYES",637,124);
+  x.fillStyle=th.ink;x.font="700 74px Georgia";wrapTextC(x,book.title,637,290,1060,86);
+  x.font="400 30px system-ui";x.fillStyle=th.ink;wrapTextC(x,book.subtitle,637,470,1000,42);
+  const finish=()=>{ /* seal + for-line */
+    x.fillStyle=th.badge;x.beginPath();x.arc(1062,1330,118,0,7);x.fill();
+    x.strokeStyle="rgba(255,255,255,.8)";x.lineWidth=4;x.beginPath();x.arc(1062,1330,110,0,7);x.stroke();
+    x.fillStyle="#fff";x.font="800 54px Georgia";x.fillText(String(book.puzzleCount||0),1062,1332);
+    x.font="700 17px system-ui";wrapTextC(x,"FUN PUZZLES & SOLUTIONS INCLUDED",1062,1378,190,22);
+    x.fillStyle="rgba(255,255,255,.88)";x.fillRect(288,1470,698,64);
+    x.strokeStyle=th.accent;x.lineWidth=2;x.strokeRect(288,1470,698,64);
+    x.fillStyle=th.ink;x.font="26px system-ui";x.fillText("Specially Created For: "+(book.forName||"You"),637,1512);
+    downloadURI(cv.toDataURL("image/png"),(book.title||"cover").replace(/[^\w\- ]/g,"")+" — cover.png");
+    toast("Front cover PNG downloaded.");};
+  if(book.coverPhoto){const img=new Image();img.onload=()=>{ /* keepsake frame */
+      x.fillStyle="#FFFDF4";x.fillRect(387,600,500,470);x.strokeStyle=th.gold;x.lineWidth=3;x.strokeRect(399,612,476,446);
+      const z=(book.photoZoom||120)/100,iw=452,ih=372;const sc=Math.max(iw/img.naturalWidth,ih/img.naturalHeight)*z;
+      x.save();x.beginPath();x.rect(411,624,iw,ih);x.clip();
+      x.drawImage(img,411+iw/2-img.naturalWidth*sc/2,624+ih/2-img.naturalHeight*sc/2,img.naturalWidth*sc,img.naturalHeight*sc);x.restore();
+      x.fillStyle=th.accent;x.fillRect(387,1090,500,58);x.fillStyle=th.pillink;x.font="26px Georgia";x.fillText(book.forName||"With Love",637,1128);
+      finish()};
+    img.onerror=finish;img.src=book.coverPhoto;}
+  else{ /* simple motif block */
+    x.fillStyle=th.accent;x.globalAlpha=.18;x.fillRect(387,620,500,420);x.globalAlpha=1;
+    x.fillStyle=th.accent2;x.font="700 44px Georgia";x.fillText("✿",637,850);finish();}
+}
+function wrapTextC(x,text,cx,y,maxW,lh){const words=String(text).split(/\s+/);let line="",yy=y;
+  for(const w of words){const t=line?line+" "+w:w;if(x.measureText(t).width>maxW&&line){x.fillText(line,cx,yy);yy+=lh;line=w}else line=t}
+  if(line)x.fillText(line,cx,yy);return yy+lh}
+/* ---------- Export / print ---------- */
+function standaloneBookHTML(){
+  const mainStyle=document.querySelector("style")?document.querySelector("style").textContent:"";
+  const pageStyle=$("#pageStyle")?$("#pageStyle").textContent:"";
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(cur.title)}</title><style>${mainStyle}</style><style>${pageStyle}</style><style>#printRoot{display:block}.savebar{position:sticky;top:0;z-index:9;background:#1B2E26;color:#FDF8F0;padding:12px 14px;font-family:system-ui,sans-serif;font-size:14px;line-height:1.55}.savebar b{color:#fff}@media print{.savebar{display:none}}</style></head><body><div class="savebar">📄 <b>Your book is ready.</b> To save it as a PDF: tap the browser menu <b>⋮</b> → <b>Share</b> → <b>Print</b> → <b>Save as PDF</b>. Paper: ${settings.paper==="a4"?"A4":"Letter"} · Margins: None · Tick “Background graphics” for the colour edition.</div><div id="printRoot" class="${settings.inkSaver?"ink-saver":""}">${$("#printRoot").innerHTML}</div></body></html>`;
+}
+function setPageStyle(wrap){
+  const sz=settings.paper==="a4"?{name:"A4",w:"210mm",h:"297mm"}:{name:"letter",w:"8.5in",h:"11in"};
+  let st=$("#pageStyle");if(!st){st=document.createElement("style");st.id="pageStyle";document.head.appendChild(st)}
+  st.textContent=wrap?`@page{size:17.25in 11.25in;margin:0}`:`@page{size:${sz.name};margin:0}#printRoot .sheet{width:${sz.w};height:${sz.h}}`;
+}
+function needBookAction(){toast("No book yet — tap ⚙ Generate first, or open one in My Books.");if(activeTab!=="quick"){activeTab="quick";render()}window.scrollTo({top:0,behavior:"smooth"})}
+function printBook(){if(!cur){needBookAction();return}
+  const root=$("#printRoot");
+  root.innerHTML=composeBook(cur).join("");root.className=settings.inkSaver?"ink-saver":"";
+  setPageStyle(false);
+  const old=document.title;document.title=cur.title.replace(/[^\w\- ]/g,"");
+  toast("Preparing your book…");
+  if(/Android/i.test(navigator.userAgent||"")){
+    const w=window.open("","_blank");
+    if(w){try{w.document.open();w.document.write(standaloneBookHTML());w.document.close();toast("Book opened in a new tab — ⋮ menu → Share → Print → Save as PDF.");document.title=old;return}catch(e){}}
+    toast("Print window opening — choose “Save as PDF”.");
+  }
+  setTimeout(()=>{window.print();document.title=old},350);
+}
+function printWrap(){if(!cur){needBookAction();return}
+  const root=$("#printRoot");root.innerHTML=wrapHTML(cur);root.className=settings.inkSaver?"ink-saver":"";
+  setPageStyle(true);toast("Preparing the KDP wrap cover…");
+  if(/Android/i.test(navigator.userAgent||"")){
+    const w=window.open("","_blank");
+    if(w){try{w.document.open();w.document.write(standaloneBookHTML());w.document.close();document.title=document.title;return}catch(e){}}
+  }
+  setTimeout(()=>{window.print()},350);
+}
+function renderExport(el){
+  if(!cur)return needBook(el);
+  el.innerHTML=`<h2>Book &amp; Export</h2><p class="sub">Your complete book: designed front cover → title page → how-to → contents → ${cur.puzzleCount} activity pages → large-print answer key → publisher page → back cover. <b>${cur.totalPages} pages in total.</b></p>
+  <div class="grid2">
+    <div><label class="f">Paper size</label><select class="inp" id="ePaper"><option value="letter" ${settings.paper==="letter"?"selected":""}>US Letter (8.5×11)</option><option value="a4" ${settings.paper==="a4"?"selected":""}>A4</option></select></div>
+    <div><label class="f">Colour or ink-saver</label><select class="inp" id="eInk"><option value="0" ${!settings.inkSaver?"selected":""}>Full colour</option><option value="1" ${settings.inkSaver?"selected":""}>Ink-saver (black &amp; white)</option></select></div>
+  </div>
+  <div class="btn-row"><button class="btn btn-cta" id="ePdf" type="button" style="min-height:58px;font-size:17px">🖨 Get the Complete Book (PDF)</button>
+  <button class="btn" id="eCoverTab" type="button">🎨 Cover Studio</button>
+  <button class="btn" id="eWrap" type="button">📚 KDP Wrap Cover</button></div>
+  <p class="sub" style="margin-top:12px">On a phone, the book opens in its own tab — use the browser menu ⋮ → Share → Print → Save as PDF.</p>`;
+  $("#ePaper").onchange=e=>{settings.paper=e.target.value;saveSettings()};
+  $("#eInk").onchange=e=>{settings.inkSaver=e.target.value==="1";saveSettings()};
+  $("#ePdf").onclick=()=>printBook();
+  $("#eWrap").onclick=()=>printWrap();
+  $("#eCoverTab").onclick=()=>{activeTab="design";render()};
+}
+/* ---------- My Books + DFY starters ---------- */
+const STARTERS=[
+ {name:"Golden Mix Starter — 50 Pages",decade:"mix",seed:19500101,title:"Large Print Activity Book Vol. 1",coverTheme:"sunroom"},
+ {name:"Fabulous Fifties Starter — 50 Pages",decade:"fifties",seed:19550202,title:"Fabulous Fifties Activity Book",coverTheme:"diner"},
+ {name:"Swinging Sixties Starter — 50 Pages",decade:"sixties",seed:19660303,title:"Swinging Sixties Activity Book",coverTheme:"library"}];
+function renderBooks(el){
+  const a=loadBooks();
+  el.innerHTML=`<h2>My Books</h2><p class="sub">Books you make are saved on this device automatically. The three starter books below are ready-made — open one and it's yours to edit, print and sell.</p>
+  <label class="f">⭐ DFY Starter Books</label>
+  ${STARTERS.map((s,i)=>`<div class="bookcard"><h3>${esc(s.name)}</h3><p class="sub" style="margin:0">“${esc(s.title)}” · ${BANKS[s.decade]?BANKS[s.decade].name:"The Golden Years"} theme · designed cover included</p><div class="btn-row"><button class="btn btn-gold" data-starter="${i}" type="button">Open Starter Book</button></div></div>`).join("")}
+  <label class="f" style="margin-top:16px">Your saved books (${a.length})</label>
+  ${a.length?a.map(b=>`<div class="bookcard"><h3>${esc(b.title)}</h3><p class="sub" style="margin:0">${b.totalPages} pages · ${b.puzzleCount} activities · ${b.fontPt}pt · ${esc(bankFor({decade:b.decade}).name)}</p>
+    <div class="btn-row"><button class="btn" data-open="${b.id}" type="button">Open</button><button class="btn" data-dup="${b.id}" type="button">Duplicate</button><button class="btn" data-del="${b.id}" type="button">Delete</button></div></div>`).join(""):`<p class="sub">No saved books yet — your first generated book will appear here.</p>`}`;
+  el.querySelectorAll("[data-starter]").forEach(btn=>btn.onclick=()=>{const s=STARTERS[+btn.dataset.starter];
+    toast("Preparing your starter book…");
+    setTimeout(()=>{cur=generateBook({decade:s.decade,size:50,fontPt:24,seed:s.seed,title:s.title,coverTheme:s.coverTheme});autosave();activeTab="quick";render();toast("Starter book opened — make it yours in the Cover Studio.")},30)});
+  el.querySelectorAll("[data-open]").forEach(btn=>btn.onclick=()=>{const b=loadBooks().find(x=>x.id===btn.dataset.open);if(b){cur=JSON.parse(JSON.stringify(b));try{localStorage.setItem(LASTKEY,cur.id)}catch(e){}activeTab="quick";render();toast("Book opened.")}});
+  el.querySelectorAll("[data-dup]").forEach(btn=>btn.onclick=()=>{const arr=loadBooks();const b=arr.find(x=>x.id===btn.dataset.dup);if(b){const c=JSON.parse(JSON.stringify(b));c.id="bk"+Date.now().toString(36);c.title=c.title+" (Copy)";arr.push(c);saveBooks(arr);render();toast("Duplicated.")}});
+  el.querySelectorAll("[data-del]").forEach(btn=>btn.onclick=()=>{saveBooks(loadBooks().filter(x=>x.id!==btn.dataset.del));if(cur&&cur.id===btn.dataset.del)cur=null;render();toast("Book deleted.")});
+}
+/* ---------- Etsy Kit ---------- */
+function renderEtsy(el){
+  if(!cur)return needBook(el);
+  const bank=bankFor(cur);
+  const title=(`${cur.title} | Large Print Activity Book for Seniors | ${cur.puzzleCount} Puzzles: Word Search, Sudoku, Crossword, Mazes & Nostalgia Trivia | ${bank.name} | Printable PDF`).slice(0,140);
+  const tags=["large print puzzles","senior activity book","nostalgia trivia","word search large print","sudoku large print","crossword book seniors","memory lane gift","grandma gift printable","grandpa gift","easy read puzzles","brain boosting fun","printable puzzle book","activity book adults"].join(", ");
+  const desc=`${cur.title} — a complete ${cur.totalPages}-page large-print activity book with ${cur.puzzleCount} relaxing activities.\n\nWHAT'S INSIDE\n• Word searches, sudoku, crosswords, number searches, mazes and word scrambles\n• Nostalgia trivia, Finish-the-Phrase and “Talk About It” memory pages from ${bank.name}\n• A full large-print answer key\n• Beautiful designed front and back covers\n\nPRINTED LARGE & CLEAR\nEvery page uses ${cur.fontPt}pt high-contrast print — easy on the eyes, kind to tired hands.\n\nYOU WILL RECEIVE\n1 printable PDF (${cur.totalPages} pages, ${settings.paper==="a4"?"A4":"US Letter"}). Print at home or at any copy shop.\n\nA thoughtful gift for parents, grandparents and anyone who loves the golden days.`;
+  el.innerHTML=`<h2>Etsy Listing Kit</h2><p class="sub">Ready-to-paste listing text for this book. Copy each box into your Etsy listing.</p>
+  <label class="f">Listing title (${title.length}/140)</label><textarea class="inp" rows="3" readonly>${esc(title)}</textarea>
+  <label class="f" style="margin-top:12px">Tags</label><textarea class="inp" rows="3" readonly>${esc(tags)}</textarea>
+  <label class="f" style="margin-top:12px">Description</label><textarea class="inp" rows="12" readonly>${esc(desc)}</textarea>
+  <div class="btn-row"><button class="btn" id="etCopy" type="button">📋 Copy All</button></div>`;
+  $("#etCopy").onclick=()=>{const txt="TITLE:\n"+title+"\n\nTAGS:\n"+tags+"\n\nDESCRIPTION:\n"+desc;
+    if(navigator.clipboard)navigator.clipboard.writeText(txt).then(()=>toast("Listing kit copied.")).catch(()=>toast("Copy failed — long-press the text to copy manually."));
+    else toast("Long-press the text to copy it manually.")};
+}
+/* ---------- init ---------- */
+$("#abGen").onclick=()=>{activeTab="quick";render();quickGenerate()};
+$("#abPrint").onclick=()=>printBook();
+restoreLast();
+render();
+</script>
+<script>
+"use strict";
+/* ================= SELF-TESTS (?test) ================= */
+if(new URLSearchParams(location.search).has("test")){window.addEventListener("load",()=>setTimeout(runTests,80))}
+function runTests(){
+  const lines=[];let fails=0;
+  const T=(name,cond,extra)=>{lines.push((cond?"PASS":"FAIL")+" | "+name+(extra?" | "+extra:""));if(!cond)fails++};
+  /* banks */
+  for(const k of DECADE_KEYS){const b=BANKS[k];
+    T("bank "+k+" complete",b.words.length>=15&&b.cross.length>=10&&b.trivia.length>=10&&b.phrases.length>=6&&b.facts.length>=8&&b.prompts.length>=6&&b.numbers.length>=6,
+      `w${b.words.length} c${b.cross.length} t${b.trivia.length} p${b.phrases.length} f${b.facts.length}`);}
+  /* word search + number search: placement verified */
+  for(const k of DECADE_KEYS){const r=rng(42);
+    const ws=genWordSearch(r,BANKS[k],false);
+    T("wordsearch "+k,!!ws&&verifyPlaced(ws.grid,ws.placed)&&ws.placed.length===9,ws?("placed "+ws.placed.length):"null");
+    const ns=genNumberSearch(r,BANKS[k],false);
+    T("numbersearch "+k,!!ns&&verifyPlaced(ns.grid,ns.placed)&&ns.placed.length===7,ns?("placed "+ns.placed.length):"null");}
+  /* sudoku: valid solution + unique */
+  {const r=rng(7);const s=genSudoku(r,false);
+   const validSol=s&&s.solution.every(row=>row.slice().sort().join("")==="123456789");
+   let givOk=true;if(s)for(let i=0;i<9;i++)for(let j=0;j<9;j++)if(s.puzzle[i][j]&&s.puzzle[i][j]!==s.solution[i][j])givOk=false;
+   T("sudoku solution valid + givens match",!!validSol&&givOk);
+   T("sudoku unique solution",!!s&&sdkCount(s.puzzle,2)===1,"givens="+(s?s.givens:0));
+   const se=genSudoku(rng(11),true);
+   T("sudoku easy has more givens",!!se&&!!s&&se.givens>s.givens,`easy ${se?se.givens:0} vs std ${s?s.givens:0}`);}
+  /* crossword integrity */
+  for(const k of DECADE_KEYS){const r=rng(99);const c=genCrossword(r,BANKS[k],false);
+    let ok=!!c&&c.placed.length>=4;
+    if(c)for(const p of c.placed){let s2="";for(let i=0;i<p.word.length;i++)s2+=c.grid[p.r+p.dr*i][p.c+p.dc*i];if(s2!==p.word)ok=false}
+    T("crossword "+k+" integrity",ok,c?("words "+c.placed.length):"null");}
+  /* scramble */
+  {const sc=genScramble(rng(5),BANKS.fifties,false);
+   T("scramble letters match + differ",!!sc&&sc.items.every(i=>i.scr!==i.word&&i.scr.split("").sort().join("")===i.word.split("").sort().join("")));}
+  /* maze solvable + path contiguous through open walls */
+  {const m=genMaze(rng(3),false);let ok=!!m&&m.path.length>1;
+   if(m){if(m.path[0][0]!==0||m.path[0][1]!==0)ok=false;const last=m.path[m.path.length-1];if(last[0]!==m.rows-1||last[1]!==m.cols-1)ok=false;
+     for(let i=1;i<m.path.length;i++){const [pr,pc]=m.path[i-1],[cr,cc]=m.path[i];const dr=cr-pr,dc=cc-pc;
+       if(Math.abs(dr)+Math.abs(dc)!==1){ok=false;break}
+       const wi=dr===-1?0:dc===1?1:dr===1?2:3;if(m.cells[pr][pc].w[wi]){ok=false;break}}}
+   T("maze solvable, path valid",ok,m?("path "+m.path.length):"null");}
+  /* text + matching generators */
+  {const r=rng(21);const bk={decade:"sixties",easy:false};
+   T("trivia gen",genTrivia(r,BANKS.sixties,false).items.length===5);
+   T("phrases gen",genPhrases(r,BANKS.sixties).items.length===5);
+   T("prompts gen",genPrompts(r,BANKS.sixties).items.length===3);
+   const mt=genMatching(r);const perm=mt.order.slice().sort().join("")==="012345";
+   T("matching gen + permutation",mt.objs.length===6&&perm);}
+  /* book totals: exact page counts */
+  for(const size of [50,100,120]){
+    const b=generateBook({decade:"mix",size:size,fontPt:24,seed:1000+size});
+    const sheets=composeBook(b);
+    T("book "+size+" exact total",b.totalPages===size&&sheets.length===size,`total=${b.totalPages} sheets=${sheets.length} puzzles=${b.puzzleCount}`);
+    T("book "+size+" answer pages match",answerKeyPages(b).length===akPagesFor(b.pages),"ak="+answerKeyPages(b).length);
+  }
+  {const b=generateBook({decade:"fifties",size:100,fontPt:28,easy:true,mix:["sudoku","wordsearch"],seed:777});
+   T("easy single-decade subset-mix book",b.totalPages===100&&b.pages.every(p=>["sudoku","wordsearch","trivia","prompts","phrases","matching"].includes(p.type)),"pages="+b.pages.length);}
+  /* covers */
+  T("7 cover themes",Object.keys(COVER_THEMES).length===7);
+  {const b=generateBook({decade:"mix",size:50,fontPt:24,seed:5});
+   let allOk=true;for(const k of Object.keys(COVER_THEMES)){b.coverTheme=k;const h=coverHTML(b,false).toLowerCase();
+     if(!h.includes("extra-large print")||!h.includes("specially created for"))allOk=false}
+   T("all themes render front cover essentials",allOk);
+   b.coverPhoto="data:image/jpeg;base64,AAAA";b.forName="Grandma Rose";
+   const f=coverHTML(b,false),bk2=coverHTML(b,true);
+   T("photo in keepsake frame front + back",f.includes("keepsake")&&bk2.includes("keepsake")&&f.includes("Grandma Rose"));
+   T("back cover look-inside + barcode zone",bk2.includes("mini-page")&&bk2.includes("barcode-zone"));
+   const rt=JSON.parse(JSON.stringify(b));T("book JSON round-trip keeps photo",rt.coverPhoto===b.coverPhoto&&rt.pages.length===b.pages.length);}
+  /* KDP wrap */
+  {const b=generateBook({decade:"mix",size:100,fontPt:24,seed:9});
+   const w=wrapHTML(b);T("wrap cover builds with spine",w.includes("17.")||w.includes("in;")&&w.length>500,"len="+w.length);
+   T("spine width math",Math.abs(b.totalPages*0.0025-0.25)<1e-9);}
+  /* language rules: no banned words in any default output */
+  {const banned=["Dementia","Alzheimer","Memory Loss","For Old People"];
+   const b=generateBook({decade:"mix",size:50,fontPt:24,seed:3});
+   const all=coverHTML(b,false)+coverHTML(b,true)+belongsHTML(b)+howtoHTML(b)+contentsHTML(b)+licenceHTML(b)+b.title+b.subtitle;
+   T("no banned words in defaults",banned.every(w=>!all.includes(w)));}
+  document.title=fails?("TESTS FAIL ("+fails+")"):("TESTS PASS ("+lines.length+")");
+  const pre=document.createElement("pre");pre.id="testResults";pre.textContent=lines.join("\n")+"\n"+(fails?("FAILURES: "+fails):"ALL PASS");document.body.appendChild(pre);
+}
+</script>
+<script>
+/*
+ * ============================================================
+ *  Large-Print Seniors Activity Book Generator — license gate (stage 2)
+ * ============================================================
+ *  LICENSING CONFIG
+ *  Each buyer has a UNIQUE code, registered to their name by
+ *  the license server (Google Apps Script + Google Sheet
+ *  "SNR Licenses — Songlap").
+ *  The gate sends { name, code } to LICENSE_API_URL and unlocks
+ *  only when the server says ok.
+ *  >> STAGE 2: after deploying the Apps Script web app, paste
+ *     its URL in place of the placeholder below. That is the
+ *     ONLY change needed to go live. <<
+ * ============================================================
+ */
+const LICENSE_API_URL = "https://script.google.com/macros/s/AKfycbw77KRK0qHj9gAGaDFYSaYeryerlCuTATXVFCLaJUAAe8284Lfhpp9pXQ2H8SRa8y3wXw/exec";
+
+/* ---------- License response handling ---------- */
+
+var LICENSE_ERROR_MESSAGES = {
+  invalid_code: 'This code was not found. Please check the code from your purchase.',
+  code_registered_to_another_name: 'This code is already registered to another buyer. If this is your code, please contact support.',
+  missing_fields: 'Please enter both your name and your code.',
+  network: 'Could not verify your code. Please check your internet connection and try again.'
+};
+
+function licenseErrorMessage(errorCode) {
+  return LICENSE_ERROR_MESSAGES[errorCode] || LICENSE_ERROR_MESSAGES.network;
+}
+
+/* Turn a parsed license-server response into a gate decision. */
+function interpretLicenseResponse(data) {
+  if (!data || typeof data !== 'object') {
+    return { action: 'error', message: licenseErrorMessage('network') };
+  }
+  if (data.ok === true) {
+    return { action: 'unlock', test: data.test === true };
+  }
+  return { action: 'error', message: licenseErrorMessage(data.error) };
+}
+
+(function () {
+  'use strict';
+
+  /* ================= License gate ================= */
+
+  var NAME_KEY = 'seniors_license_name';
+  var CODE_KEY = 'seniors_license_code';
+
+  function unlock() {
+    document.getElementById('lock-screen').hidden = true;
+    document.getElementById('app').hidden = false;
+  }
+
+  function showLicenseBar(name, code) {
+    document.getElementById('license-name').textContent = name;
+    document.getElementById('license-code').textContent = code;
+    document.getElementById('license-bar').hidden = false;
+  }
+
+  function storedLicense() {
+    try {
+      var name = localStorage.getItem(NAME_KEY);
+      var code = localStorage.getItem(CODE_KEY);
+      if (name && code) return { name: name, code: code };
+    } catch (e) { /* private mode */ }
+    return null;
+  }
+
+  function initGate() {
+    var saved = storedLicense();
+    if (saved) { showLicenseBar(saved.name, saved.code); unlock(); return; }
+
+    var form = document.getElementById('lock-form');
+    var nameInput = document.getElementById('lock-name');
+    var codeInput = document.getElementById('lock-input');
+    var button = document.getElementById('lock-submit');
+    var errorEl = document.getElementById('lock-error');
+
+    /* Warm-up: the license server (Apps Script) cold-starts
+       slowly — a no-await GET while the buyer is still
+       typing wakes it, so the real check lands fast. */
+    try { fetch(LICENSE_API_URL, { method: 'GET' }).then(function (r) { return r.text(); }).catch(function () { }); } catch (e) { /* offline */ }
+
+    function showError(message) {
+      errorEl.classList.remove('info');
+      errorEl.textContent = message;
+      errorEl.hidden = false;
+    }
+    function showInfo(message) {
+      errorEl.classList.add('info');
+      errorEl.textContent = message;
+      errorEl.hidden = false;
+    }
+
+    /* One check attempt with a 45-second timeout. The
+       server can take up to ~30 s on a cold start; without
+       a timeout and a patience note, that wait reads as
+       "nothing works" — the owner's original complaint. */
+    function checkLicense(name, code) {
+      var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      var timer = controller ? setTimeout(function () { controller.abort(); }, 45000) : null;
+      var opts = {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ name: name, code: code })
+      };
+      if (controller) opts.signal = controller.signal;
+      return fetch(LICENSE_API_URL, opts)
+        .then(function (res) { return res.json(); })
+        .then(function (data) { if (timer) clearTimeout(timer); return interpretLicenseResponse(data); })
+        .catch(function (err) { if (timer) clearTimeout(timer); throw err; });
+    }
+
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var name = nameInput.value.trim();
+      var code = codeInput.value.trim();
+      if (!name || !code) { showError(licenseErrorMessage('missing_fields')); return; }
+      button.disabled = true;
+      button.textContent = 'Checking…';
+      showInfo('Checking your code — the first check can take up to 30 seconds, please wait…');
+      checkLicense(name, code)
+        .catch(function () {
+          /* one automatic retry on a network failure /
+             timeout before the buyer sees an error */
+          showInfo('Still checking — the server was slow to answer, trying once more…');
+          return checkLicense(name, code);
+        })
+        .then(function (decision) {
+          if (decision.action === 'unlock') {
+            try {
+              localStorage.setItem(NAME_KEY, name);
+              localStorage.setItem(CODE_KEY, code.toUpperCase());
+            } catch (e) { /* private mode */ }
+            showLicenseBar(name, code.toUpperCase());
+            unlock();
+          } else {
+            showError(decision.message);
+          }
+        })
+        .catch(function () { showError(licenseErrorMessage('network')); })
+        .finally(function () {
+          button.disabled = false;
+          button.textContent = 'Unlock';
+        });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGate);
+  } else {
+    initGate();
+  }
+})();
+</script>
+</body>
+</html>
