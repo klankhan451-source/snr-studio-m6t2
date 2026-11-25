@@ -865,7 +865,11 @@ function coverHTML(book,back){
 }
 function miniPageHTML(book,idx){
   const p=book.pages[idx];if(!p)return "";
-  return `<div class="mini-page"><div class="mini-in"><div class="pg-inner" style="position:relative;width:8.5in;height:11in;--bfs:24pt">${pageHTML(book,p,idx)}</div></div></div>`;
+  /* Render the thumbnail with the book's OWN print size + grid cell size
+     (same layout parameters composeBook uses for the real page), so the
+     back-cover "Look Inside" strip shows the actual pages of this book. */
+  const cf=cellFor(book,p);
+  return `<div class="mini-page"><div class="mini-in"><div class="pg-inner" style="position:relative;width:8.5in;height:11in;--bfs:${book.fontPt}pt${cf?`;--cell:${cf.toFixed(1)}pt`:""}">${pageHTML(book,p,idx)}</div></div></div>`;
 }
 function coverSheet(book,back){
   return `<div class="sheet cover-sheet" style="${coverVars(book)};${bfsVar(book)}">${coverHTML(book,back)}</div>`;
