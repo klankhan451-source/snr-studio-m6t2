@@ -691,10 +691,14 @@ function generateBook(opts){
   if(!book.subtitle)book.subtitle="Word Searches • Sudoku • Crosswords • Mazes • Trivia & More — All in Easy-to-Read Large Print";
   const ctx=makeCtx();
   const pattern=book.mix&&book.mix.length?book.mix:MIX_PATTERN;
-  let P=book.sizeTarget-FIXED_PAGES-6;
   const pages=[];
   let guard=0;
-  while(pages.length<P&&guard++<400){pages.push(genPage(r,book,pattern[pages.length%pattern.length],ctx))}
+  /* generate incrementally against the live AK estimate: the old fixed guess
+     overshot by ~30 pages on a 100-page book, and the trimmed pages had already
+     burned bank items from the de-dup pools, causing repeats in filler pages */
+  while(guard++<600){
+    if(FIXED_PAGES+pages.length+akPagesFor(book,pages)>=book.sizeTarget)break;
+    pages.push(genPage(r,book,pattern[pages.length%pattern.length],ctx))}
   let A=akPagesFor(book,pages);
   while(FIXED_PAGES+pages.length+A>book.sizeTarget&&pages.length>12){pages.pop();A=akPagesFor(book,pages)}
   const fillers=["prompts","trivia","phrases","matching"];
