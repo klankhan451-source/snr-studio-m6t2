@@ -823,6 +823,10 @@ function answerKeyPages(book){
     if(used+h>AK_BUDGET&&curGroup.length){groups.push(curGroup);curGroup=[];used=0}
     curGroup.push([p,idx]);used+=h});
   if(curGroup.length)groups.push(curGroup);
+  if(!groups.length){ /* every page is Talk About It (no answers exist) — still print the
+     key page the book's page count and contents promise, and say why it is empty */
+    return [`<div class="pg-kicker">Answer Key</div><h3 class="pg-title">No Answers Needed</h3><p class="pg-sub">Every page in this book is a “Talk About It” memory page. There are no right or wrong answers — each page is made for sharing stories and memories out loud with family and friends.</p>`];
+  }
   return groups.map((g,gi)=>{const fp=5+g[0][1],lp=5+g[g.length-1][1];
     return `<div class="pg-kicker">Answer Key</div><h3 class="pg-title">${fp===lp?`Answers for Page ${fp}`:`Answers for Pages ${fp}–${lp}`}</h3>`+g.map(([p,idx])=>akItemHTML(book,p,idx)).join("")});
 }
@@ -1119,7 +1123,7 @@ function wrapTextC(x,text,cx,y,maxW,lh){const words=String(text).split(/\s+/);le
 function standaloneBookHTML(){
   const mainStyle=document.querySelector("style")?document.querySelector("style").textContent:"";
   const pageStyle=$("#pageStyle")?$("#pageStyle").textContent:"";
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(cur.title)}</title><style>${mainStyle}</style><style>${pageStyle}</style><style>#printRoot{display:block}.savebar{position:sticky;top:0;z-index:9;background:#1B2E26;color:#FDF8F0;padding:12px 14px;font-family:system-ui,sans-serif;font-size:14px;line-height:1.55}.savebar b{color:#fff}@media print{.savebar{display:none}}</style></head><body><div class="savebar">📄 <b>Your book is ready.</b> To save it as a PDF: tap the browser menu <b>⋮</b> → <b>Share</b> → <b>Print</b> → <b>Save as PDF</b>. Paper: ${settings.paper==="a4"?"A4":"Letter"} · Margins: None · Tick “Background graphics” for the colour edition.</div><div id="printRoot" class="${settings.inkSaver?"ink-saver":""}">${$("#printRoot").innerHTML}</div></body></html>`;
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(cur.title)}</title><style>${mainStyle}</style><style>${pageStyle}</style><style>#printRoot{display:block}.savebar{position:sticky;top:0;z-index:9;background:#1B2E26;color:#FDF8F0;padding:12px 14px;font-family:system-ui,sans-serif;font-size:14px;line-height:1.55}.savebar b{color:#fff}@media print{.savebar{display:none}#printRoot .sheet{zoom:1!important}}</style></head><body><div class="savebar">📄 <b>Your book is ready.</b> To save it as a PDF: tap the browser menu <b>⋮</b> → <b>Share</b> → <b>Print</b> → <b>Save as PDF</b>. Paper: ${settings.paper==="a4"?"A4":"Letter"} · Margins: None · Tick “Background graphics” for the colour edition.</div><div id="printRoot" class="${settings.inkSaver?"ink-saver":""}">${$("#printRoot").innerHTML}</div><script>(function(){function fit(){var w=window.innerWidth||816;document.querySelectorAll("#printRoot .sheet").forEach(function(s){var sw=s.offsetWidth||816;s.style.zoom=Math.min(1,w/sw)})}window.addEventListener("resize",fit);fit()})();<\/script></body></html>`;
 }
 function setPageStyle(wrap){
   const sz=settings.paper==="a4"?{name:"A4",w:"210mm",h:"297mm"}:{name:"letter",w:"8.5in",h:"11in"};
@@ -1264,6 +1268,8 @@ function runTests(){
   }
   {const b=generateBook({decade:"fifties",size:100,fontPt:28,easy:true,mix:["sudoku","wordsearch"],seed:777});
    T("easy single-decade subset-mix book",b.totalPages===100&&b.pages.every(p=>["sudoku","wordsearch","trivia","prompts","phrases","matching"].includes(p.type)),"pages="+b.pages.length);}
+  {const b=generateBook({decade:"mix",size:50,fontPt:28,mix:["prompts"],seed:314});
+   T("prompts-only book keeps its answer-key page",composeBook(b).length===b.totalPages&&answerKeyPages(b).length===akPagesFor(b,b.pages),"sheets="+composeBook(b).length+" total="+b.totalPages);}
   /* covers */
   T("7 cover themes",Object.keys(COVER_THEMES).length===7);
   {const b=generateBook({decade:"mix",size:50,fontPt:24,seed:5});b.forName="Grandma Rose";
